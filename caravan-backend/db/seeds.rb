@@ -25,10 +25,26 @@ def race_parsing
   all_race_data = RestClient.get("http://www.dnd5eapi.co/api/races")
   all_parsed_race_data = JSON.parse(all_race_data)
   all_parsed_race_data["results"].map do |race_obj|
+    race_data = RestClient.get(race_obj["url"])
+    parsed_race_data = JSON.parse(race_data)
+    parsed_race_data["subraces"].map do |subrace_obj|
+      all_race_names_array.push(subrace_obj["name"])
+    end
     all_race_names_array.push(race_obj["name"])
   end
-  byebug
+  all_race_names_array.each do |race|
+    raceType = Race.create(
+      race: race
+    )
+    raceType.save
+  end
 end
 
+def spell_parsing
+  all_spell_info_hash = {}
+  spells = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../local-data/spells.json")))
+end
+
+# spell_parsing
 # item_data_process
 race_parsing
