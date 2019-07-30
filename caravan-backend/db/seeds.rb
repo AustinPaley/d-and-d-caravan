@@ -16,8 +16,61 @@ def item_data_process
     parsed_item_data = JSON.parse(item_data)
     all_item_info_hash[item_obj["name"]] = parsed_item_data
   end
-  byebug
-  all_item_info_hash
+  all_item_info_hash.each do |item_obj|
+    gold_guide = {"cp" => 0.01, "sp" => 0.1, "ep" => 0.5, "gp" => 1, "pp" => 10}
+    range_info = item_obj[1]["range"].to_s.gsub("=>", " ").gsub(" ", "spacerspacerspacer").gsub(/[^A-Za-z0-9]+/, "").gsub("spacerspacerspacer", " ")
+
+    if (defined?(gold_guide[item_obj[1]["cost"]["unit"]] * item_obj[1]["cost"]["quantity"])).nil?
+      cost_info = ""
+    else
+      cost_info = gold_guide[item_obj[1]["cost"]["unit"]] * item_obj[1]["cost"]["quantity"]
+    end
+
+    if (defined?(item_obj[1]["damage"]["dice_count"].to_s + "d" + item_obj[1]["damage"]["dice_value"].to_s)).nil?
+      damage_info = ""
+    else
+      damage_info = item_obj[1]["damage"]["dice_count"].to_s + "d" + item_obj[1]["damage"]["dice_value"].to_s
+    end
+
+    if (defined?(item_obj[1]["damage"]["damage_type"]["name"])).nil?
+      damage_type = ""
+    else
+      damage_type = item_obj[1]["damage"]["damage_type"]["name"]
+    end
+
+    if (defined?(item_obj[1]["armor_category"])).nil?
+      armor_category = ""
+    else
+      armor_category = item_obj[1]["armor_category"]
+    end
+
+    if (defined?(item_obj[1]["armor_class"])).nil?
+      armor_class = ""
+    else
+      armor_class = item_obj[1]["armor_class"].to_s.gsub("=>", " ").gsub(",", " ").gsub("_", " ").gsub(" ", "spacerspacerspacer").gsub(/[^A-Za-z0-9]+/, "").gsub("spacerspacerspacer", " ")
+    end
+
+    if (defined?(item_obj[1]["desc"])).nil?
+      desc = ""
+    else
+      desc = item_obj[1]["desc"]
+    end
+
+    itemType = Item.create(
+      name: item_obj[1]["name"],
+      equipment_category: item_obj[1]["equipment_category"],
+      weapon_category: item_obj[1]["weapon_category"],
+      range: range_info,
+      cost: cost_info,
+      damage: damage_info,
+      damage_type: damage_type,
+      description: desc,
+      armor_category: armor_category,
+      armor_class: armor_class,
+      shop_id: 1,
+    )
+    itemType.save
+  end
 end
 
 def race_parsing
@@ -45,6 +98,8 @@ def spell_parsing
   spells = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../local-data/spells.json")))
 end
 
-# spell_parsing
-# item_data_process
 race_parsing
+Character.create(name: "Austin", race_id: Race.all[0].id)
+Shop.create(name: "The Womping Willow", character_id: Character.all[0].id)
+item_data_process
+# spell_parsing

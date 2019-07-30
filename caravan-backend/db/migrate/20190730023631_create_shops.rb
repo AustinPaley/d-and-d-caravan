@@ -2,7 +2,7 @@ class CreateShops < ActiveRecord::Migration[5.2]
   def change
     create_table :shops do |t|
       t.string :name
-      t.string :character
+      t.integer :character_id
       t.timestamps
     end
   end
