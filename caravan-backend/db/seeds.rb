@@ -38,28 +38,44 @@ def item_data_process
       damage_type = item_obj[1]["damage"]["damage_type"]["name"]
     end
 
-    if (defined?(item_obj[1]["armor_category"])).nil?
+    if (item_obj[1]["armor_category"]).nil?
       armor_category = ""
     else
       armor_category = item_obj[1]["armor_category"]
     end
 
-    if (defined?(item_obj[1]["armor_class"])).nil?
+    if (item_obj[1]["armor_class"]).nil?
       armor_class = ""
     else
       armor_class = item_obj[1]["armor_class"].to_s.gsub("=>", " ").gsub(",", " ").gsub("_", " ").gsub(" ", "spacerspacerspacer").gsub(/[^A-Za-z0-9]+/, "").gsub("spacerspacerspacer", " ")
     end
 
-    if (defined?(item_obj[1]["desc"])).nil?
+    if (item_obj[1]["desc"]).nil?
       desc = ""
     else
       desc = item_obj[1]["desc"]
     end
 
+    if (item_obj[1]["weapon_category:"]).nil?
+      weapon_category = ""
+    else
+      weapon_category = item_obj[1]["weapon_category:"]
+    end
+
+    # TODO: FILTER OUT THE REST OF GENERAL ITEMS FROM WEAPONS, ADD REST OF FILTERS FOR ARMOR AND GENERAL GOODS
+    case
+    when (item_obj[1]["name"].include?("bow") == true)
+      shop_id = 4
+    when (weapon_category != "")
+      shop_id = 3
+    else
+      shop_id = 1
+    end
+
     itemType = Item.create(
       name: item_obj[1]["name"],
       equipment_category: item_obj[1]["equipment_category"],
-      weapon_category: item_obj[1]["weapon_category"],
+      weapon_category: weapon_category,
       range: range_info,
       cost: cost_info,
       damage: damage_info,
@@ -67,7 +83,8 @@ def item_data_process
       description: desc,
       armor_category: armor_category,
       armor_class: armor_class,
-      shop_id: 1,
+      shop_id: shop_id,
+      current_stock: 2,
     )
     itemType.save
   end
@@ -96,10 +113,29 @@ end
 def spell_parsing
   all_spell_info_hash = {}
   spells = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../local-data/spells.json")))
+  spells.map do |spells_obj|
+    spellType = Spell.create(
+      name: spells_obj[0],
+      casting_time: spells_obj[1]["casting_time"],
+      components: spells_obj[1]["components"],
+      description: spells_obj[1]["description"],
+      duration: spells_obj[1]["duration"],
+      level: spells_obj[1]["level"],
+      range: spells_obj[1]["range"],
+      school: spells_obj[1]["school"],
+      shop_id: 2,
+    ).save
+  end
 end
 
 race_parsing
+Character.create(name: "Excalibur", race_id: Race.all[12].id)
 Character.create(name: "Austin", race_id: Race.all[0].id)
-Shop.create(name: "The Womping Willow", character_id: Character.all[0].id)
+Character.create(name: "Eduardo", race_id: Race.all[2].id)
+Character.create(name: "Finnius", race_id: Race.all[5].id)
+Shop.create(name: "Troublesome Telekinesis", character_id: 1)
+Shop.create(name: "The Whomping Willow", character_id: 2)
+Shop.create(name: "Eduardo's Arms", character_id: 3)
+Shop.create(name: "The Fickle Fletcher", character_id: 4)
 item_data_process
-# spell_parsing
+spell_parsing

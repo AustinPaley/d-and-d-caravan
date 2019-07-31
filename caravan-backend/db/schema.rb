@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_024233) do
     t.integer "shop_id"
     t.string "armor_category"
     t.string "armor_class"
+    t.integer "current_stock"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_024233) do
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.integer "character_id"
+    t.integer "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_024233) do
     t.integer "level"
     t.string "range"
     t.string "school"
+    t.integer "shop_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
