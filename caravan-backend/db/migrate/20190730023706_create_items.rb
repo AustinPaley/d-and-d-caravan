@@ -13,6 +13,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.string :armor_category
       t.string :armor_class
       t.integer :current_stock
+      t.integer :item_level
       t.timestamps
     end
   end

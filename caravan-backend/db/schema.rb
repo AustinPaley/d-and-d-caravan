@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_024233) do
     t.string "armor_category"
     t.string "armor_class"
     t.integer "current_stock"
+    t.integer "item_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

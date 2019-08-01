@@ -20,6 +20,8 @@ def item_data_process
     gold_guide = {"cp" => 0.01, "sp" => 0.1, "ep" => 0.5, "gp" => 1, "pp" => 10}
     range_info = item_obj[1]["range"].to_s.gsub("=>", " ").gsub(" ", "spacerspacerspacer").gsub(/[^A-Za-z0-9]+/, "").gsub("spacerspacerspacer", " ")
 
+
+# DATA REPURPOSING/CLEANUP BASED ON ITEM TYPE
     if (defined?(gold_guide[item_obj[1]["cost"]["unit"]] * item_obj[1]["cost"]["quantity"])).nil?
       cost_info = ""
     else
@@ -62,14 +64,48 @@ def item_data_process
       weapon_category = item_obj[1]["weapon_category:"]
     end
 
-    # TODO: FILTER OUT THE REST OF GENERAL ITEMS FROM WEAPONS, ADD REST OF FILTERS FOR ARMOR AND GENERAL GOODS
+    # SHOP FILTERING BASED ON ITEM TYPE
+    musical_instruments = ["bagpipes", "lute", "drum", "dulcimer", "flute", "lyre", "horn", "pan flute", "shawm", "viol"]
+
     case
-    when (item_obj[1]["name"].include?("bow") == true)
+    when ((item_obj[1]["name"].downcase.include?("bow") == true) || (item_obj[1]["name"].downcase.include?("arrow") == true) || (item_obj[1]["name"].downcase.include?("bolt") == true))
       shop_id = 4
+    when (armor_category != "")
+      shop_id = 5
     when (weapon_category != "")
       shop_id = 3
+    when ((item_obj[1]["name"].downcase.include?("ship") == true) || (item_obj[1]["name"].downcase.include?("boat") == true))
+      shop_id = 7
+    when (item_obj[1]["equipment_category"].include?("Mounts") == true)
+      shop_id = 6
+    when ((item_obj[1]["name"].downcase.include?("vial") == true) || (item_obj[1]["name"].downcase.include?("flask") == true) || (item_obj[1]["name"].downcase.include?("potion") == true))
+      shop_id = 8
+    when (musical_instruments.include?(item_obj[1]["name"].downcase) == true)
+      shop_id = 9
     else
-      shop_id = 1
+      shop_id = 2
+    end
+
+    # LEVEL ASSIGNMENT BASED ON ITEM COST
+    case
+    when (cost_info < 10)
+      item_level = 1
+    when (cost_info >= 10)
+      item_level = 2
+    when (cost_info >= 50)
+      item_level = 3
+    when (cost_info >= 100)
+      item_level = 4
+    when (cost_info >= 200)
+      item_level = 5
+    when (cost_info >= 500)
+      item_level = 6
+    when (cost_info >= 1000)
+      item_level = 7
+    when (cost_info >= 2000)
+      item_level = 8
+    when (cost_info >= 5000)
+      item_level = 9
     end
 
     itemType = Item.create(
@@ -85,6 +121,7 @@ def item_data_process
       armor_class: armor_class,
       shop_id: shop_id,
       current_stock: 2,
+      item_level: item_level
     )
     itemType.save
   end
@@ -133,9 +170,19 @@ Character.create(name: "Excalibur", race_id: Race.all[12].id)
 Character.create(name: "Austin", race_id: Race.all[0].id)
 Character.create(name: "Eduardo", race_id: Race.all[2].id)
 Character.create(name: "Finnius", race_id: Race.all[5].id)
+Character.create(name: "Annabelle", race_id: Race.all[0].id)
+Character.create(name: "Mason Maxwell IV", race_id: Race.all[11].id)
+Character.create(name: "Ferrymaster Mack", race_id: Race.all[4].id)
+Character.create(name: "Eevee The Arcane", race_id: Race.all[7].id)
+Character.create(name: "Kyrene", race_id: Race.all[4].id)
 Shop.create(name: "Troublesome Telekinesis", character_id: 1)
 Shop.create(name: "The Whomping Willow", character_id: 2)
 Shop.create(name: "Eduardo's Arms", character_id: 3)
 Shop.create(name: "The Fickle Fletcher", character_id: 4)
+Shop.create(name: "The Gargantuan Girl Forge", character_id: 5)
+Shop.create(name: "Mason's Magnificant Mounts and Pets", character_id: 6)
+Shop.create(name: "Boats of Loire", character_id: 7)
+Shop.create(name: "Versatile Vials", character_id: 8)
+Shop.create(name: "No Strings Attached", character_id: 9)
 item_data_process
 spell_parsing
