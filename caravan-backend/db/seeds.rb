@@ -160,7 +160,7 @@ def spell_parsing
       level: spells_obj[1]["level"],
       range: spells_obj[1]["range"],
       school: spells_obj[1]["school"],
-      shop_id: 2,
+      shop_id: 1,
     ).save
   end
 end
