@@ -24,7 +24,7 @@ class App extends React.Component{
     return (
       <div className="App">
         {this.state.allStoresObject.map(store => (
-            <StoresComponent key={store.id} />
+            <StoresComponent key={store.id} info={store} />
           ))
         }
         <StoresComponent />
