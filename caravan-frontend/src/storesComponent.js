@@ -19,6 +19,7 @@ class StoresComponent extends React.Component{
       shopName: "",
       ownerName: "",
       ownerRace: "",
+      ownerImage: "",
       shopItems: [],
       shopSpells: [],
       shopLevel: null,
@@ -38,6 +39,7 @@ class StoresComponent extends React.Component{
           shopName: res.shop.name,
           ownerName: res.owner.name,
           ownerRace: res.owner.race,
+          ownerImage: "data:image/png;base64," + res.owner.image,
           shopItems: res.items,
           shopSpells: res.spells,
           shopLevel: res.shop.level,
@@ -48,13 +50,15 @@ class StoresComponent extends React.Component{
   }
 
   render(){
+    console.log(this.state.ownerImage)
     return(
       <div>
         <h2>{this.state.shopName}</h2>
         {this.state.ownerName ?
           <div>
-            <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
             <img src={this.state.shopImage} alt={this.state.shopName} />
+            <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
+            <img src={this.state.ownerImage} alt={this.state.ownerImage} />
           </div>
         :
           null

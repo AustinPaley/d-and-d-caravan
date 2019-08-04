@@ -6,6 +6,6 @@ class ShopsController < ApplicationController
 
   def show
     @shop = Shop.find(params[:id])
-    render json: {shop: {id: @shop.id, name: @shop.name, level: @shop.level}, owner: {name: @shop.character.name, race: @shop.character.race.race}, items: @shop.items, spells: @shop.spells}
+    render json: {shop: {id: @shop.id, name: @shop.name, level: @shop.level}, owner: {name: @shop.character.name, race: @shop.character.race.race, image: @shop.character.character_image}, items: @shop.items, spells: @shop.spells}
   end
 end

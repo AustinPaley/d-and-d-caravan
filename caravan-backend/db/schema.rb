@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_024233) do
   create_table "characters", force: :cascade do |t|
     t.string "name"
     t.integer "race_id"
+    t.string "character_image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
