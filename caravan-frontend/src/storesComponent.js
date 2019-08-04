@@ -1,4 +1,5 @@
 import React from 'react';
+import ItemList from './storesComponents/itemList.js'
 
 const IMAGELIBRARY = {
   1: require('./images/level1.png'),
@@ -50,7 +51,6 @@ class StoresComponent extends React.Component{
   }
 
   render(){
-    console.log(this.state.ownerImage)
     return(
       <div>
         <h2>{this.state.shopName}</h2>
@@ -59,6 +59,7 @@ class StoresComponent extends React.Component{
             <img src={this.state.shopImage} alt={this.state.shopName} />
             <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
             <img src={this.state.ownerImage} alt={this.state.ownerImage} />
+            <ItemList items={this.state.shopItems}/>
           </div>
         :
           null

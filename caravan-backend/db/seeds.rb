@@ -74,7 +74,7 @@ def item_data_process
       shop_id = 5
     when (weapon_category != "")
       shop_id = 3
-    when ((item_obj[1]["name"].downcase.include?("ship") == true) || (item_obj[1]["name"].downcase.include?("boat") == true))
+    when ((item_obj[1]["name"].downcase.include?("ship") == true) || (item_obj[1]["name"].downcase.include?("boat") == true) || (item_obj[1]["name"].downcase.include?("galley") == true))
       shop_id = 7
     when (item_obj[1]["equipment_category"].include?("Mounts") == true)
       shop_id = 6
