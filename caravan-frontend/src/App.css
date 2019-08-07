@@ -31,3 +31,57 @@
     transform: rotate(360deg);
   }
 }
+
+.parchmentTop {
+  position:relative;
+  width:730px;
+  top:25px;
+  font-family:georgia,times;
+  font-style:italic;
+  font-size:12pt;
+  line-height:normal;
+  background-image:url("./images/Parchment-Body.png");
+}
+
+.parchment {
+  position:relative;
+  top:-25px;
+  width:730px;
+  height:38px;
+  background-image:url("./images/Parchment-Top.png");
+}
+
+.parchmentBottom {
+  position:relative;
+  bottom:-18px;
+  right:-6px;
+  width:730px;
+  height:38px;
+  background-image:url("./images/Parchment-Bottom.png");
+  margin-bottom:40px;
+}
+
+.parchmentBody {
+  width:610px;
+  height: 70vh;
+  margin: auto;
+  overflow-y: scroll;
+}
+
+.itemListTable{
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+}
+
+.itemListTable tbody tr{
+  height: 20px;
+}
+
+th.sticky-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: rgb(183,133,78, 1);
+}
