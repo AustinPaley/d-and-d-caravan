@@ -24,7 +24,7 @@ class ItemList extends React.Component{
                 return (
                   <Fragment key={`item-number-${item.id}`}>
                   <tr>
-                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.cost}</td><td>{item.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon"/><img className="add-remove-icons" src={MinusImage} alt="minusIcon"/></td>
+                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.cost}</td><td>{item.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.stockChanger(item, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
                   </tr>
                   </Fragment>
                 )

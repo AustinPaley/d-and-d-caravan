@@ -50,7 +50,24 @@ class StoresComponent extends React.Component{
     }
   }
 
+  stockChanger = (changedItem, actionType) => {
+    //TODO - FIND A WAY TO SET A MAX VALUE THAT DOES NOT CHANGE FOR THE PLUS ACTION
+    var selectedItem = this.state.shopItems.find(item => item.id === changedItem.id)
+    console.log(this.state.shopItems)
+    if (actionType === "plus"){
+      selectedItem.current_stock += 1
+    }
+    if (actionType === "minus" && selectedItem.current_stock > 0){
+      selectedItem.current_stock -= 1
+    }
+    this.setState(prevState => ({
+      ...prevState.shopItems,
+      [prevState.shopItems.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
+    }))
+  }
+
   render(){
+    console.log(this.state.shopItems)
     return(
       <div>
         <h2>{this.state.shopName}</h2>
@@ -59,7 +76,7 @@ class StoresComponent extends React.Component{
             <img src={this.state.shopImage} alt={this.state.shopName} />
             <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
             <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-            <ItemList items={this.state.shopItems}/>
+            <ItemList items={this.state.shopItems} stockChanger={this.stockChanger}/>
           </div>
         :
           null
