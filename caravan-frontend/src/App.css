@@ -85,3 +85,10 @@ th.sticky-header{
   z-index: 10;
   background-color: rgb(183,133,78, 1);
 }
+
+.add-remove-icons{
+  width: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}
