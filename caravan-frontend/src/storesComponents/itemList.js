@@ -34,6 +34,7 @@ class ItemList extends React.Component{
         itemCost = copper.toString() + "c"
       }
       item["render_cost"] = itemCost
+      item["max_stock"] = item.current_stock
       newItemArray.push(item)
     })
 
@@ -41,7 +42,7 @@ class ItemList extends React.Component{
       itemsList: newItemArray
     })
   }
-  
+
   render(){
     return(
       <div>

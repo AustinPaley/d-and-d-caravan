@@ -52,9 +52,10 @@ class StoresComponent extends React.Component{
   }
 
   stockChanger = (changedItem, actionType) => {
-    //TODO - FIND A WAY TO SET A MAX VALUE THAT DOES NOT CHANGE FOR THE PLUS ACTION
     var selectedItem = this.state.shopItems.find(item => item.id === changedItem.id)
-    if (actionType === "plus"){
+    var maxStock = this.state.shopItems.find(item => item.id === changedItem.id).max_stock
+        debugger
+    if (actionType === "plus" && selectedItem.current_stock < maxStock){
       selectedItem.current_stock += 1
     }
     if (actionType === "minus" && selectedItem.current_stock > 0){
@@ -68,7 +69,8 @@ class StoresComponent extends React.Component{
 
   spellChanger = (purchasedSpell, actionType) => {
     var selectedSpell = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id)
-    if (actionType === "plus"){
+    var maxSpellStock = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id).max_stock
+    if (actionType === "plus" && selectedSpell.current_stock < maxSpellStock){
       selectedSpell.current_stock += 1
     }
     if (actionType === "minus" && selectedSpell.current_stock > 0){

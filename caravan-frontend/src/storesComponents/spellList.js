@@ -26,6 +26,7 @@ class SpellList extends React.Component{
         spell["render_level"] = spell.level
         spell["render_cost"] = spell.cost + "g"
       }
+      spell["max_stock"] = spell.current_stock
       newSpellArray.push(spell)
     })
 
