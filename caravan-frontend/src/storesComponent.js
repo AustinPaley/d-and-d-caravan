@@ -53,7 +53,6 @@ class StoresComponent extends React.Component{
   stockChanger = (changedItem, actionType) => {
     //TODO - FIND A WAY TO SET A MAX VALUE THAT DOES NOT CHANGE FOR THE PLUS ACTION
     var selectedItem = this.state.shopItems.find(item => item.id === changedItem.id)
-    console.log(this.state.shopItems)
     if (actionType === "plus"){
       selectedItem.current_stock += 1
     }
@@ -67,7 +66,6 @@ class StoresComponent extends React.Component{
   }
 
   render(){
-    console.log(this.state.shopItems)
     return(
       <div>
         <h2>{this.state.shopName}</h2>

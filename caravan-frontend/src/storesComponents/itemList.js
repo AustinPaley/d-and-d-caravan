@@ -4,9 +4,44 @@ import MinusImage from '../images/minus-square-regular.svg';
 
 class ItemList extends React.Component{
 
-  componentDidMount(){
+  constructor(props){
+    super(props)
+    this.state = {
+      itemsList: this.props.items
+    }
   }
 
+  componentDidMount(){
+    this.priceConverterHelper()
+  }
+
+  priceConverterHelper = () => {
+    var newItemArray = []
+    this.state.itemsList.forEach(item => {
+      var itemCost = parseFloat(item.cost)
+      if (itemCost / 1 >= 1){
+        var gold = itemCost / 1
+        itemCost = gold.toString() + "g"
+      }
+
+      else if (itemCost / .1 >= 1){
+        var silver = itemCost / .1
+        itemCost = silver.toString() + "s"
+      }
+
+      else if (itemCost / .01 >= 1){
+        var copper = itemCost / .01
+        itemCost = copper.toString() + "c"
+      }
+      item["render_cost"] = itemCost
+      newItemArray.push(item)
+    })
+
+    this.setState({
+      itemsList: newItemArray
+    })
+  }
+  
   render(){
     return(
       <div>
@@ -20,11 +55,11 @@ class ItemList extends React.Component{
               </tr>
             </thead>
             <tbody>
-              {this.props.items.sort((a,b) => a.cost-b.cost).map(item => {
+              {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
                 return (
                   <Fragment key={`item-number-${item.id}`}>
                   <tr>
-                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.cost}</td><td>{item.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.stockChanger(item, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
+                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.render_cost}</td><td>{item.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.stockChanger(item, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
                   </tr>
                   </Fragment>
                 )
