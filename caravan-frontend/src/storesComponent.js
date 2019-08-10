@@ -1,6 +1,8 @@
 import React from 'react';
 import ItemList from './storesComponents/itemList.js'
 import SpellList from './storesComponents/spellList.js'
+import RightArrow from './images/arrow-circle-right-solid.svg';
+import LeftArrow from './images/arrow-circle-left-solid.svg';
 
 const IMAGELIBRARY = {
   1: require('./images/level1.png'),
@@ -105,17 +107,21 @@ class StoresComponent extends React.Component{
         {this.state.ownerName ?
           (this.state.shopSpells.length > 0 ?
             <div>
+              <img src={LeftArrow} alt="Left Arrow" width={"5%"} />
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
               <SpellList spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger}/>
+              <img src={RightArrow} alt="Right Arrow" width={"5%"} />
             </div>
           :
             <div>
+              <img src={LeftArrow} alt="Left Arrow" width={"5%"} />
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
               <ItemList items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger}/>
+              <img src={RightArrow} alt="Right Arrow" width={"5%"} />
             </div>
           )
         :
