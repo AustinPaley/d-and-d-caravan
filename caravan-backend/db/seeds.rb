@@ -150,6 +150,7 @@ end
 def spell_parsing
   all_spell_info_hash = {}
   spells = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../local-data/spells.json")))
+  spellCostKey = {0 => "50", 1 => "100", 2 => "150", 3 => "200", 4 => "250", 5 => "300", 6 => "350", 7 => "400", 8 => "450", 9 => "500"}
   spells.map do |spells_obj|
     spellType = Spell.create(
       name: spells_obj[0],
@@ -160,6 +161,7 @@ def spell_parsing
       level: spells_obj[1]["level"],
       range: spells_obj[1]["range"],
       school: spells_obj[1]["school"],
+      cost: spellCostKey[spells_obj[1]["level"]],
       shop_id: 1,
     ).save
   end

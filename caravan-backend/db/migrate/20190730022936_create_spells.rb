@@ -9,6 +9,7 @@ class CreateSpells < ActiveRecord::Migration[5.2]
       t.integer :level
       t.string :range
       t.string :school
+      t.string :cost
       t.integer :shop_id
       t.timestamps
     end

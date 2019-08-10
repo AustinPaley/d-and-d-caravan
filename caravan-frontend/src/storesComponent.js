@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemList from './storesComponents/itemList.js'
+import SpellList from './storesComponents/spellList.js'
 
 const IMAGELIBRARY = {
   1: require('./images/level1.png'),
@@ -70,12 +71,21 @@ class StoresComponent extends React.Component{
       <div>
         <h2>{this.state.shopName}</h2>
         {this.state.ownerName ?
-          <div>
-            <img src={this.state.shopImage} alt={this.state.shopName} />
-            <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
-            <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-            <ItemList items={this.state.shopItems} stockChanger={this.stockChanger}/>
-          </div>
+          (this.state.shopSpells.length > 0 ?
+            <div>
+              <img src={this.state.shopImage} alt={this.state.shopName} />
+              <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
+              <img src={this.state.ownerImage} alt={this.state.ownerImage} />
+              <SpellList spells={this.state.shopSpells} stockChanger={this.stockChanger}/>
+            </div>
+          :
+            <div>
+              <img src={this.state.shopImage} alt={this.state.shopName} />
+              <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
+              <img src={this.state.ownerImage} alt={this.state.ownerImage} />
+              <ItemList items={this.state.shopItems} stockChanger={this.stockChanger}/>
+            </div>
+          )
         :
           null
         }
