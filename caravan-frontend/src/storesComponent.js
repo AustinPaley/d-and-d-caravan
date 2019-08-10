@@ -4,6 +4,14 @@ import SpellList from './storesComponents/spellList.js'
 import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
 
+// TODO
+// 1) ADD UPGRADE BUTTONS TO THE STORE
+// 2) BUILD PATCH CALLS TO DATABASE TO UPDATE IN DATABASE AS WELL AS IN FRONTEND
+// 3) BUILD BACKEND BAG FUNCTIONALITY - SHOULD HOLD ITEMS AS WELL AS MONEY
+// 4) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME 
+// 5) RENDER BAG IN FRONT END
+
+
 const IMAGELIBRARY = {
   1: require('./images/level1.png'),
   2: require('./images/level2.png'),
