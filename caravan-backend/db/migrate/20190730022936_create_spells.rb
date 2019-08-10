@@ -11,6 +11,7 @@ class CreateSpells < ActiveRecord::Migration[5.2]
       t.string :school
       t.string :cost
       t.integer :shop_id
+      t.integer :current_stock
       t.timestamps
     end
   end

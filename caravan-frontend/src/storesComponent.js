@@ -66,6 +66,20 @@ class StoresComponent extends React.Component{
     }))
   }
 
+  spellChanger = (purchasedSpell, actionType) => {
+    var selectedSpell = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id)
+    if (actionType === "plus"){
+      selectedSpell.current_stock += 1
+    }
+    if (actionType === "minus" && selectedSpell.current_stock > 0){
+      selectedSpell.current_stock -= 1
+    }
+    this.setState(prevState => ({
+      ...prevState.shopItems,
+      [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
+    }))
+  }
+
   render(){
     return(
       <div>
@@ -76,7 +90,7 @@ class StoresComponent extends React.Component{
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-              <SpellList spells={this.state.shopSpells} stockChanger={this.stockChanger}/>
+              <SpellList spells={this.state.shopSpells} spellChanger={this.spellChanger}/>
             </div>
           :
             <div>

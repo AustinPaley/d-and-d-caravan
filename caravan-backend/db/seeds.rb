@@ -162,6 +162,7 @@ def spell_parsing
       range: spells_obj[1]["range"],
       school: spells_obj[1]["school"],
       cost: spellCostKey[spells_obj[1]["level"]],
+      current_stock: 1,
       shop_id: 1,
     ).save
   end

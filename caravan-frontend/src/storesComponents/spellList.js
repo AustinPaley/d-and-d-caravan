@@ -34,6 +34,8 @@ class SpellList extends React.Component{
     })
   }
 
+  // TODO - FIX STOCK CHANGER FOR SPELLS - IT NEEDS TO REMOVE SPELLS ENTIRELY WHEN SELECTED
+
   render(){
     console.log(this.state.spellsList)
     return(
@@ -44,7 +46,7 @@ class SpellList extends React.Component{
           <table className="itemListTable">
             <thead>
               <tr>
-                <th className="sticky-header">Spell Name</th><th className="sticky-header">Spell Type</th><th className="sticky-header">Spell Level</th><th className="sticky-header">Cost</th><th className="sticky-header">Add/Remove</th>
+                <th className="sticky-header">Spell Name</th><th className="sticky-header">Spell Type</th><th className="sticky-header">Spell Level</th><th className="sticky-header">Cost</th><th className="sticky-header">Stock</th><th className="sticky-header">Add/Remove</th>
               </tr>
             </thead>
             <tbody>
@@ -52,7 +54,7 @@ class SpellList extends React.Component{
                 return (
                   <Fragment key={`item-number-${spell.id}`}>
                   <tr>
-                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.render_level}</td><td>{spell.render_cost}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.stockChanger(spell, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(spell, "minus")}/></td>
+                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.render_level}</td><td>{spell.render_cost}</td><td>{spell.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.spellChanger(spell, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
                   </tr>
                   </Fragment>
                 )

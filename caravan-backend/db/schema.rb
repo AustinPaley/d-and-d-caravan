@@ -63,6 +63,7 @@ ActiveRecord::Schema.define(version: 2019_07_30_024233) do
     t.string "school"
     t.string "cost"
     t.integer "shop_id"
+    t.integer "current_stock"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
