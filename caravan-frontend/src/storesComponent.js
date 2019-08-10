@@ -23,7 +23,9 @@ class StoresComponent extends React.Component{
       ownerRace: "",
       ownerImage: "",
       shopItems: [],
+      unlockedItems: [],
       shopSpells: [],
+      unlockedSpells: [],
       shopLevel: null,
       shopImage: "",
     }
@@ -37,18 +39,32 @@ class StoresComponent extends React.Component{
       .then(res => res.json())
       .then(res => {
         var shopImage = IMAGELIBRARY[res.shop.level + 1]
+        var unlockedItems = this.unlockedItemChanger(res.items, res.shop.level)
+        var unlockedSpells = this.unlockedSpellChanger(res.spells, res.shop.level)
         this.setState({
           shopName: res.shop.name,
           ownerName: res.owner.name,
           ownerRace: res.owner.race,
           ownerImage: "data:image/png;base64," + res.owner.image,
           shopItems: res.items,
+          unlockedItems: unlockedItems,
           shopSpells: res.spells,
+          unlockedSpells: unlockedSpells,
           shopLevel: res.shop.level,
           shopImage: shopImage
         })
       })
     }
+  }
+
+  unlockedItemChanger = (allItems, shopLevel) => {
+    // THIS IS SET TO LEVEL 9 FOR TESTING PURPOSES
+    return allItems.filter(item => item.item_level <= (shopLevel + 9))
+  }
+
+  unlockedSpellChanger = (allSpells, shopLevel) => {
+    // THIS IS SET TO LEVEL 9 FOR TESTING PURPOSES
+    return allSpells.filter(spell => spell.level <= (shopLevel + 9))
   }
 
   stockChanger = (changedItem, actionType) => {
@@ -92,14 +108,14 @@ class StoresComponent extends React.Component{
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-              <SpellList spells={this.state.shopSpells} spellChanger={this.spellChanger}/>
+              <SpellList spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger}/>
             </div>
           :
             <div>
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-              <ItemList items={this.state.shopItems} stockChanger={this.stockChanger}/>
+              <ItemList items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger}/>
             </div>
           )
         :

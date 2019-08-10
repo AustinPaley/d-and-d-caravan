@@ -44,6 +44,7 @@ class ItemList extends React.Component{
   }
 
   render(){
+    console.log(this.state.itemsList)
     return(
       <div>
         <div className="parchmentTop">

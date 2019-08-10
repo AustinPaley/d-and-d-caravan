@@ -35,10 +35,7 @@ class SpellList extends React.Component{
     })
   }
 
-  // TODO - FIX STOCK CHANGER FOR SPELLS - IT NEEDS TO REMOVE SPELLS ENTIRELY WHEN SELECTED
-
   render(){
-    console.log(this.state.spellsList)
     return(
       <div>
         <div className="parchmentTop">
