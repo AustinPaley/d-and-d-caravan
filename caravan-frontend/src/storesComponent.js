@@ -8,7 +8,7 @@ import LeftArrow from './images/arrow-circle-left-solid.svg';
 // 1) ADD UPGRADE BUTTONS TO THE STORE
 // 2) BUILD PATCH CALLS TO DATABASE TO UPDATE IN DATABASE AS WELL AS IN FRONTEND
 // 3) BUILD BACKEND BAG FUNCTIONALITY - SHOULD HOLD ITEMS AS WELL AS MONEY
-// 4) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME 
+// 4) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
 // 5) RENDER BAG IN FRONT END
 
 
@@ -77,6 +77,27 @@ class StoresComponent extends React.Component{
     return allSpells.filter(spell => spell.level <= (shopLevel + 9))
   }
 
+  shopLevelChanger = (levelChange) => {
+    // DOWN FUNCTIONALITY WILL BE UNNECESSARY IN LIVE, KEPT IN FOR TESTING
+    if (levelChange === "up"){
+      var increasedLevel = this.state.shopLevel + 1
+      var increasedShopImage = IMAGELIBRARY[increasedLevel + 1]
+      this.setState({
+        shopLevel: increasedLevel,
+        shopImage: increasedShopImage
+      })
+    }
+
+    if (levelChange === "down"){
+      var decreasedLevel = this.state.shopLevel - 1
+      var decreasedShopImage = IMAGELIBRARY[decreasedLevel + 1]
+      this.setState({
+        shopLevel: decreasedLevel,
+        shopImage: decreasedShopImage
+      })
+    }
+  }
+
   stockChanger = (changedItem, actionType) => {
     var selectedItem = this.state.shopItems.find(item => item.id === changedItem.id)
     var maxStock = this.state.shopItems.find(item => item.id === changedItem.id).max_stock
@@ -116,6 +137,8 @@ class StoresComponent extends React.Component{
           (this.state.shopSpells.length > 0 ?
             <div>
               <img src={LeftArrow} alt="Left Arrow" width={"5%"} />
+              <span className="level-up-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
+              <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
