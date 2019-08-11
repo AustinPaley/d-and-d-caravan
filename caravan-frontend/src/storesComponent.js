@@ -5,11 +5,10 @@ import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
 
 // TODO
-// 1) ADD UPGRADE BUTTONS TO THE STORE
-// 2) BUILD PATCH CALLS TO DATABASE TO UPDATE IN DATABASE AS WELL AS IN FRONTEND
-// 3) BUILD BACKEND BAG FUNCTIONALITY - SHOULD HOLD ITEMS AS WELL AS MONEY
-// 4) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
-// 5) RENDER BAG IN FRONT END
+// 1) FIND NEW IMAGE FOR SHOPS THAT HAVE NOT BEEN PURCHASED YET
+// 2) BUILD BACKEND BAG FUNCTIONALITY - SHOULD HOLD ITEMS AS WELL AS MONEY
+// 3) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
+// 4) RENDER BAG IN FRONT END
 
 
 const IMAGELIBRARY = {
@@ -79,21 +78,43 @@ class StoresComponent extends React.Component{
 
   shopLevelChanger = (levelChange) => {
     // DOWN FUNCTIONALITY WILL BE UNNECESSARY IN LIVE, KEPT IN FOR TESTING
+    // THE IMAGE FUNCTIONALITY HERE IS OFF BY 1 TO ACCOMODATE FOR TESTING
+    // LEVEL 0 SHOPS SHOULD NOT RENDER NORMALLY TO BEGIN WITH - NEED BUY NOW IMAGE
     if (levelChange === "up"){
       var increasedLevel = this.state.shopLevel + 1
       var increasedShopImage = IMAGELIBRARY[increasedLevel + 1]
-      this.setState({
-        shopLevel: increasedLevel,
-        shopImage: increasedShopImage
+      fetch("http://localhost:3000/shops/" + this.props.info.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({"level": increasedLevel})
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          shopLevel: res.level,
+          shopImage: increasedShopImage
+        })
       })
     }
 
     if (levelChange === "down"){
       var decreasedLevel = this.state.shopLevel - 1
       var decreasedShopImage = IMAGELIBRARY[decreasedLevel + 1]
-      this.setState({
-        shopLevel: decreasedLevel,
-        shopImage: decreasedShopImage
+      fetch("http://localhost:3000/shops/" + this.props.info.id, {
+        method: "PUT",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({"level": decreasedLevel})
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          shopLevel: res.level,
+          shopImage: decreasedShopImage
+        })
       })
     }
   }
@@ -148,6 +169,8 @@ class StoresComponent extends React.Component{
           :
             <div>
               <img src={LeftArrow} alt="Left Arrow" width={"5%"} />
+              <span className="level-up-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
+              <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
               <img src={this.state.shopImage} alt={this.state.shopName} />
               <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
               <img src={this.state.ownerImage} alt={this.state.ownerImage} />
