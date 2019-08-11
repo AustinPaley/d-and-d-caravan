@@ -5,13 +5,14 @@ import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
 
 // TODO
-// 1) FIND NEW IMAGE FOR SHOPS THAT HAVE NOT BEEN PURCHASED YET
+// 1) TIE STOCK TO BACKEND FUNCTIONALITY
 // 2) BUILD BACKEND BAG FUNCTIONALITY - SHOULD HOLD ITEMS AS WELL AS MONEY
-// 3) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
-// 4) RENDER BAG IN FRONT END
+// 3) RENDER BAG IN FRONT END
+// 4) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
 
 
 const IMAGELIBRARY = {
+  0: require('./images/level0.png'),
   1: require('./images/level1.png'),
   2: require('./images/level2.png'),
   3: require('./images/level3.png'),
@@ -47,7 +48,7 @@ class StoresComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
-        var shopImage = IMAGELIBRARY[res.shop.level + 1]
+        var shopImage = IMAGELIBRARY[res.shop.level]
         var unlockedItems = this.unlockedItemChanger(res.items, res.shop.level)
         var unlockedSpells = this.unlockedSpellChanger(res.spells, res.shop.level)
         this.setState({
@@ -82,7 +83,7 @@ class StoresComponent extends React.Component{
     // LEVEL 0 SHOPS SHOULD NOT RENDER NORMALLY TO BEGIN WITH - NEED BUY NOW IMAGE
     if (levelChange === "up"){
       var increasedLevel = this.state.shopLevel + 1
-      var increasedShopImage = IMAGELIBRARY[increasedLevel + 1]
+      var increasedShopImage = IMAGELIBRARY[increasedLevel]
       fetch("http://localhost:3000/shops/" + this.props.info.id, {
         method: "PUT",
         headers: {
@@ -101,7 +102,7 @@ class StoresComponent extends React.Component{
 
     if (levelChange === "down"){
       var decreasedLevel = this.state.shopLevel - 1
-      var decreasedShopImage = IMAGELIBRARY[decreasedLevel + 1]
+      var decreasedShopImage = IMAGELIBRARY[decreasedLevel]
       fetch("http://localhost:3000/shops/" + this.props.info.id, {
         method: "PUT",
         headers: {
