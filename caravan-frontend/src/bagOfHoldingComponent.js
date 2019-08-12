@@ -3,9 +3,7 @@ import ObjectsList from './bagOfHoldingComponents/objectsList.js'
 
 // TODO
 // 1) ADD MONEY TO BOTTOM OF THE BAG
-// 2) ADD REMOVE FUNCTIONALITY - IF STOCK GOES TO 0 REMOVE ITEM ENTIRELY FROM BAG
-// 3) ADD CANCEL BUTTON TO REMOVE ANY CHANGES MADE BY THE PARTY
-// 4) ADD SAVE BUTTON TO SAVE CHANGES AND UPDATE BAG DATA IN BACKEND
+// 2) FIX BUG WHERE SAVE UPDATES ARE NOT REFLECTED IN STOCK
 
 class BagofHoldingComponent extends React.Component{
   constructor(props){
@@ -33,6 +31,23 @@ class BagofHoldingComponent extends React.Component{
     })
   }
 
+  saveItems = (bagContents) => {
+    fetch("http://localhost:3000/bagofholdings/1", {
+      method: "PUT",
+      headers: {
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList})
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        items: res.bag.items,
+        spells: res.bag.spells,
+      })
+    })
+  }
+
   stockChanger = (changedItem, actionType) => {
     var selectedItem = this.state.items.find(item => item.id === changedItem.id)
 
@@ -56,21 +71,28 @@ class BagofHoldingComponent extends React.Component{
 
     if (actionType === "minus" && selectedSpell.current_stock > 0){
       selectedSpell.current_stock -= 1
+      this.setState(prevState => ({
+        ...prevState.spells,
+        [prevState.spells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
+      }))
     }
-    this.setState(prevState => ({
-      ...prevState.spells,
-      [prevState.spells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
-    }))
+
+    if (actionType === "minus" && selectedSpell.current_stock === 0){
+      this.setState({
+        spells: this.state.spells.filter(spell => spell.id !== selectedSpell.id)
+      })
+    }
   }
 
 
   render(){
-    console.log(this.state.items)
     return(
       <div>
         {
           this.state.items.length > 0 || this.state.spells.length > 0 ?
-            <ObjectsList items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems}/>
+            <ObjectsList items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems}>
+
+            </ObjectsList>
           :
           null
         }

@@ -1,10 +1,6 @@
 import React, {Fragment} from 'react';
 import MinusImage from '../images/minus-square-regular.svg';
 
-// TODO
-// 1) ADD REMOVE SPELLS FUNCTIONALITY - IF STOCK GOES TO 0 REMOVE SPELL ENTIRELY FROM BAG
-// USE FUNCTIONALITY FROM ITEMS BUT CHANGE LOGIC - WORK IS COMPLETED THERE
-
 class ObjectsList extends React.Component{
   constructor(props){
     super(props)
@@ -59,7 +55,7 @@ class ObjectsList extends React.Component{
 
   spellConverterHelper = () => {
     var newSpellArray = []
-    this.state.spellsList.forEach(spell => {
+    this.props.spells.forEach(spell => {
       if (spell.level === 0){
         spell["render_level"] = "Cantrip"
         spell["render_cost"] = spell.cost + "g"
@@ -113,7 +109,10 @@ class ObjectsList extends React.Component{
             </tbody>
           </table>
         </div>
-        <p className="bag-of-holding-cancel-changes-button" onClick={() => this.props.refreshItems()}>Cancel Changes</p>
+        <div className="changes-button-holder">
+          <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>
+          <p className="bag-of-holding-cancel-changes-button" onClick={() => this.props.refreshItems()}>Cancel<br/>Changes</p>
+        </div>
         <div className="parchmentBottom"></div></div>
       </div>
     )

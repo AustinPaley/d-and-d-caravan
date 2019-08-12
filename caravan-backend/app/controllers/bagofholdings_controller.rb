@@ -10,8 +10,14 @@ class BagofholdingsController < ApplicationController
   end
 
   def update
-    @shop = Shop.find(params[:id])
-    @shop.update(level: params[:level])
-    render json: @shop
+    @bagofholding = Bagofholding.find(params[:id])
+    newItems = params[:items].map do |item|
+      Item.find(item[:id])
+    end
+    newSpells = params[:spells].map do |spell|
+      Spell.find(spell[:id])
+    end
+    @bagofholding.update(items: newItems, spells: newSpells)
+    render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells}}
   end
 end
