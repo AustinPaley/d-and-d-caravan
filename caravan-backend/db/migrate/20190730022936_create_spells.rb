@@ -12,6 +12,7 @@ class CreateSpells < ActiveRecord::Migration[5.2]
       t.string :cost
       t.integer :shop_id
       t.integer :current_stock
+      t.integer :bagofholding_id
       t.timestamps
     end
   end

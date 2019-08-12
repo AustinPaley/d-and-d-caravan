@@ -123,6 +123,10 @@ def item_data_process
       current_stock: 2,
       item_level: item_level
     )
+    # This is for testing purposes - just need 10 items in the bag to start
+    if (Bagofholding.all[0].items.length < 10)
+      itemType.update(bagofholding_id: 1)
+    end
     itemType.save
   end
 end
@@ -163,12 +167,18 @@ def spell_parsing
       school: spells_obj[1]["school"],
       cost: spellCostKey[spells_obj[1]["level"]],
       current_stock: 1,
-      shop_id: 1,
-    ).save
+      shop_id: 1
+    )
+    # Need some spells to test bagofholding - this is for testing purposes
+    if (Bagofholding.all[0].spells.length < 10)
+      spellType.update(bagofholding_id: 1)
+    end
+    spellType.save
   end
 end
 
 race_parsing
+Bagofholding.create(money: "0")
 Character.create(name: "Excalibur", race_id: Race.all[12].id, character_image: Base64.encode64(File.read(File.join(File.dirname(__FILE__), "../local-data/character-images/excalibur.png"))))
 Character.create(name: "Austin", race_id: Race.all[0].id, character_image: Base64.strict_encode64(File.read(File.join(File.dirname(__FILE__), "../local-data/character-images/austin.png"))))
 Character.create(name: "Eduardo", race_id: Race.all[2].id, character_image: Base64.strict_encode64(File.read(File.join(File.dirname(__FILE__), "../local-data/character-images/eduardo.png"))))

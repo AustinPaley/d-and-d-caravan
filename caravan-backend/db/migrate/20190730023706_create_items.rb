@@ -14,6 +14,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.string :armor_class
       t.integer :current_stock
       t.integer :item_level
+      t.integer :bagofholding_id
       t.timestamps
     end
   end
