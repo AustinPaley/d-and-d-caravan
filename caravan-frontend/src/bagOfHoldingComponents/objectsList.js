@@ -1,6 +1,10 @@
 import React, {Fragment} from 'react';
 import MinusImage from '../images/minus-square-regular.svg';
 
+// TODO
+// 1) ADD REMOVE SPELLS FUNCTIONALITY - IF STOCK GOES TO 0 REMOVE SPELL ENTIRELY FROM BAG
+// USE FUNCTIONALITY FROM ITEMS BUT CHANGE LOGIC - WORK IS COMPLETED THERE
+
 class ObjectsList extends React.Component{
   constructor(props){
     super(props)
