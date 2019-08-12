@@ -5,10 +5,9 @@ import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
 
 // TODO
-// 1) TIE STOCK TO BACKEND FUNCTIONALITY
-// 2) BUILD BACKEND BAG FUNCTIONALITY - SHOULD HOLD ITEMS AS WELL AS MONEY
-// 3) RENDER BAG IN FRONT END
-// 4) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
+// 1) RENDER BAG IN FRONT END
+// 2) TIE STOCK TO BACKEND FUNCTIONALITY
+// 3) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
 
 
 const IMAGELIBRARY = {
@@ -123,7 +122,6 @@ class StoresComponent extends React.Component{
   stockChanger = (changedItem, actionType) => {
     var selectedItem = this.state.shopItems.find(item => item.id === changedItem.id)
     var maxStock = this.state.shopItems.find(item => item.id === changedItem.id).max_stock
-        debugger
     if (actionType === "plus" && selectedItem.current_stock < maxStock){
       selectedItem.current_stock += 1
     }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import StoresComponent from './storesComponent.js';
+import BagofHoldingComponent from './bagOfHoldingComponent.js';
 
 class App extends React.Component{
   state={
@@ -22,11 +23,11 @@ class App extends React.Component{
   render(){
     return (
       <div className="App">
+        <BagofHoldingComponent />
         {this.state.allStoresObject.map(store => (
             <StoresComponent key={store.id} info={store} />
           ))
         }
-        <StoresComponent />
       </div>
     );
   }
