@@ -143,7 +143,7 @@ class StoresComponent extends React.Component{
       selectedSpell.current_stock -= 1
     }
     this.setState(prevState => ({
-      ...prevState.shopItems,
+      ...prevState.shopSpells,
       [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
     }))
   }

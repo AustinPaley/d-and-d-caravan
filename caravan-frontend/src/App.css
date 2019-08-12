@@ -100,3 +100,13 @@ th.sticky-header{
   background-color: red;
   border: 1px solid black;
 }
+
+.bag-of-holding-cancel-changes-button{
+  cursor: pointer;
+  border-radius: 5px;
+  color: yellow;
+  background-color: red;
+  border: 1px solid black;
+  width: 100px;
+  margin: auto;
+}

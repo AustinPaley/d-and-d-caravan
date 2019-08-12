@@ -1,11 +1,6 @@
 import React, {Fragment} from 'react';
 import MinusImage from '../images/minus-square-regular.svg';
 
-// TODO
-// 1) ADD MONEY TO BOTTOM OF THE BAG
-// 2) ADD REMOVE FUNCTIONALITY - IF STOCK GOES TO 0 REMOVE ITEM ENTIRELY FROM BAG
-// 3) ADD SAVE BUTTON TO SAVE CHANGES AND UPDATE BAG DATA IN BACKEND
-
 class ObjectsList extends React.Component{
   constructor(props){
     super(props)
@@ -20,9 +15,19 @@ class ObjectsList extends React.Component{
     this.spellConverterHelper()
   }
 
+  componentDidUpdate(prevProps, prevState){
+    if (this.props.items.length !== prevProps.items.length){
+      this.priceConverterHelper()
+    }
+
+    if (this.props.spells.length !== prevProps.spells.length){
+      this.spellConverterHelper()
+    }
+  }
+
   priceConverterHelper = () => {
     var newItemArray = []
-    this.state.itemsList.forEach(item => {
+    this.props.items.forEach(item => {
       var itemCost = parseFloat(item.cost)
       if (itemCost / 1 >= 1){
         var gold = itemCost / 1
@@ -69,8 +74,6 @@ class ObjectsList extends React.Component{
   }
 
   render(){
-    console.log("props", this.props)
-    console.log("state", this.state)
     return(
       <div>
         <div className="parchmentTop">
@@ -106,6 +109,7 @@ class ObjectsList extends React.Component{
             </tbody>
           </table>
         </div>
+        <p className="bag-of-holding-cancel-changes-button" onClick={() => this.props.refreshItems()}>Cancel Changes</p>
         <div className="parchmentBottom"></div></div>
       </div>
     )
