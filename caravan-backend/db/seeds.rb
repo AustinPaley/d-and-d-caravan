@@ -1,25 +1,12 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-
 def item_data_process
   all_item_info_hash = {}
-  all_item_data = RestClient.get("http://www.dnd5eapi.co/api/equipment")
-  all_parsed_item_data = JSON.parse(all_item_data)
-  all_parsed_item_data["results"].map do |item_obj|
-    item_data = RestClient.get(item_obj["url"])
-    parsed_item_data = JSON.parse(item_data)
-    all_item_info_hash[item_obj["name"]] = parsed_item_data
+  all_parsed_item_data = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../local-data/equipment.json")))
+  all_parsed_item_data.map do |item_obj|
+    all_item_info_hash[item_obj["name"]] = item_obj
   end
   all_item_info_hash.each do |item_obj|
     gold_guide = {"cp" => 0.01, "sp" => 0.1, "ep" => 0.5, "gp" => 1, "pp" => 10}
     range_info = item_obj[1]["range"].to_s.gsub("=>", " ").gsub(" ", "spacerspacerspacer").gsub(/[^A-Za-z0-9]+/, "").gsub("spacerspacerspacer", " ")
-
 
 # DATA REPURPOSING/CLEANUP BASED ON ITEM TYPE
     if (defined?(gold_guide[item_obj[1]["cost"]["unit"]] * item_obj[1]["cost"]["quantity"])).nil?
@@ -58,10 +45,10 @@ def item_data_process
       desc = item_obj[1]["desc"]
     end
 
-    if (item_obj[1]["weapon_category:"]).nil?
+    if (item_obj[1]["weapon_category"]).nil?
       weapon_category = ""
     else
-      weapon_category = item_obj[1]["weapon_category:"]
+      weapon_category = item_obj[1]["weapon_category"]
     end
 
     # SHOP FILTERING BASED ON ITEM TYPE
@@ -133,12 +120,9 @@ end
 
 def race_parsing
   all_race_names_array = []
-  all_race_data = RestClient.get("http://www.dnd5eapi.co/api/races")
-  all_parsed_race_data = JSON.parse(all_race_data)
-  all_parsed_race_data["results"].map do |race_obj|
-    race_data = RestClient.get(race_obj["url"])
-    parsed_race_data = JSON.parse(race_data)
-    parsed_race_data["subraces"].map do |subrace_obj|
+  all_parsed_race_data = JSON.parse(File.read(File.join(File.dirname(__FILE__), "../local-data/races.json")))
+  all_parsed_race_data.map do |race_obj|
+    race_obj["subraces"].map do |subrace_obj|
       all_race_names_array.push(subrace_obj["name"])
     end
     all_race_names_array.push(race_obj["name"])
