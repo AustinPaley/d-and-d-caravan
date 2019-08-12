@@ -5,9 +5,8 @@ import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
 
 // TODO
-// 1) RENDER BAG IN FRONT END
-// 2) TIE STOCK TO BACKEND FUNCTIONALITY
-// 3) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
+// 1) TIE STOCK TO BACKEND FUNCTIONALITY
+// 2) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
 
 
 const IMAGELIBRARY = {

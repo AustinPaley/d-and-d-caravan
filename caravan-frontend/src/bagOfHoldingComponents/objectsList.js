@@ -1,6 +1,10 @@
 import React, {Fragment} from 'react';
-import PlusImage from '../images/plus-square-regular.svg';
 import MinusImage from '../images/minus-square-regular.svg';
+
+// TODO
+// 1) ADD MONEY TO BOTTOM OF THE BAG
+// 2) ADD REMOVE FUNCTIONALITY - IF STOCK GOES TO 0 REMOVE ITEM ENTIRELY FROM BAG
+// 3) ADD SAVE BUTTON TO SAVE CHANGES AND UPDATE BAG DATA IN BACKEND
 
 class ObjectsList extends React.Component{
   constructor(props){
