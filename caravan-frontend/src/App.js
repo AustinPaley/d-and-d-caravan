@@ -2,10 +2,14 @@ import React from 'react';
 import './App.css';
 import StoresComponent from './storesComponent.js';
 import BagofHoldingComponent from './bagOfHoldingComponent.js';
+import RightArrow from './images/arrow-circle-right-solid.svg';
+import LeftArrow from './images/arrow-circle-left-solid.svg';
 
 class App extends React.Component{
   state={
-    allStoresObject: []
+    allStoresObject: [],
+    loaded: false,
+    currentlySelectedStore: 0
   }
 
   componentDidMount(){
@@ -20,13 +24,49 @@ class App extends React.Component{
     })
   }
 
+  loaderHelper = () => {
+    this.setState({
+      loaded: true
+    })
+  }
+
+  storeSelectorHelper = (type) => {
+    if (type === "left"){
+
+    }
+
+    if (type === "right"){
+
+    }
+  }
+
   render(){
     return (
       <div className="App">
-        <BagofHoldingComponent />
-        {this.state.allStoresObject.map(store => (
-            <StoresComponent key={store.id} info={store} />
-          ))
+        {this.state.loaded === true ?
+          <div>
+            <img src={LeftArrow} alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
+          </div>
+        :
+          null
+        }
+        {this.state.allStoresObject.length > 0 ?
+          <div>
+            <BagofHoldingComponent />
+              {this.state.allStoresObject.map(store => (
+                  <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
+                ))
+              }
+          </div>
+        :
+          null
+        }
+        {this.state.loaded === true ?
+          <div>
+            <img src={RightArrow} alt="Right Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("right")} />
+          </div>
+        :
+          null
         }
       </div>
     );
