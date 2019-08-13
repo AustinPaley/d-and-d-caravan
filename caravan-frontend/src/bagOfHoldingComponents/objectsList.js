@@ -6,7 +6,13 @@ class ObjectsList extends React.Component{
     super(props)
     this.state = {
       itemsList: this.props.items,
-      spellsList: this.props.spells
+      spellsList: this.props.spells,
+      newGold: this.props.gold,
+      newSilver: this.props.silver,
+      newCopper: this.props.copper,
+      shownGold: this.props.gold,
+      shownSilver: this.props.silver,
+      shownCopper: this.props.copper,
     }
   }
 
@@ -73,7 +79,65 @@ class ObjectsList extends React.Component{
     })
   }
 
+  moneyConverterHelper = (event, moneyType) => {
+    // TODO - THIS NEEDS A CHECK TO MAKE SURE NO REGULAR ALPHABETICAL CHARACTERS ARE INCLUDED
+    // SHOULD BE SOMETHING LIKE /[A-Za-z]/ in regex.
+    var goldGuide = {"cp": 0.01, "sp": 0.1, "ep": 0.5, "gp": 1, "pp": 10}
+
+    if (moneyType === "gp" && isNaN(parseFloat(event.target.value)) === true){
+      this.setState({
+        newGold: "",
+        shownGold: "",
+      })
+    }
+
+    if (moneyType === "gp" && isNaN(parseFloat(event.target.value)) !== true){
+
+      var newGoldAmount = parseFloat(event.target.value)
+      var convertedGoldAmount = goldGuide["gp"] * newGoldAmount
+      this.setState({
+        newGold: convertedGoldAmount,
+        shownGold: newGoldAmount
+      })
+    }
+
+    if (moneyType === "sp" && isNaN(parseFloat(event.target.value)) === true){
+      this.setState({
+        newSilver: "",
+        shownSilver: "",
+      })
+    }
+
+    if (moneyType === "sp" && isNaN(parseFloat(event.target.value)) !== true){
+      var newSilverAmount = parseFloat(event.target.value)
+      var convertedSilverAmount = goldGuide["sp"] * newSilverAmount
+
+      this.setState({
+        newSilver: convertedSilverAmount,
+        shownSilver: newSilverAmount
+      })
+    }
+
+    if (moneyType === "cp" && isNaN(parseFloat(event.target.value)) === true){
+      this.setState({
+        newCopper: "",
+        shownCopper: ""
+      })
+    }
+
+    if (moneyType === "cp" && isNaN(parseFloat(event.target.value)) !== true){
+      var newCopperAmount = parseFloat(event.target.value)
+      var convertedCopperAmount = goldGuide["cp"] * newCopperAmount
+
+      this.setState({
+        newCopper: convertedCopperAmount,
+        shownCopper: newCopperAmount
+      })
+    }
+  }
+
   render(){
+    console.log("state", this.state)
     return(
       <div>
         <div className="parchmentTop">
@@ -108,6 +172,20 @@ class ObjectsList extends React.Component{
               }
             </tbody>
           </table>
+        </div>
+        <div className="bag-of-holding-money">
+          <div className="bag-of-holding-money-type">
+            <label>Gold:</label>
+            <input value={this.state.shownGold} onChange={(event) => this.moneyConverterHelper(event, "gp")}/>
+          </div>
+          <div className="bag-of-holding-money-type">
+            <label>Silver:</label>
+            <input value={this.state.shownSilver} onChange={(event) => this.moneyConverterHelper(event, "sp")}/>
+          </div>
+          <div className="bag-of-holding-money-type">
+            <label>Copper:</label>
+            <input value={this.state.shownCopper} onChange={(event) => this.moneyConverterHelper(event, "cp")}/>
+          </div>
         </div>
         <div className="changes-button-holder">
           <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>

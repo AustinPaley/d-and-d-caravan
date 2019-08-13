@@ -63,7 +63,7 @@
 
 .parchmentBody {
   width:610px;
-  height: 70vh;
+  height: 60vh;
   margin: auto;
   overflow-y: scroll;
 }
@@ -134,4 +134,27 @@ th.sticky-header{
 .changes-button-holder{
   display: inline-flex;
   justify-content: center;
+}
+
+.bag-of-holding-money{
+  display: inline-flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 40px;
+  width: 100%;
+}
+
+.bag-of-holding-money-type{
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.bag-of-holding-money-type label{
+  margin-right: 5px;
+}
+
+.bag-of-holding-money-type input{
+  background-color: yellow;
+  border: none;
+  width: 90px;
 }

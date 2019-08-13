@@ -6,7 +6,7 @@ class BagofholdingsController < ApplicationController
 
   def show
     @bagofholding = Bagofholding.find(params[:id])
-    render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells}}
+    render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
   end
 
   def update
@@ -17,7 +17,7 @@ class BagofholdingsController < ApplicationController
     newSpells = params[:spells].map do |spell|
       Spell.find(spell[:id])
     end
-    @bagofholding.update(items: newItems, spells: newSpells)
-    render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells}}
+    @bagofholding.update(items: newItems, spells: newSpells, money: params[:money])
+    render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
   end
 end
