@@ -150,7 +150,7 @@ def spell_parsing
       range: spells_obj[1]["range"],
       school: spells_obj[1]["school"],
       cost: spellCostKey[spells_obj[1]["level"]],
-      current_stock: 1,
+      current_stock: 2,
       shop_id: 1
     )
     # Need some spells to test bagofholding - this is for testing purposes

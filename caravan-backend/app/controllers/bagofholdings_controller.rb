@@ -31,8 +31,23 @@ class BagofholdingsController < ApplicationController
       )
       newItems.push(currentItem)
     end
-    newSpells = params[:spells].map do |spell|
-      Spell.find(spell[:id])
+    newSpells = []
+    params[:spells].each do |spell|
+      currentSpell = Spell.find(spell[:id])
+      currentSpell.update(
+        name: spell[:name],
+        casting_time: spell[:casting_time],
+        components: spell[:components],
+        description: spell[:description],
+        duration: spell[:duration],
+        level: spell[:level],
+        range: spell[:range],
+        school: spell[:school],
+        cost: spell[:cost],
+        current_stock: spell[:current_stock],
+        shop_id: spell[:shop_id]
+      )
+      newSpells.push(currentSpell)
     end
     @bagofholding.update(items: newItems, spells: newSpells, money: params[:money])
     render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
