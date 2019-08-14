@@ -9,7 +9,7 @@ class App extends React.Component{
   state={
     allStoresObject: [],
     loaded: false,
-    currentlySelectedStore: 0
+    currentlySelectedStore: 1
   }
 
   componentDidMount(){
@@ -38,20 +38,27 @@ class App extends React.Component{
         currentlySelectedStore: Math.abs(totalNumberOfStores - 1)
       })
     }
-    
-    else {
+
+    else if (type === "left") {
       this.setState({
         currentlySelectedStore: Math.abs(currentStoreSelected - 1)
       })
     }
 
-    if (type === "right"){
+    if ((type === "right" && this.state.currentlySelectedStore === 0) || (type === "right" && this.state.currentlySelectedStore === 8)){
+      this.setState({
+        currentlySelectedStore: 1
+      })
+    }
 
+    else if (type === "right") {
+      this.setState({
+        currentlySelectedStore: Math.abs(currentStoreSelected + 1)
+      })
     }
   }
 
   render(){
-    console.log(this.state.currentlySelectedStore)
     return (
       <div className="App">
         {this.state.loaded === true ?

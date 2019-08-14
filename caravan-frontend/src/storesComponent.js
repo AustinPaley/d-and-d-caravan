@@ -4,7 +4,6 @@ import SpellList from './storesComponents/spellList.js'
 
 // TODO
 // 1) TIE STOCK TO BACKEND FUNCTIONALITY
-// 2) BUILD FRONTEND FUNCTIONALITY TO SHOW ONE STORE AT A TIME
 
 
 const IMAGELIBRARY = {
@@ -154,7 +153,7 @@ class StoresComponent extends React.Component{
 
   render(){
     return(
-      <div>
+      <div style={this.props.currentlySelectedStore === this.props.info.id ? {display: "block"} : {display: "none"}}>
         <h2>{this.state.shopName}</h2>
         {this.state.ownerName ?
           (this.state.shopSpells.length > 0 ?
