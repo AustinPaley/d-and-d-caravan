@@ -31,8 +31,18 @@ class App extends React.Component{
   }
 
   storeSelectorHelper = (type) => {
-    if (type === "left"){
-
+    var totalNumberOfStores = this.state.allStoresObject.length
+    var currentStoreSelected = this.state.currentlySelectedStore
+    if ((type === "left" && this.state.currentlySelectedStore === 0) || (type === "left" && this.state.currentlySelectedStore === 1)){
+      this.setState({
+        currentlySelectedStore: Math.abs(totalNumberOfStores - 1)
+      })
+    }
+    
+    else {
+      this.setState({
+        currentlySelectedStore: Math.abs(currentStoreSelected - 1)
+      })
     }
 
     if (type === "right"){
@@ -41,6 +51,7 @@ class App extends React.Component{
   }
 
   render(){
+    console.log(this.state.currentlySelectedStore)
     return (
       <div className="App">
         {this.state.loaded === true ?
