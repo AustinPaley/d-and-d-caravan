@@ -13,6 +13,7 @@ class ObjectsList extends React.Component{
       shownGold: this.props.gold,
       shownSilver: this.props.silver,
       shownCopper: this.props.copper,
+      moneyBeingReset: false,
     }
   }
 
@@ -29,6 +30,19 @@ class ObjectsList extends React.Component{
     if (this.props.spells.length !== prevProps.spells.length){
       this.spellConverterHelper()
     }
+
+    if (this.state.moneyBeingReset){
+      this.setState({
+        newGold: this.props.gold,
+        newSilver: this.props.silver,
+        newCopper: this.props.copper,
+        shownGold: this.props.gold,
+        shownSilver: this.props.silver,
+        shownCopper: this.props.copper,
+        moneyBeingReset: false,
+      })
+    }
+
   }
 
   priceConverterHelper = () => {
@@ -136,7 +150,26 @@ class ObjectsList extends React.Component{
     }
   }
 
+  moneyRefreshHandler = (e) => {
+    var newMoney = this.state.newGold + this.state.newSilver + this.state.newCopper
+    var oldMoney = this.props.gold + this.props.silver + this.props.copper
+    if (newMoney !== oldMoney){
+      this.setState({
+        moneyBeingReset: true
+      }, () => {
+        console.log(this.state.moneyBeingReset)
+        this.props.refreshItems()
+      })
+    }
+    else{
+      this.props.refreshItems()
+    }
+
+  }
+
   render(){
+    console.log("props", this.props)
+    console.log("state", this.state)
     return(
       <div>
         <div className="parchmentTop">
@@ -188,7 +221,7 @@ class ObjectsList extends React.Component{
         </div>
         <div className="changes-button-holder">
           <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>
-          <p className="bag-of-holding-cancel-changes-button" onClick={() => this.props.refreshItems()}>Cancel<br/>Changes</p>
+          <p className="bag-of-holding-cancel-changes-button" onClick={() => this.moneyRefreshHandler()}>Cancel<br/>Changes</p>
         </div>
         <div className="parchmentBottom"></div></div>
       </div>
