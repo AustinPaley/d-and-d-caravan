@@ -63,25 +63,25 @@ class App extends React.Component{
       <div className="App">
         {this.state.loaded === true ?
           <div>
-            <img src={LeftArrow} alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
+            <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
           </div>
         :
           null
         }
         {this.state.allStoresObject.length > 0 ?
           <div>
-            <BagofHoldingComponent />
               {this.state.allStoresObject.map(store => (
                   <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
                 ))
               }
+            <BagofHoldingComponent />
           </div>
         :
           null
         }
         {this.state.loaded === true ?
           <div>
-            <img src={RightArrow} alt="Right Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("right")} />
+            <img src={RightArrow} className="right-arrow" alt="Right Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("right")} />
           </div>
         :
           null

@@ -37,6 +37,7 @@ class StoresComponent extends React.Component{
       unlockedSpells: [],
       shopLevel: null,
       shopImage: "",
+      shopActive: false
     }
   }
 
@@ -155,28 +156,48 @@ class StoresComponent extends React.Component{
     }))
   }
 
+  activeShopHelper = () => {
+    this.setState({
+      shopActive: !this.state.shopActive
+    })
+  }
+
   render(){
     return(
       <div style={this.props.currentlySelectedStore === this.props.info.id ? {display: "block"} : {display: "none"}}>
         <h2>{this.state.shopName}</h2>
         {this.state.ownerName ?
           (this.state.shopSpells.length > 0 ?
-            <div>
-              <span className="level-up-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
-              <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
-              <img src={this.state.shopImage} alt={this.state.shopName} />
-              <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
-              <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-              <SpellList spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger}/>
+            <div className="stores-component-container">
+              <div className="stores-image-container">
+                <span className="level-down-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
+                <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
+                <img className="shop-image" src={this.state.shopImage} alt={this.state.shopName} />
+              </div>
+                {this.state.shopActive === false ?
+                  <div className="stores-owner-container">
+                    <img className="owner-image" src={this.state.ownerImage} alt={this.state.ownerImage} onClick={() => this.activeShopHelper()} />
+                    <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
+                  </div>
+                :
+                  <SpellList spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                }
             </div>
           :
-            <div>
-              <span className="level-up-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
-              <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
-              <img src={this.state.shopImage} alt={this.state.shopName} />
-              <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
-              <img src={this.state.ownerImage} alt={this.state.ownerImage} />
-              <ItemList items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger}/>
+            <div className="stores-component-container">
+              <div className="stores-image-container">
+                <span className="level-down-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
+                <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
+                <img className="shop-image" src={this.state.shopImage} alt={this.state.shopName} />
+              </div>
+                {this.state.shopActive === false ?
+                  <div className="stores-owner-container">
+                    <img className="owner-image" src={this.state.ownerImage} alt={this.state.ownerImage} onClick={() => this.activeShopHelper()} />
+                    <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
+                  </div>
+                :
+                  <ItemList items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                }
             </div>
           )
         :

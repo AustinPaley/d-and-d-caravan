@@ -93,14 +93,6 @@ th.sticky-header{
   cursor: pointer;
 }
 
-.level-up-button{
-  cursor: pointer;
-  border-radius: 5px;
-  color: yellow;
-  background-color: red;
-  border: 1px solid black;
-}
-
 .bag-of-holding-cancel-changes-button{
   cursor: pointer;
   border-radius: 5px;
@@ -157,4 +149,97 @@ th.sticky-header{
   background-color: yellow;
   border: none;
   width: 90px;
+}
+
+.left-arrow{
+  position: fixed;
+  top: 50%;
+  left: 2.5%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.left-arrow:hover{
+  position: fixed;
+  top: 50%;
+  right: 2.5%;
+  cursor: pointer;
+  z-index: 10;
+  filter: contrast(50%);
+}
+
+.right-arrow{
+  position: fixed;
+  top: 50%;
+  right: 2.5%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.right-arrow:hover{
+  position: fixed;
+  top: 50%;
+  right: 2.5%;
+  cursor: pointer;
+  z-index: 10;
+  filter: contrast(50%);
+}
+
+.stores-component-container{
+  display: inline-flex;
+}
+
+.shop-image{
+  width: auto;
+}
+
+.stores-owner-container{
+  width: 50%;
+  display: grid;
+}
+
+.owner-image{
+  width: 400px;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.stores-owner-container p{
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.stores-image-container{
+  position: relative;
+}
+
+.level-up-button{
+  cursor: pointer;
+  border-radius: 5px;
+  color: yellow;
+  background-color: red;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 0;
+  left: 60%;
+}
+
+.level-down-button{
+  cursor: pointer;
+  border-radius: 5px;
+  color: yellow;
+  background-color: red;
+  border: 1px solid black;
+  position: absolute;
+  bottom: 0;
+  left: 40%;
+}
+
+.shop-x-button{
+  position: absolute;
+  left: 40px;
+  border: 1px solid black;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
 }

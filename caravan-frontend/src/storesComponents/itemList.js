@@ -47,6 +47,7 @@ class ItemList extends React.Component{
     return(
       <div>
         <div className="parchmentTop">
+        <p className="shop-x-button" onClick={() => this.props.activeShopHelper()}>X</p>
         <div className="parchment"></div>
         <div className="parchmentBody">
           <table className="itemListTable">
