@@ -128,9 +128,8 @@ class BagofHoldingComponent extends React.Component{
   }
 
   render(){
-    console.log("IN")
     return(
-      <div>
+      <div style={this.props.bagOfHoldingShown === true ? {display: "block"} : {display: "none"}}>
         {
           (this.state.items.length > 0 || this.state.spells.length > 0) && this.state.gold !== null ?
             <ObjectsList items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems} gold={this.state.gold} silver={this.state.silver} copper={this.state.copper} />

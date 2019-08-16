@@ -84,11 +84,7 @@ class App extends React.Component{
                 <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
               ))
             }
-            {this.state.bagOfHoldingShown === true ?
-              <BagofHoldingComponent />
-            :
-              null
-            }
+            <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
           </div>
         :
           null
