@@ -128,6 +128,7 @@ class BagofHoldingComponent extends React.Component{
   }
 
   render(){
+    console.log("IN")
     return(
       <div>
         {

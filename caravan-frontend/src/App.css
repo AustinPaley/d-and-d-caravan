@@ -243,3 +243,23 @@ th.sticky-header{
   font-weight: 700;
   cursor: pointer;
 }
+
+.nav-bar{
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: #b7854e;
+  z-index: 999999;
+  height: 40px;
+  display: flex;
+}
+
+.nav-bar div{
+  display: inline-flex;
+  margin: auto;
+  cursor: pointer;
+}
+
+.nav-bar div:hover{
+  filter: contrast(5%);
+}

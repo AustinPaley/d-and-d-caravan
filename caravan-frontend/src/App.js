@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import StoresComponent from './storesComponent.js';
 import BagofHoldingComponent from './bagOfHoldingComponent.js';
+import PartyNavBar from './partyNavBar.js'
 import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
 
@@ -9,7 +10,8 @@ class App extends React.Component{
   state={
     allStoresObject: [],
     loaded: false,
-    currentlySelectedStore: 1
+    currentlySelectedStore: 1,
+    bagOfHoldingShown: false,
   }
 
   componentDidMount(){
@@ -27,6 +29,12 @@ class App extends React.Component{
   loaderHelper = () => {
     this.setState({
       loaded: true
+    })
+  }
+
+  bagOfHoldingShown = () => {
+    this.setState({
+      bagOfHoldingShown: !this.state.bagOfHoldingShown
     })
   }
 
@@ -59,8 +67,10 @@ class App extends React.Component{
   }
 
   render(){
+    console.log(this.state)
     return (
       <div className="App">
+        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} />
         {this.state.loaded === true ?
           <div>
             <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
@@ -70,11 +80,15 @@ class App extends React.Component{
         }
         {this.state.allStoresObject.length > 0 ?
           <div>
-              {this.state.allStoresObject.map(store => (
-                  <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
-                ))
-              }
-            <BagofHoldingComponent />
+            {this.state.allStoresObject.map(store => (
+                <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
+              ))
+            }
+            {this.state.bagOfHoldingShown === true ?
+              <BagofHoldingComponent />
+            :
+              null
+            }
           </div>
         :
           null
