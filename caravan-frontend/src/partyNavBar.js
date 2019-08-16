@@ -12,7 +12,7 @@ class PartyNavBar extends React.Component{
         <div onClick={() => this.props.bagOfHoldingShown()}>Bag of Holding</div>
         <div>World Map</div>
         <div>Quest Board</div>
-        <div>Current Cart</div>
+        <div onClick={() => this.props.currentCartShown()}>Current Cart</div>
       </div>
     );
   }

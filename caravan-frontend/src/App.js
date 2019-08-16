@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import StoresComponent from './storesComponent.js';
 import BagofHoldingComponent from './bagOfHoldingComponent.js';
+import CurrentCart from './currentCart.js';
 import PartyNavBar from './partyNavBar.js'
 import RightArrow from './images/arrow-circle-right-solid.svg';
 import LeftArrow from './images/arrow-circle-left-solid.svg';
@@ -12,6 +13,7 @@ class App extends React.Component{
     loaded: false,
     currentlySelectedStore: 1,
     bagOfHoldingShown: false,
+    currentCartShown: false,
   }
 
   componentDidMount(){
@@ -35,6 +37,12 @@ class App extends React.Component{
   bagOfHoldingShown = () => {
     this.setState({
       bagOfHoldingShown: !this.state.bagOfHoldingShown
+    })
+  }
+
+  currentCartShown = () => {
+    this.setState({
+      currentCartShown: !this.state.currentCartShown
     })
   }
 
@@ -70,7 +78,9 @@ class App extends React.Component{
     console.log(this.state)
     return (
       <div className="App">
-        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} />
+        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} />
+        <CurrentCart currentCartShown={this.state.currentCartShown} />
+        <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
         {this.state.loaded === true ?
           <div>
             <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
@@ -84,7 +94,6 @@ class App extends React.Component{
                 <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
               ))
             }
-            <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
           </div>
         :
           null
