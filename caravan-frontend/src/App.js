@@ -75,11 +75,14 @@ class App extends React.Component{
   }
 
   render(){
-    console.log(this.state)
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} />
-        <CurrentCart currentCartShown={this.state.currentCartShown} />
+        {this.state.currentCartShown === true ?
+          <CurrentCart currentCartShown={this.currentCartShown} />
+        :
+          null
+        }
         <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
         {this.state.loaded === true ?
           <div>
