@@ -125,7 +125,7 @@ class App extends React.Component{
           null
         }
         {this.state.bagOfHoldingShown === true ?
-          <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
+          <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
         :
           null
         }

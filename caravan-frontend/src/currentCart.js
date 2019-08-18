@@ -16,7 +16,7 @@ class CurrentCart extends React.Component{
 
   render(){
     return(
-      <div className="current-cart">
+      <div className="bag-or-cart">
         <div className="parchmentTop">
         <p className="shop-x-button" onClick={() => this.props.currentCartShown()}>X</p>
         <div className="parchment"></div>

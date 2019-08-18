@@ -264,6 +264,9 @@ th.sticky-header{
   filter: contrast(5%);
 }
 
-.current-cart{
+.bag-or-cart{
   margin: auto;
+  width: 730px;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
 }
