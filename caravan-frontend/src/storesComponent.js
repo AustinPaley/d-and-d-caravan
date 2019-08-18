@@ -169,7 +169,7 @@ class StoresComponent extends React.Component{
         {this.state.ownerName ?
           (this.state.shopSpells.length > 0 ?
             <div className="stores-component-container">
-              <div className="stores-image-container">
+              <div className="stores-image-container" style={this.state.shopActive === false ? {display: "block"} : {display: "none"}}>
                 <span className="level-down-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
                 <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
                 <img className="shop-image" src={this.state.shopImage} alt={this.state.shopName} />
