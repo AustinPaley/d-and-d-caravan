@@ -138,7 +138,7 @@ class StoresComponent extends React.Component{
     this.setState(prevState => ({
       ...prevState.shopItems,
       [prevState.shopItems.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
-    }))
+    }), () => this.props.objectToCartAdd(selectedItem))
   }
 
   spellChanger = (purchasedSpell, actionType) => {
@@ -153,7 +153,7 @@ class StoresComponent extends React.Component{
     this.setState(prevState => ({
       ...prevState.shopSpells,
       [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
-    }))
+    }), () => this.props.objectToCartAdd(selectedSpell))
   }
 
   activeShopHelper = () => {
@@ -185,7 +185,7 @@ class StoresComponent extends React.Component{
             </div>
           :
             <div className="stores-component-container">
-              <div className="stores-image-container">
+              <div className="stores-image-container" style={this.state.shopActive === false ? {display: "block"} : {display: "none"}}>
                 <span className="level-down-button" onClick={() => this.shopLevelChanger("down")}>Level Down</span>
                 <span className="level-up-button" onClick={() => this.shopLevelChanger("up")}>Level Up</span>
                 <img className="shop-image" src={this.state.shopImage} alt={this.state.shopName} />

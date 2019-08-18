@@ -14,6 +14,7 @@ class App extends React.Component{
     currentlySelectedStore: 1,
     bagOfHoldingShown: false,
     currentCartShown: false,
+    pendingObjectsInCart: []
   }
 
   componentDidMount(){
@@ -74,6 +75,12 @@ class App extends React.Component{
     }
   }
 
+  objectToCartAdd = (object) => {
+    this.setState(prevState => ({
+      pendingObjectsInCart: [...prevState.pendingObjectsInCart, object]
+    }))
+  }
+
   render(){
     return (
       <div className="App">
@@ -94,7 +101,7 @@ class App extends React.Component{
         {this.state.allStoresObject.length > 0 ?
           <div>
             {this.state.allStoresObject.map(store => (
-                <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} />
+                <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} />
               ))
             }
           </div>
