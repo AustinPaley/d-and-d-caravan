@@ -138,7 +138,7 @@ class StoresComponent extends React.Component{
     this.setState(prevState => ({
       ...prevState.shopItems,
       [prevState.shopItems.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
-    }), () => this.props.objectToCartAdd(selectedItem))
+    }), () => this.props.objectToCartAdd(selectedItem, "item"))
   }
 
   spellChanger = (purchasedSpell, actionType) => {
@@ -153,7 +153,7 @@ class StoresComponent extends React.Component{
     this.setState(prevState => ({
       ...prevState.shopSpells,
       [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
-    }), () => this.props.objectToCartAdd(selectedSpell))
+    }), () => this.props.objectToCartAdd(selectedSpell, "spell"))
   }
 
   activeShopHelper = () => {

@@ -263,3 +263,7 @@ th.sticky-header{
 .nav-bar div:hover{
   filter: contrast(5%);
 }
+
+.current-cart{
+  margin: auto;
+}

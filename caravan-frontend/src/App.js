@@ -14,7 +14,9 @@ class App extends React.Component{
     currentlySelectedStore: 1,
     bagOfHoldingShown: false,
     currentCartShown: false,
-    pendingObjectsInCart: []
+    shopsShown: true,
+    pendingItemsInCart: [],
+    pendingSpellsInCart: []
   }
 
   componentDidMount(){
@@ -38,12 +40,36 @@ class App extends React.Component{
   bagOfHoldingShown = () => {
     this.setState({
       bagOfHoldingShown: !this.state.bagOfHoldingShown
+    }, () => {
+      if (this.state.bagOfHoldingShown === false && this.state.currentCartShown === false){
+        this.setState({
+          shopsShown: true
+        })
+      }
+      else {
+        this.setState({
+          shopsShown: false,
+          currentCartShown: false
+        })
+      }
     })
   }
 
   currentCartShown = () => {
     this.setState({
       currentCartShown: !this.state.currentCartShown
+    }, () => {
+      if (this.state.currentCartShown === false && this.state.bagOfHoldingShown === false){
+        this.setState({
+          shopsShown: true
+        })
+      }
+      else {
+        this.setState({
+          shopsShown: false,
+          bagOfHoldingShown: false
+        })
+      }
     })
   }
 
@@ -75,22 +101,34 @@ class App extends React.Component{
     }
   }
 
-  objectToCartAdd = (object) => {
-    this.setState(prevState => ({
-      pendingObjectsInCart: [...prevState.pendingObjectsInCart, object]
-    }))
+  objectToCartAdd = (object, itemType) => {
+    if (itemType === "item"){
+      this.setState(prevState => ({
+        pendingItemsInCart: [...prevState.pendingItemsInCart, object]
+      }))
+    }
+    if (itemType === "spell"){
+      this.setState(prevState => ({
+        pendingSpellsInCart: [...prevState.pendingSpellsInCart, object]
+      }))
+    }
   }
 
   render(){
+    console.log(this.state)
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} />
         {this.state.currentCartShown === true ?
-          <CurrentCart currentCartShown={this.currentCartShown} />
+          <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart}/>
         :
           null
         }
-        <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
+        {this.state.bagOfHoldingShown === true ?
+          <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} />
+        :
+          null
+        }
         {this.state.loaded === true ?
           <div>
             <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
@@ -98,7 +136,7 @@ class App extends React.Component{
         :
           null
         }
-        {this.state.allStoresObject.length > 0 ?
+        {this.state.allStoresObject.length > 0 && this.state.shopsShown === true ?
           <div>
             {this.state.allStoresObject.map(store => (
                 <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} />
