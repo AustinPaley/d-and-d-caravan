@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import PlusImage from './images/plus-square-regular.svg';
 import MinusImage from './images/minus-square-regular.svg';
 
 class CurrentCart extends React.Component{
@@ -12,7 +11,7 @@ class CurrentCart extends React.Component{
 
   render(){
     return(
-      <div className="bag-or-cart">
+      <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">
         <p className="shop-x-button" onClick={() => this.props.currentCartShown()}>X</p>
         <div className="parchment"></div>

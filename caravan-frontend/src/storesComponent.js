@@ -164,7 +164,7 @@ class StoresComponent extends React.Component{
 
   render(){
     return(
-      <div style={this.props.currentlySelectedStore === this.props.info.id ? {display: "block"} : {display: "none"}}>
+      <div style={(this.props.currentlySelectedStore === this.props.info.id) && (this.props.shopsShown === true) ? {display: "block"} : {display: "none"}}>
         <h2>{this.state.shopName}</h2>
         {this.state.ownerName ?
           (this.state.shopSpells.length > 0 ?

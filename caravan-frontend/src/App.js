@@ -135,16 +135,8 @@ class App extends React.Component{
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} />
-        {this.state.currentCartShown === true ?
-          <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove}/>
-        :
-          null
-        }
-        {this.state.bagOfHoldingShown === true ?
-          <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
-        :
-          null
-        }
+        <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} />
+        <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
         {this.state.loaded === true ?
           <div>
             <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
@@ -152,10 +144,10 @@ class App extends React.Component{
         :
           null
         }
-        {this.state.allStoresObject.length > 0 && this.state.shopsShown === true ?
+        {this.state.allStoresObject.length > 0 ?
           <div>
             {this.state.allStoresObject.map(store => (
-                <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} />
+                <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} shopsShown={this.state.shopsShown} />
               ))
             }
           </div>
