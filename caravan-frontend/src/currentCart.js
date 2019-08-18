@@ -10,10 +10,6 @@ class CurrentCart extends React.Component{
     }
   }
 
-  componentDidMount(){
-
-  }
-
   render(){
     return(
       <div className="bag-or-cart">
@@ -32,7 +28,7 @@ class CurrentCart extends React.Component{
                 return (
                   <Fragment key={`item-number-${item.id}`}>
                   <tr>
-                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
+                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
                   </tr>
                   </Fragment>
                 )
@@ -42,7 +38,7 @@ class CurrentCart extends React.Component{
                 return (
                   <Fragment key={`item-number-${spell.id}`}>
                   <tr>
-                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
+                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
                   </tr>
                   </Fragment>
                 )

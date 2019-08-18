@@ -114,13 +114,29 @@ class App extends React.Component{
     }
   }
 
+  objectToCartRemove = (object, itemType) => {
+    if (itemType === "item"){
+      var currentPendingItems = this.state.pendingItemsInCart
+      this.setState({
+        pendingItemsInCart: currentPendingItems.filter(item => item.id !== object.id)
+      })
+    }
+
+    if (itemType === "spell"){
+      var currentPendingSpells = this.state.pendingSpellsInCart
+      this.setState({
+        pendingSpellsInCart: currentPendingSpells.filter(item => item.id !== object.id)
+      })
+    }
+  }
+
   render(){
     console.log(this.state)
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} />
         {this.state.currentCartShown === true ?
-          <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart}/>
+          <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove}/>
         :
           null
         }
