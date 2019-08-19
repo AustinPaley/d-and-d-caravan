@@ -134,7 +134,7 @@ class App extends React.Component{
     console.log(this.state)
     return (
       <div className="App">
-        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} />
+        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} numberOfPendingItemsInCart={this.state.pendingItemsInCart.length + this.state.pendingSpellsInCart.length} />
         <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} />
         <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
         {this.state.loaded === true ?

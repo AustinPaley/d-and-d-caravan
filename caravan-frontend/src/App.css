@@ -264,6 +264,15 @@ th.sticky-header{
   filter: contrast(5%);
 }
 
+.number-of-items-in-cart-nav{
+  color: black;
+  background-color: red;
+  border-radius: 50%;
+  width: 20px;
+  margin-left: 10px;
+  font-weight: 700;
+}
+
 .bag-or-cart{
   margin: auto;
   width: 730px;
