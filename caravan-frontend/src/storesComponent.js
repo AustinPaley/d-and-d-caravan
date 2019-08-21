@@ -144,6 +144,8 @@ class StoresComponent extends React.Component{
   spellChanger = (purchasedSpell, actionType) => {
     var selectedSpell = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id)
     var maxSpellStock = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id).max_stock
+    var cartObject = Object.assign({}, purchasedSpell)
+    delete cartObject.current_stock
     if (actionType === "plus" && selectedSpell.current_stock < maxSpellStock){
       selectedSpell.current_stock += 1
     }
@@ -153,7 +155,7 @@ class StoresComponent extends React.Component{
     this.setState(prevState => ({
       ...prevState.shopSpells,
       [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
-    }), () => this.props.objectToCartAdd(selectedSpell, "spell"))
+    }), () => this.props.objectToCartAdd(cartObject, "spell"))
   }
 
   activeShopHelper = () => {

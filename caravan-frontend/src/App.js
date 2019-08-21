@@ -107,10 +107,23 @@ class App extends React.Component{
         pendingItemsInCart: [...prevState.pendingItemsInCart, object]
       }))
     }
+    
     if (itemType === "spell"){
-      this.setState(prevState => ({
-        pendingSpellsInCart: [...prevState.pendingSpellsInCart, object]
-      }))
+      if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
+        object.current_stock = 1
+        this.setState(prevState => ({
+          pendingSpellsInCart: [...prevState.pendingSpellsInCart, object]
+        }))
+      }
+
+      if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined){
+        var newArray = [...this.state.pendingSpellsInCart]
+        newArray.find(spell => spell.id === object.id).current_stock += 1
+        this.setState({
+          pendingSpellsInCart: newArray
+        })
+        // [prevState.items.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
+      }
     }
   }
 
@@ -131,7 +144,6 @@ class App extends React.Component{
   }
 
   render(){
-    console.log(this.state)
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} numberOfPendingItemsInCart={this.state.pendingItemsInCart.length + this.state.pendingSpellsInCart.length} />

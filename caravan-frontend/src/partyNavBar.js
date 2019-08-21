@@ -6,7 +6,6 @@ class PartyNavBar extends React.Component{
   }
 
   render(){
-    console.log(this.props)
     return (
       <div className="nav-bar">
         <div>Caravan Shoppes</div>
