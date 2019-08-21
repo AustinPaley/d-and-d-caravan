@@ -138,17 +138,34 @@ class App extends React.Component{
   }
 
   objectToCartRemove = (object, itemType) => {
-    if (itemType === "item"){
+    debugger
+    if (itemType === "item" && this.state.pendingItemsInCart.find(item => item.id === object.id).current_stock === 1){
       var currentPendingItems = this.state.pendingItemsInCart
       this.setState({
         pendingItemsInCart: currentPendingItems.filter(item => item.id !== object.id)
       })
     }
 
-    if (itemType === "spell"){
+    if (itemType === "item" && this.state.pendingItemsInCart.find(item => item.id === object.id).id !== undefined && this.state.pendingItemsInCart.find(item => item.id === object.id).current_stock > 1){
+      var newItemsArray = [...this.state.pendingItemsInCart]
+      newItemsArray.find(item => item.id === object.id).current_stock -= 1
+      this.setState({
+        pendingItemsInCart: newItemsArray
+      })
+    }
+
+    if (itemType === "spell" && this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock === 1){
       var currentPendingSpells = this.state.pendingSpellsInCart
       this.setState({
-        pendingSpellsInCart: currentPendingSpells.filter(item => item.id !== object.id)
+        pendingSpellsInCart: currentPendingSpells.filter(spell => spell.id !== object.id)
+      })
+    }
+
+    if (itemType === "spell" && this.state.pendingSpellsInCart.find(spell => spell.id === object.id).id !== undefined && this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock > 1){
+      var newSpellsArray = [...this.state.pendingSpellsInCart]
+      newSpellsArray.find(spell => spell.id === object.id).current_stock -= 1
+      this.setState({
+        pendingSpellsInCart: newSpellsArray
       })
     }
   }
