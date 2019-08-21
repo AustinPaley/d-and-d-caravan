@@ -110,11 +110,11 @@ class App extends React.Component{
         }))
       }
 
-      if (this.state.pendingItemsInCart.find(item => item.id === object.id) !== undefined){
-        var newArray = [...this.state.pendingItemsInCart]
-        newArray.find(item => item.id === object.id).current_stock += 1
+      if ((this.state.pendingItemsInCart.find(item => item.id === object.id) !== undefined) && (this.state.pendingItemsInCart.find(item => item.id === object.id).current_stock < this.state.pendingItemsInCart.find(item => item.id === object.id).max_stock)){
+        var newItemArray = [...this.state.pendingItemsInCart]
+        newItemArray.find(item => item.id === object.id).current_stock += 1
         this.setState({
-          pendingItemsInCart: newArray
+          pendingItemsInCart: newItemArray
         })
       }
     }
@@ -127,11 +127,11 @@ class App extends React.Component{
         }))
       }
 
-      if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined){
-        var newArray = [...this.state.pendingSpellsInCart]
-        newArray.find(spell => spell.id === object.id).current_stock += 1
+      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < this.state.pendingSpellsInCart.find(spell => spell.id === object.id).max_stock)){
+        var newSpellArray = [...this.state.pendingSpellsInCart]
+        newSpellArray.find(spell => spell.id === object.id).current_stock += 1
         this.setState({
-          pendingSpellsInCart: newArray
+          pendingSpellsInCart: newSpellArray
         })
       }
     }

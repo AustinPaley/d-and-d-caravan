@@ -146,7 +146,6 @@ class StoresComponent extends React.Component{
     var selectedSpell = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id)
     var maxSpellStock = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id).max_stock
     var cartObject = Object.assign({}, purchasedSpell)
-    delete cartObject.current_stock
     if (actionType === "plus" && selectedSpell.current_stock < maxSpellStock){
       selectedSpell.current_stock += 1
     }
