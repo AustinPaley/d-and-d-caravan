@@ -103,11 +103,22 @@ class App extends React.Component{
 
   objectToCartAdd = (object, itemType) => {
     if (itemType === "item"){
-      this.setState(prevState => ({
-        pendingItemsInCart: [...prevState.pendingItemsInCart, object]
-      }))
+      if (this.state.pendingItemsInCart.find(item => item.id === object.id) === undefined){
+        object.current_stock = 1
+        this.setState(prevState => ({
+          pendingItemsInCart: [...prevState.pendingItemsInCart, object]
+        }))
+      }
+
+      if (this.state.pendingItemsInCart.find(item => item.id === object.id) !== undefined){
+        var newArray = [...this.state.pendingItemsInCart]
+        newArray.find(item => item.id === object.id).current_stock += 1
+        this.setState({
+          pendingItemsInCart: newArray
+        })
+      }
     }
-    
+
     if (itemType === "spell"){
       if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
         object.current_stock = 1
@@ -122,7 +133,6 @@ class App extends React.Component{
         this.setState({
           pendingSpellsInCart: newArray
         })
-        // [prevState.items.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
       }
     }
   }
