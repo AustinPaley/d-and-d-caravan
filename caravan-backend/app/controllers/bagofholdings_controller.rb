@@ -11,7 +11,6 @@ class BagofholdingsController < ApplicationController
 
   def update
     @bagofholding = Bagofholding.find(params[:id])
-    newItems = []
     params[:items].each do |item|
       currentItem = Item.find(item[:id])
       currentItem.update(
@@ -29,9 +28,8 @@ class BagofholdingsController < ApplicationController
         current_stock: item[:current_stock],
         item_level: item[:item_level]
       )
-      newItems.push(currentItem)
+      @bagofholding.items.push(currentItem)
     end
-    newSpells = []
     params[:spells].each do |spell|
       currentSpell = Spell.find(spell[:id])
       currentSpell.update(
@@ -47,9 +45,9 @@ class BagofholdingsController < ApplicationController
         current_stock: spell[:current_stock],
         shop_id: spell[:shop_id]
       )
-      newSpells.push(currentSpell)
+      @bagofholding.spells.push(currentSpell)
     end
-    @bagofholding.update(items: newItems, spells: newSpells, money: params[:money])
+    # @bagofholding.update(items: newItems, spells: newSpells, money: params[:money])
     render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
   end
 end

@@ -2,6 +2,9 @@ import React, {Fragment} from 'react';
 import MinusImage from './images/minus-square-regular.svg';
 import Negotiate from './images/negotiate.svg'
 
+
+// TODO - POST SAVEITEMS NEEDS TO PASS THE RESPONSE INTO BAG OF HOLDING SO THAT UPDATES IMMEDIATELY
+
 class CurrentCart extends React.Component{
   constructor(props){
     super(props)
@@ -73,8 +76,23 @@ class CurrentCart extends React.Component{
     })
   }
 
+  saveItems = (bagContents) => {
+    var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
+
+    fetch("http://localhost:3000/bagofholdings/1", {
+      method: "PUT",
+      headers: {
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": newBagMoney})
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.props.clearCart()
+    })
+  }
+
   render(){
-    console.log("cart", this.props.pendingItemsInCart)
     return(
       <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">
@@ -112,7 +130,7 @@ class CurrentCart extends React.Component{
           </table>
         </div>
         <div className="changes-button-holder">
-          <p className="cart-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Checkout</p>
+          <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
           <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
         </div>
         <div className="parchmentBottom"></div></div>
