@@ -92,7 +92,7 @@ class CurrentCart extends React.Component{
                 return (
                   <Fragment key={`item-number-${item.id}`}>
                   <tr>
-                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-image" /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
+                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
                   </tr>
                   </Fragment>
                 )
@@ -102,7 +102,7 @@ class CurrentCart extends React.Component{
                 return (
                   <Fragment key={`item-number-${spell.id}`}>
                   <tr>
-                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-image" /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
+                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
                   </tr>
                   </Fragment>
                 )
@@ -113,7 +113,7 @@ class CurrentCart extends React.Component{
         </div>
         <div className="changes-button-holder">
           <p className="cart-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Checkout</p>
-          <p className="cart-cancel-changes-button" onClick={() => this.moneyRefreshHandler()}>Empty<br/>Cart</p>
+          <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
         </div>
         <div className="parchmentBottom"></div></div>
       </div>

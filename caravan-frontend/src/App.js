@@ -138,7 +138,6 @@ class App extends React.Component{
   }
 
   objectToCartRemove = (object, itemType) => {
-    debugger
     if (itemType === "item" && this.state.pendingItemsInCart.find(item => item.id === object.id).current_stock === 1){
       var currentPendingItems = this.state.pendingItemsInCart
       this.setState({
@@ -170,11 +169,18 @@ class App extends React.Component{
     }
   }
 
+  clearCart = () => {
+    this.setState({
+      pendingSpellsInCart: [],
+      pendingItemsInCart: []
+    })
+  }
+
   render(){
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} numberOfPendingItemsInCart={this.state.pendingItemsInCart.length + this.state.pendingSpellsInCart.length} />
-        <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} />
+        <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
         <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
         {this.state.loaded === true ?
           <div>
