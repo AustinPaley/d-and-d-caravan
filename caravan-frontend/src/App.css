@@ -133,6 +133,7 @@ th.sticky-header{
 .changes-button-holder{
   display: inline-flex;
   justify-content: center;
+  margin: auto;
 }
 
 .bag-of-holding-money{
@@ -314,4 +315,19 @@ th.sticky-header{
   margin: auto;
   margin-left: 10px;
   margin-top: 10px;
+}
+
+.current-cart-cost{
+  margin-left: 20px;
+}
+
+.cart-finance-holder{
+  text-align: left;
+  margin: auto;
+  justify-content: center;
+  width: 250px;
+}
+
+.cart-finance-holder p{
+  width: 240px;
 }

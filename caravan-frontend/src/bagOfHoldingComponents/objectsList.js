@@ -157,7 +157,6 @@ class ObjectsList extends React.Component{
       this.setState({
         moneyBeingReset: true
       }, () => {
-        console.log(this.state.moneyBeingReset)
         this.props.refreshItems()
       })
     }

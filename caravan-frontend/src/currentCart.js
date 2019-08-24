@@ -10,7 +10,9 @@ class CurrentCart extends React.Component{
     super(props)
     this.state = {
       itemsList: [],
-      spellsList: []
+      spellsList: [],
+      currentCost: 999999,
+      displayedCost: ""
     }
   }
 
@@ -53,7 +55,7 @@ class CurrentCart extends React.Component{
 
     this.setState({
       itemsList: newItemArray
-    })
+    }, () => {this.totalCostHelper()})
   }
 
   spellConverterHelper = () => {
@@ -73,7 +75,7 @@ class CurrentCart extends React.Component{
 
     this.setState({
       spellsList: newSpellArray
-    })
+    }, () => {this.totalCostHelper()})
   }
 
   saveItems = (bagContents) => {
@@ -90,6 +92,45 @@ class CurrentCart extends React.Component{
     .then(res => {
       this.props.clearCart()
     })
+  }
+
+  totalCostHelper = () => {
+    var totalCost = 0
+    var gold = ""
+    var silver = ""
+    var copper = ""
+    var total = ""
+    var totalObjects = [...this.state.itemsList, this.state.spellsList].flat()
+    if (totalObjects.length > 0){
+      totalObjects.forEach(item => {
+        var itemCost = parseFloat(item.cost)
+        totalCost += itemCost
+      })
+    }
+
+    if ((totalCost > 0) && (totalCost.toString().split(".")[1] !== undefined) && (totalCost.toString().split(".")[1][1] !== undefined)){
+      gold = totalCost.toString().split(".")[0] + "g"
+      silver = totalCost.toString().split(".")[1][0] + "s"
+      copper = totalCost.toString().split(".")[1][1] + "c"
+      total = gold + " " + silver + " " + copper
+      this.setState({
+        displayedCost: total
+      })
+    }
+    else if ((totalCost > 0) && (totalCost.toString().split(".")[1] !== undefined)){
+      gold = totalCost.toString().split(".")[0] + "g"
+      silver = totalCost.toString().split(".")[1][0] + "s"
+      total = gold + " " + silver
+      this.setState({
+        displayedCost: total
+      })
+    }
+    else if (totalCost > 0){
+      gold = totalCost.toString().split(".")[0] + "g"
+      this.setState({
+        displayedCost: gold
+      })
+    }
   }
 
   render(){
@@ -128,6 +169,10 @@ class CurrentCart extends React.Component{
               }
             </tbody>
           </table>
+        </div>
+        <div className="cart-finance-holder">
+          <p>Current Funds<span className="current-cart-cost">1000000</span></p>
+          <p>Current Cost<span className="current-cart-cost">{this.state.displayedCost}</span></p>
         </div>
         <div className="changes-button-holder">
           <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
