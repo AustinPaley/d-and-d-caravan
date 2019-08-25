@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import MinusImage from './images/minus-square-regular.svg';
 import Negotiate from './images/negotiate.svg'
+import NegotiatedObject from './cartComponents/negotiatedObject.js'
 
 
 // TODO - POST SAVEITEMS NEEDS TO PASS THE RESPONSE INTO BAG OF HOLDING SO THAT UPDATES IMMEDIATELY
@@ -11,7 +12,8 @@ class CurrentCart extends React.Component{
     this.state = {
       itemsList: [],
       spellsList: [],
-      displayedCost: 0
+      displayedCost: 0,
+      currentlyNegotiatedObject: ""
     }
   }
 
@@ -132,51 +134,119 @@ class CurrentCart extends React.Component{
     }
   }
 
+  negotiatorHelper = (item) => {
+    this.setState({
+      currentlyNegotiatedObject: item.name,
+      currentlyNegotiatedObjectInfo: item
+    })
+  }
+
+  negotiatedObjectShown = () => {
+    this.setState({
+      currentlyNegotiatedObject: ""
+    })
+  }
+
+  negotiatedPriceUpdator = (object, currencyType, currencyAmount) => {
+    var rawCost = 0
+    var newCost = currencyAmount + currencyType[0]
+    if (currencyType[0] === "g"){
+      rawCost = (parseInt(currencyAmount) * 1).toString()
+    }
+
+    else if (currencyType[0] === "s"){
+      rawCost = (parseInt(currencyAmount) * .1).toString()
+    }
+
+    else if (currencyType[0] === "c"){
+      rawCost = (parseInt(currencyAmount) * .01).toString()
+    }
+
+    if (Object.keys(object).includes("item_level")){
+      // ITEMCHANGE
+      console.log(this.state.itemsList)
+      var newItemArray = [...this.state.itemsList]
+      newItemArray.find(oldObject => oldObject.id === object.id).render_cost = newCost
+      newItemArray.find(oldObject => oldObject.id === object.id).cost = rawCost
+      this.setState({
+        itemsList: newItemArray,
+        currentlyNegotiatedObject: ""
+      }, () => this.totalCostHelper())
+    }
+
+    if (Object.keys(object).includes("level")){
+      console.log(this.state.spellsList)
+      var newSpellArray = [...this.state.spellsList]
+      newSpellArray.find(oldObject => oldObject.id === object.id).render_cost = newCost
+      newSpellArray.find(oldObject => oldObject.id === object.id).cost = rawCost
+
+      this.setState({
+        spellsList: newSpellArray,
+        currentlyNegotiatedObject: ""
+      }, () => this.totalCostHelper())
+    }
+  }
+
   render(){
+    console.log(this.state.itemsList)
     return(
       <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">
-        <p className="shop-x-button" onClick={() => this.props.currentCartShown()}>X</p>
+        {this.state.currentlyNegotiatedObject === "" ?
+          <p className="shop-x-button" onClick={() => this.props.currentCartShown()}>X</p>
+        :
+          <p className="shop-x-button" onClick={() => this.negotiatedObjectShown()}>X</p>
+        }
         <div className="parchment"></div>
         <div className="parchmentBody">
-          <table className="itemListTable">
-            <thead>
-              <tr>
-                <th className="sticky-header">Item Name</th><th className="sticky-header">Item/Spell Type</th><th className="sticky-header">Stock</th><th className="sticky-header">Price</th><th className="sticky-header">Negotiate</th><th className="sticky-header">Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
-                return (
-                  <Fragment key={`item-number-${item.id}`}>
-                  <tr>
-                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
-                  </tr>
-                  </Fragment>
-                )
-              })
-              }
-              {this.state.spellsList.sort((a,b) => a.level-b.level).map(spell => {
-                return (
-                  <Fragment key={`item-number-${spell.id}`}>
-                  <tr>
-                    <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
-                  </tr>
-                  </Fragment>
-                )
-              })
-              }
-            </tbody>
-          </table>
+          {this.state.currentlyNegotiatedObject === "" ?
+            <table className="itemListTable">
+              <thead>
+                <tr>
+                  <th className="sticky-header">Item Name</th><th className="sticky-header">Item/Spell Type</th><th className="sticky-header">Stock</th><th className="sticky-header">Price</th><th className="sticky-header">Negotiate</th><th className="sticky-header">Remove</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
+                  return (
+                    <Fragment key={`item-number-${item.id}`}>
+                    <tr>
+                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
+                    </tr>
+                    </Fragment>
+                  )
+                })
+                }
+                {this.state.spellsList.sort((a,b) => a.level-b.level).map(spell => {
+                  return (
+                    <Fragment key={`item-number-${spell.id}`}>
+                    <tr>
+                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
+                    </tr>
+                    </Fragment>
+                  )
+                })
+                }
+              </tbody>
+            </table>
+          :
+            <NegotiatedObject negotiatedPriceUpdator={this.negotiatedPriceUpdator} info={this.state.currentlyNegotiatedObjectInfo}/>
+          }
         </div>
-        <div className="cart-finance-holder">
-          <p>Current Funds<span className="current-cart-cost">{`${this.props.bagOfHoldingMoneyInfo.gold}g ${this.props.bagOfHoldingMoneyInfo.silver}s ${this.props.bagOfHoldingMoneyInfo.copper}c`}</span></p>
-          <p>Current Cost<span className="current-cart-cost">{this.state.displayedCost}</span></p>
-        </div>
-        <div className="changes-button-holder">
-          <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
-          <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
-        </div>
+        {this.state.currentlyNegotiatedObject === "" ?
+          <Fragment>
+            <div className="cart-finance-holder">
+              <p>Current Funds<span className="current-cart-cost">{`${this.props.bagOfHoldingMoneyInfo.gold}g ${this.props.bagOfHoldingMoneyInfo.silver}s ${this.props.bagOfHoldingMoneyInfo.copper}c`}</span></p>
+              <p>Current Cost<span className="current-cart-cost">{this.state.displayedCost}</span></p>
+            </div>
+            <div className="changes-button-holder">
+              <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
+              <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
+            </div>
+          </Fragment>
+        :
+          null
+        }
         <div className="parchmentBottom"></div></div>
       </div>
     )
