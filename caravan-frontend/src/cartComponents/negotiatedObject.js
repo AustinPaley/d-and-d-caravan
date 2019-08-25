@@ -59,10 +59,10 @@ class NegotiatedObject extends React.Component{
         <div>
           <h2>Negotiating...</h2>
           <h3 style={{textAlign: "left"}}><u>Name:</u> {this.props.info.name}</h3>
-          <div style={{display: "inline-flex"}}>
-            <div style={{display: "grid"}}>
+          <div style={{display: "inline-flex", width: "400px"}}>
+            <div className="negotiation-holder" style={{display: "grid"}}>
               <label>Current Price:</label>
-              <input value={this.state.existingValue} readOnly={true} />
+              <input value={this.state.existingValue} readOnly={true} className="negotiation-input" />
               <label>
                 <input type="radio" value="gold" checked={this.state.existingSelectedOption === "gold"} readOnly={true} />
                 Gold
@@ -76,9 +76,9 @@ class NegotiatedObject extends React.Component{
                 Copper
               </label>
             </div>
-            <div style={{display: "grid"}}>
+            <div className="negotiation-holder" style={{display: "grid"}}>
               <label>Negotiated Price:</label>
-              <input value={this.state.newValue} onChange={(event) => this.handlePriceChange(event.target.value)} />
+              <input value={this.state.newValue} className="negotiation-input" onChange={(event) => this.handlePriceChange(event.target.value)} />
               <label>
                 <input type="radio" value="gold" checked={this.state.selectedOption === "gold"} onChange={(event) => this.handleCurrencyChange(event.target.value)} />
                 Gold

@@ -331,3 +331,16 @@ th.sticky-header{
 .cart-finance-holder p{
   width: 240px;
 }
+
+.negotiation-holder{
+  margin: auto;
+}
+
+.negotiation-input{
+  height:100px;
+  width: 100px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin:auto;
+}
