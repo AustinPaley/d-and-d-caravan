@@ -3,9 +3,6 @@ import MinusImage from './images/minus-square-regular.svg';
 import Negotiate from './images/negotiate.svg'
 import NegotiatedObject from './cartComponents/negotiatedObject.js'
 
-
-// TODO - POST SAVEITEMS NEEDS TO PASS THE RESPONSE INTO BAG OF HOLDING SO THAT UPDATES IMMEDIATELY
-
 class CurrentCart extends React.Component{
   constructor(props){
     super(props)
@@ -163,8 +160,6 @@ class CurrentCart extends React.Component{
     }
 
     if (Object.keys(object).includes("item_level")){
-      // ITEMCHANGE
-      console.log(this.state.itemsList)
       var newItemArray = [...this.state.itemsList]
       newItemArray.find(oldObject => oldObject.id === object.id).render_cost = newCost
       newItemArray.find(oldObject => oldObject.id === object.id).cost = rawCost
@@ -175,7 +170,6 @@ class CurrentCart extends React.Component{
     }
 
     if (Object.keys(object).includes("level")){
-      console.log(this.state.spellsList)
       var newSpellArray = [...this.state.spellsList]
       newSpellArray.find(oldObject => oldObject.id === object.id).render_cost = newCost
       newSpellArray.find(oldObject => oldObject.id === object.id).cost = rawCost
@@ -188,7 +182,6 @@ class CurrentCart extends React.Component{
   }
 
   render(){
-    console.log(this.state.itemsList)
     return(
       <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">

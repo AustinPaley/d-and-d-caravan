@@ -1,5 +1,7 @@
 import React from 'react';
 
+// TODO - THIS COMPONENT NEEDS CSS TO MAKE THE INPUT LESS FUCKY-WUCKY
+
 class NegotiatedObject extends React.Component{
   constructor(props){
     super(props)
@@ -14,13 +16,6 @@ class NegotiatedObject extends React.Component{
   componentDidMount(){
     this.currencyFinderHelper(this.props.info.render_cost)
   }
-
-  // componentDidUpdate(prevProps, prevState){
-  //   if (this.props !== prevProps){
-  //     debugger
-  //     this.handleCurrencyChange()
-  //   }
-  // }
 
   currencyFinderHelper = (costString) => {
     var existingSelectedOptionType = ""
@@ -59,8 +54,6 @@ class NegotiatedObject extends React.Component{
   }
 
   render(){
-    console.log("IN")
-    console.log(this.state)
     return(
       <div>
         <div>
