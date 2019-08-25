@@ -16,7 +16,8 @@ class App extends React.Component{
     currentCartShown: false,
     shopsShown: true,
     pendingItemsInCart: [],
-    pendingSpellsInCart: []
+    pendingSpellsInCart: [],
+    bagOfHoldingMoneyInfo: {}
   }
 
   componentDidMount(){
@@ -176,12 +177,18 @@ class App extends React.Component{
     })
   }
 
+  moneyHoister = (bagOfHoldingMoney, bagOfHoldingGold, bagOfHoldingSilver, bagOfHoldingCopper) => {
+    this.setState({
+      bagOfHoldingMoneyInfo: {"money": bagOfHoldingMoney, "gold": bagOfHoldingGold, "silver": bagOfHoldingSilver, "copper": bagOfHoldingCopper}
+    })
+  }
+
   render(){
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} numberOfPendingItemsInCart={this.state.pendingItemsInCart.length + this.state.pendingSpellsInCart.length} />
-        <CurrentCart currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
-        <BagofHoldingComponent bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
+        <CurrentCart bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
+        <BagofHoldingComponent moneyHoister={this.moneyHoister} bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} />
         {this.state.loaded === true ?
           <div>
             <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>

@@ -47,7 +47,7 @@ class BagofholdingsController < ApplicationController
       )
       @bagofholding.spells.push(currentSpell)
     end
-    # @bagofholding.update(items: newItems, spells: newSpells, money: params[:money])
+    @bagofholding.update(money: params[:money])
     render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
   end
 end

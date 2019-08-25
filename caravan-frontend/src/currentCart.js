@@ -11,8 +11,7 @@ class CurrentCart extends React.Component{
     this.state = {
       itemsList: [],
       spellsList: [],
-      currentCost: 999999,
-      displayedCost: ""
+      displayedCost: 0
     }
   }
 
@@ -171,7 +170,7 @@ class CurrentCart extends React.Component{
           </table>
         </div>
         <div className="cart-finance-holder">
-          <p>Current Funds<span className="current-cart-cost">1000000</span></p>
+          <p>Current Funds<span className="current-cart-cost">{`${this.props.bagOfHoldingMoneyInfo.gold}g ${this.props.bagOfHoldingMoneyInfo.silver}s ${this.props.bagOfHoldingMoneyInfo.copper}c`}</span></p>
           <p>Current Cost<span className="current-cart-cost">{this.state.displayedCost}</span></p>
         </div>
         <div className="changes-button-holder">

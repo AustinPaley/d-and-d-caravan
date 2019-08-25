@@ -89,7 +89,7 @@ class BagofHoldingComponent extends React.Component{
       gold: currentGold,
       silver: currentSilver,
       copper: currentCopper,
-    })
+    }, () => this.props.moneyHoister(this.state.money, this.state.gold, this.state.silver, this.state.copper))
   }
 
   stockChanger = (changedItem, actionType) => {
