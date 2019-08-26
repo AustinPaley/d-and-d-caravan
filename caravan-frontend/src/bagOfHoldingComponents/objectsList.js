@@ -167,6 +167,7 @@ class ObjectsList extends React.Component{
   }
 
   render(){
+    console.log(this.props.loading)
     return(
       <div>
         <div className="parchmentTop">
@@ -217,10 +218,16 @@ class ObjectsList extends React.Component{
             <input value={this.state.shownCopper} onChange={(event) => this.moneyConverterHelper(event, "cp")}/>
           </div>
         </div>
-        <div className="changes-button-holder">
-          <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>
-          <p className="bag-of-holding-cancel-changes-button" onClick={() => this.moneyRefreshHandler()}>Cancel<br/>Changes</p>
-        </div>
+        {this.props.loading === false ?
+          <div className="changes-button-holder">
+            <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>
+            <p className="bag-of-holding-cancel-changes-button" onClick={() => this.moneyRefreshHandler()}>Cancel<br/>Changes</p>
+          </div>
+        :
+          <div className="changes-button-holder">
+            <p>Saving...</p>
+          </div>
+        }
         <div className="parchmentBottom"></div></div>
       </div>
     )

@@ -18,7 +18,8 @@ class BagofHoldingComponent extends React.Component{
       money: "",
       gold: null,
       silver: null,
-      copper: null
+      copper: null,
+      loading: false
     }
   }
 
@@ -27,17 +28,22 @@ class BagofHoldingComponent extends React.Component{
   }
 
   refreshItems = () => {
-    fetch("http://localhost:3000/bagofholdings/1", {
-      method: "GET"
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({
-        items: res.bag.items,
-        spells: res.bag.spells,
-        money: res.bag.money
-      }, () => {
-        this.moneyParser()
+    debugger
+    this.setState({
+      loading: true
+    }, () => {
+      fetch("http://localhost:3000/bagofholdings/1", {
+        method: "GET"
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          items: res.bag.items,
+          spells: res.bag.spells,
+          money: res.bag.money,
+        }, () => {
+          this.moneyParser()
+        })
       })
     })
   }
@@ -45,21 +51,25 @@ class BagofHoldingComponent extends React.Component{
   saveItems = (bagContents) => {
     var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
 
-    fetch("http://localhost:3000/bagofholdings/1", {
-      method: "PUT",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": newBagMoney})
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.setState({
-        items: res.bag.items,
-        spells: res.bag.spells,
-        money: res.bag.money
-      }, () => {
-        this.moneyParser()
+    this.setState({
+      loading: true
+    }, () => {
+      fetch("http://localhost:3000/bagofholdings/1", {
+        method: "PUT",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": newBagMoney})
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          items: res.bag.items,
+          spells: res.bag.spells,
+          money: res.bag.money,
+        }, () => {
+          this.moneyParser()
+        })
       })
     })
   }
@@ -89,6 +99,7 @@ class BagofHoldingComponent extends React.Component{
       gold: currentGold,
       silver: currentSilver,
       copper: currentCopper,
+      loading: false
     }, () => this.props.moneyHoister(this.state.money, this.state.gold, this.state.silver, this.state.copper))
   }
 
@@ -133,7 +144,7 @@ class BagofHoldingComponent extends React.Component{
       <div className="bag-or-cart" style={this.props.bagOfHoldingShown === true ? {display: "block"} : {display: "none"}}>
         {
           (this.state.items.length > 0 || this.state.spells.length > 0) && this.state.gold !== null ?
-            <ObjectsList items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems} gold={this.state.gold} silver={this.state.silver} copper={this.state.copper} bagOfHoldingShownFunc={this.props.bagOfHoldingShownFunc} />
+            <ObjectsList loading={this.state.loading} items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems} gold={this.state.gold} silver={this.state.silver} copper={this.state.copper} bagOfHoldingShownFunc={this.props.bagOfHoldingShownFunc} />
           :
           null
         }
