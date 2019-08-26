@@ -10,7 +10,8 @@ class CurrentCart extends React.Component{
       itemsList: [],
       spellsList: [],
       displayedCost: 0,
-      currentlyNegotiatedObject: ""
+      currentlyNegotiatedObject: "",
+      loading: false
     }
   }
 
@@ -78,17 +79,26 @@ class CurrentCart extends React.Component{
 
   saveItems = (bagContents) => {
     var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
-
-    fetch("http://localhost:3000/bagofholdings/1", {
-      method: "PUT",
-      headers: {
-        "Content-Type":"application/json"
-      },
-      body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": newBagMoney})
-    })
-    .then(res => res.json())
-    .then(res => {
-      this.props.clearCart()
+    this.setState({
+      loading: true
+    }, () => {
+      fetch("http://localhost:3000/bagofholdings/1", {
+        method: "PUT",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": newBagMoney})
+      })
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          loading: false,
+          displayedCost: 0
+        }, () => {
+          this.props.clearCart()
+          alert("Item(s) purchased and added to Bag of Holding!")
+        })
+      })
     })
   }
 
@@ -232,10 +242,16 @@ class CurrentCart extends React.Component{
               <p>Current Funds<span className="current-cart-cost">{`${this.props.bagOfHoldingMoneyInfo.gold}g ${this.props.bagOfHoldingMoneyInfo.silver}s ${this.props.bagOfHoldingMoneyInfo.copper}c`}</span></p>
               <p>Current Cost<span className="current-cart-cost">{this.state.displayedCost}</span></p>
             </div>
+            {this.state.loading === false ?
+              <div className="changes-button-holder">
+                <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
+                <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
+              </div>
+            :
             <div className="changes-button-holder">
-              <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
-              <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
+              <p>Purchasing...</p>
             </div>
+            }
           </Fragment>
         :
           null

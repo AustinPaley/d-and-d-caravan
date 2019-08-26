@@ -28,7 +28,6 @@ class BagofHoldingComponent extends React.Component{
   }
 
   refreshItems = () => {
-    debugger
     this.setState({
       loading: true
     }, () => {
