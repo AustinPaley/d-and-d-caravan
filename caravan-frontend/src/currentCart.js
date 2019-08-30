@@ -78,7 +78,17 @@ class CurrentCart extends React.Component{
   }
 
   saveItems = (bagContents) => {
-    var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
+    var cartCost = 0
+    var cartCostString = ""
+    if (bagContents.spellsList.length !== 0){
+      bagContents.spellsList.forEach(item => cartCost += ((item.cost) * 100) / 100)
+    }
+    if (bagContents.itemsList.length !== 0){
+      bagContents.itemsList.forEach(item => cartCost += ((item.cost) * 100) / 100)
+    }
+
+    cartCostString = ((cartCost * 100) /100).toFixed(2)
+
     this.setState({
       loading: true
     }, () => {
@@ -87,7 +97,7 @@ class CurrentCart extends React.Component{
         headers: {
           "Content-Type":"application/json"
         },
-        body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": newBagMoney})
+        body: JSON.stringify({"items": bagContents.itemsList, "spells": bagContents.spellsList, "money": cartCostString, "type":"purchase"})
       })
       .then(res => res.json())
       .then(res => {
