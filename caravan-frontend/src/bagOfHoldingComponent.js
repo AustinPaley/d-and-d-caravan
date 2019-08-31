@@ -62,6 +62,7 @@ class BagofHoldingComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
+        debugger
         this.setState({
           items: res.bag.items,
           spells: res.bag.spells,
