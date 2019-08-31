@@ -54,8 +54,43 @@ class BagofHoldingComponent extends React.Component{
   }
 
   saveItems = (bagContents) => {
-    var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
+    // var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
+    var gold = 0
+    var silver = 0
+    var copper = 0
+    var moneyArray = [{"gold": bagContents.shownGold}, {"silver": bagContents.shownSilver}, {"copper":bagContents.shownCopper}]
+    debugger
+    for (var currency of moneyArray){
+      if (Object.keys(currency).includes("gold")){
+        gold = currency.gold
+      }
+      if (Object.keys(currency).includes("silver")){
+        silver = parseInt(currency.silver.toString()[currency.silver.toString().length -1])
+        if (currency.silver.toString().length > 1){
+          gold += parseInt(currency.silver.toString().slice(0, currency.silver.toString().length -1))
+        }
 
+      }
+      if (Object.keys(currency).includes("copper")){
+
+        copper = parseInt(currency.copper.toString()[currency.copper.toString().length -1])
+
+        if (currency.copper.toString().length > 2){
+          gold += parseInt(currency.copper.toString().slice(0, currency.copper.toString().length -2))
+        }
+
+        if (currency.copper.toString().length > 1){
+          silver += parseInt(currency.copper.toString()[currency.copper.toString().length -2])
+        }
+        if (silver > 10){
+          gold += parseInt(silver.toString()[0])
+          silver = parseInt(silver.toString()[1])
+        }
+      }
+
+    }
+    
+    var newBagMoney = [gold.toString(), ".", silver.toString(), copper.toString()].join("")
     this.setState({
       loading: true
     }, () => {
@@ -68,6 +103,7 @@ class BagofHoldingComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
+        debugger
         this.setState({
           items: res.bag.items,
           spells: res.bag.spells,
@@ -81,7 +117,6 @@ class BagofHoldingComponent extends React.Component{
   }
 
   moneyParser = () => {
-    // THIS FUNCTION IS FUCKED - FIGURE OUT WHY
     var moneyArray = this.state.money.split(".")
     if (moneyArray.length === 1){
       moneyArray.push("00")
@@ -102,6 +137,7 @@ class BagofHoldingComponent extends React.Component{
         currentCopper = parseInt(moneyArray[1][1])
       }
     }
+
     this.setState({
       gold: currentGold,
       silver: currentSilver,

@@ -43,7 +43,7 @@ class ObjectsList extends React.Component{
       })
     }
 
-    if ((this.props.gold + this.props.silver + this.props.copper) !== (prevProps.gold + prevProps.silver + prevProps.copper)){
+    if ((isNaN((this.props.gold + this.props.silver + this.props.copper)) !== true) && (this.props.gold + this.props.silver + this.props.copper) !== (prevProps.gold + prevProps.silver + prevProps.copper)){
       this.setState({
         newGold: this.props.gold,
         newSilver: this.props.silver,
