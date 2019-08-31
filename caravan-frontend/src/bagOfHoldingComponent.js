@@ -54,12 +54,11 @@ class BagofHoldingComponent extends React.Component{
   }
 
   saveItems = (bagContents) => {
-    // var newBagMoney = (bagContents.newGold + bagContents.newSilver + bagContents.newCopper).toString()
     var gold = 0
     var silver = 0
     var copper = 0
     var moneyArray = [{"gold": bagContents.shownGold}, {"silver": bagContents.shownSilver}, {"copper":bagContents.shownCopper}]
-    debugger
+
     for (var currency of moneyArray){
       if (Object.keys(currency).includes("gold")){
         gold = currency.gold
@@ -89,7 +88,7 @@ class BagofHoldingComponent extends React.Component{
       }
 
     }
-    
+
     var newBagMoney = [gold.toString(), ".", silver.toString(), copper.toString()].join("")
     this.setState({
       loading: true
@@ -103,7 +102,6 @@ class BagofHoldingComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
-        debugger
         this.setState({
           items: res.bag.items,
           spells: res.bag.spells,
