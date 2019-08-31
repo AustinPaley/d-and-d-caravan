@@ -43,6 +43,17 @@ class ObjectsList extends React.Component{
       })
     }
 
+    if ((this.props.gold + this.props.silver + this.props.copper) !== (prevProps.gold + prevProps.silver + prevProps.copper)){
+      this.setState({
+        newGold: this.props.gold,
+        newSilver: this.props.silver,
+        newCopper: this.props.copper,
+        shownGold: this.props.gold,
+        shownSilver: this.props.silver,
+        shownCopper: this.props.copper,
+      })
+    }
+
   }
 
   priceConverterHelper = () => {
@@ -167,6 +178,7 @@ class ObjectsList extends React.Component{
   }
 
   render(){
+    console.log("objects list", this.props)
     return(
       <div>
         <div className="parchmentTop">

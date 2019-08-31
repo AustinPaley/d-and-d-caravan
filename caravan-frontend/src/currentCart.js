@@ -109,16 +109,42 @@ class CurrentCart extends React.Component{
           })
         }
         else {
-          this.setState({
-            loading: false,
-            displayedCost: 0
-          }, () => {
-            this.props.clearCart()
-            alert("Item(s) purchased and added to Bag of Holding!")
-          })
+          this.moneyParser(res.bag.money)
         }
       })
     })
+  }
+
+  moneyParser = (money) => {
+    var moneyArray = money.split(".")
+    if (moneyArray.length === 1){
+      moneyArray.push("00")
+    }
+    var currentGold = 0
+    var currentSilver = 0
+    var currentCopper = 0
+    for (var i=0; i < 4; i++){
+      if (i === 1){
+        currentGold = parseInt(moneyArray[0])
+      }
+
+      if (i === 2){
+        currentSilver = parseInt(moneyArray[1][0])
+      }
+
+      if (i === 3){
+        currentCopper = parseInt(moneyArray[1][1])
+      }
+    }
+
+    this.setState({
+      loading: false,
+      displayedCost: 0
+    }, () => {
+      this.props.clearCart()
+      alert("Item(s) purchased and added to Bag of Holding!")
+    })
+    this.props.moneyHoister(money, currentGold, currentSilver, currentCopper)
   }
 
   totalCostHelper = () => {

@@ -27,6 +27,12 @@ class BagofHoldingComponent extends React.Component{
     this.refreshItems()
   }
 
+  componentDidUpdate(prevProps){
+    if ((this.props.bagOfHoldingMoneyInfo.money !== this.state.money) && (this.state.money !== "") && this.props !== prevProps){
+      this.refreshItems()
+    }
+  }
+
   refreshItems = () => {
     this.setState({
       loading: true
@@ -62,7 +68,6 @@ class BagofHoldingComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
-        debugger
         this.setState({
           items: res.bag.items,
           spells: res.bag.spells,
@@ -76,6 +81,7 @@ class BagofHoldingComponent extends React.Component{
   }
 
   moneyParser = () => {
+    // THIS FUNCTION IS FUCKED - FIGURE OUT WHY
     var moneyArray = this.state.money.split(".")
     if (moneyArray.length === 1){
       moneyArray.push("00")
