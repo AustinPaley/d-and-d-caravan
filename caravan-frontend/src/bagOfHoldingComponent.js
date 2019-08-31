@@ -68,6 +68,7 @@ class BagofHoldingComponent extends React.Component{
           money: res.bag.money,
         }, () => {
           this.moneyParser()
+          alert("Changes saved!")
         })
       })
     })

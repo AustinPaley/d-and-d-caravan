@@ -101,13 +101,22 @@ class CurrentCart extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
-        this.setState({
-          loading: false,
-          displayedCost: 0
-        }, () => {
-          this.props.clearCart()
-          alert("Item(s) purchased and added to Bag of Holding!")
-        })
+        if (res.status === 406){
+          this.setState({
+            loading: false
+          }, () => {
+            alert(res.error)
+          })
+        }
+        else {
+          this.setState({
+            loading: false,
+            displayedCost: 0
+          }, () => {
+            this.props.clearCart()
+            alert("Item(s) purchased and added to Bag of Holding!")
+          })
+        }
       })
     })
   }
