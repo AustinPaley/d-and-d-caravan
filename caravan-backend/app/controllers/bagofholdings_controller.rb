@@ -68,7 +68,15 @@ def add_objects(params)
     )
     @bagofholding.spells.push(currentSpell)
   end
-  @bagofholding.update(money: params[:money])
+  if (params[:type] != "purchase")
+    @bagofholding.update(money: params[:money])
+    byebug
+  elsif params[:type] === "purchase"
+    lengthSplitHelper = ((@bagofholding.money.to_f * 100) - (params[:money].to_f * 100)).to_s.split(".")[0].length - 2
+    newMoney = ((@bagofholding.money.to_f * 100) - (params[:money].to_f * 100)).to_s.split(".")[0].insert(lengthSplitHelper, ".")
+    byebug
+    @bagofholding.update(money: newMoney)
+  end
   render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
 end
 
