@@ -178,6 +178,7 @@ class ObjectsList extends React.Component{
   }
 
   render(){
+    console.log("PROPS IN OBJECTSLIST", this.props)
     return(
       <div>
         <div className="parchmentTop">

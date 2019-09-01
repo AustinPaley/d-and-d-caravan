@@ -12,7 +12,6 @@ class BagofholdingsController < ApplicationController
   def update
     @bagofholding = Bagofholding.find(params[:id])
     validUpdate = true
-
     if (params[:type] === "purchase")
       cartCost = sprintf("%.2f", params[:money])
       if cartCost.split(".")[0].to_i <= @bagofholding.money.split(".")[0].to_i
@@ -25,12 +24,35 @@ class BagofholdingsController < ApplicationController
     end
 
     if (params[:type] != "purchase")
-      add_objects(params)
+      filter_objects(params)
     end
   end
 
 private
+def filter_objects(params)
+  new_items_array = []
+  new_spells_array = []
+
+  params[:items].each do |item|
+    currentItem = Item.find(item[:id])
+    new_items_array.push(currentItem)
+  end
+
+  params[:spells].each do |spell|
+    currentSpell = Spell.find(spell[:id])
+    new_spells_array.push(currentSpell)
+  end
+
+  @bagofholding.items.replace(new_items_array)
+  @bagofholding.spells.replace(new_spells_array)
+  @bagofholding.update(money: params[:money])
+  render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
+end
+
 def add_objects(params)
+  # HUGE BUG HERE WHERE DOING AN UPDATE ON ITEM IS CAUSING THE SHOP RENDER TO IMPROPERLY RESET STOCK
+  # THIS SHOULD BE REFACTORED IN SOME WAY TO EITHER CREATE A NEW ITEM RECORD SEPARATE FROM SHOP
+
   params[:items].each do |item|
     currentItem = Item.find(item[:id])
     currentItem.update(

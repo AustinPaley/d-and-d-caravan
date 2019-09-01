@@ -2,8 +2,7 @@ import React from 'react';
 import ObjectsList from './bagOfHoldingComponents/objectsList.js'
 
 // TODO
-// 1) ADD CONFIRMATION OF SAVE WINDOW POST DATABASE RESPONSE IN SAVE ITEMS
-// 2) THERES THIS WEIRD BUG WHERE STOCK DOES NOT CHANGE WHEN THE CANCEL BUTTON IS USED
+// 1) THERES THIS WEIRD BUG WHERE STOCK DOES NOT CHANGE WHEN THE CANCEL BUTTON IS USED
 
 // NOTE
 // ALL MONEY VALUE SHOULD BE IN FORM [GOLD].[SILVER][COPPER], EVEN WHEN IT'S JUST GOLD
@@ -102,6 +101,7 @@ class BagofHoldingComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
+        debugger
         this.setState({
           items: res.bag.items,
           spells: res.bag.spells,
