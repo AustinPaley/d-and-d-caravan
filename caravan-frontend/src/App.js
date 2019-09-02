@@ -11,7 +11,7 @@ class App extends React.Component{
   state={
     allStoresObject: [],
     loaded: false,
-    currentlySelectedStore: 1,
+    currentlySelectedStore: 2,
     bagOfHoldingShown: false,
     currentCartShown: false,
     shopsShown: true,
@@ -21,7 +21,7 @@ class App extends React.Component{
   }
 
   componentDidMount(){
-    fetch("http://localhost:3000/shops/",{
+    fetch("http://localhost:3000/shops/?exclude=1",{
       method: "GET"
     })
     .then(res => res.json())
@@ -77,9 +77,10 @@ class App extends React.Component{
   storeSelectorHelper = (type) => {
     var totalNumberOfStores = this.state.allStoresObject.length
     var currentStoreSelected = this.state.currentlySelectedStore
-    if ((type === "left" && this.state.currentlySelectedStore === 0) || (type === "left" && this.state.currentlySelectedStore === 1)){
+
+    if ((type === "left" && this.state.currentlySelectedStore === 2)){
       this.setState({
-        currentlySelectedStore: Math.abs(totalNumberOfStores - 1)
+        currentlySelectedStore: Math.abs(totalNumberOfStores + 1)
       })
     }
 
@@ -89,9 +90,9 @@ class App extends React.Component{
       })
     }
 
-    if ((type === "right" && this.state.currentlySelectedStore === 0) || (type === "right" && this.state.currentlySelectedStore === 8)){
+    if ((type === "right" && this.state.currentlySelectedStore === totalNumberOfStores + 1)){
       this.setState({
-        currentlySelectedStore: 1
+        currentlySelectedStore: 2
       })
     }
 

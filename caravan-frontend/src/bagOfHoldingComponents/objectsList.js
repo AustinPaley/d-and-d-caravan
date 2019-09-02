@@ -15,7 +15,6 @@ class ObjectsList extends React.Component{
       shownSilver: this.props.silver,
       shownCopper: this.props.copper,
       moneyBeingReset: false,
-      addItemShown: false
     }
   }
 
@@ -179,67 +178,62 @@ class ObjectsList extends React.Component{
 
   }
 
-  addItemStatusHelper = () => {
-    this.setState({
-      addItemShown: !this.state.addItemShown
-    })
-  }
-
   render(){
-    console.log(this.state)
     return(
       <div>
         <div className="parchmentTop">
-        {this.state.addItemShown === false ?
+        {this.props.addItemShown === false ?
           <div>
             <p className="shop-x-button" onClick={() => this.props.bagOfHoldingShownFunc()}>X</p>
             <div style={{position: "absolute", left: "600px"}}>
-              <p style={{cursor: "pointer"}} onClick={() => this.addItemStatusHelper()}>Add Item</p>
+              <p style={{cursor: "pointer"}} onClick={() => this.props.addItemStatusHelper()}>Add Item</p>
             </div>
           </div>
 
         :
           <div>
-            <p className="shop-x-button" onClick={() => this.addItemStatusHelper()}>X</p>
+            <p className="shop-x-button" onClick={() => this.props.addItemStatusHelper()}>X</p>
           </div>
         }
         <div className="parchment"></div>
-        <div className="parchmentBody">
-          {this.state.addItemShown === false ?
-            <table className="itemListTable">
-              <thead>
-                <tr>
-                  <th className="sticky-header">Item Name</th><th className="sticky-header">Item/Spell Type</th><th className="sticky-header">Stock</th><th className="sticky-header">Remove</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
-                  return (
-                    <Fragment key={`item-number-${item.id}`}>
-                    <tr>
-                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
-                    </tr>
-                    </Fragment>
-                  )
-                })
-                }
-                {this.state.spellsList.sort((a,b) => a.level-b.level).map(spell => {
-                  return (
-                    <Fragment key={`item-number-${spell.id}`}>
-                    <tr>
-                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
-                    </tr>
-                    </Fragment>
-                  )
-                })
-                }
-              </tbody>
-            </table>
+          <div>
+          {this.props.addItemShown === false ?
+            <div className="parchmentBody">
+              <table className="itemListTable">
+                <thead>
+                  <tr>
+                    <th className="sticky-header">Item Name</th><th className="sticky-header">Item/Spell Type</th><th className="sticky-header">Stock</th><th className="sticky-header">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
+                    return (
+                      <Fragment key={`item-number-${item.id}`}>
+                      <tr>
+                        <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
+                      </tr>
+                      </Fragment>
+                    )
+                  })
+                  }
+                  {this.state.spellsList.sort((a,b) => a.level-b.level).map(spell => {
+                    return (
+                      <Fragment key={`item-number-${spell.id}`}>
+                      <tr>
+                        <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
+                      </tr>
+                      </Fragment>
+                    )
+                  })
+                  }
+                </tbody>
+              </table>
+            </div>
           :
-            <AddObject />
+            <AddObject addItemStatusHelper={this.props.addItemStatusHelper} refreshItems={this.props.refreshItems} loading={this.props.loading}/>
           }
         </div>
-        {this.state.addItemShown === false ?
+        {this.props.addItemShown === false ?
           <div className="bag-of-holding-money">
             <div className="bag-of-holding-money-type">
               <label>Gold:</label>
@@ -258,20 +252,22 @@ class ObjectsList extends React.Component{
           null
         }
         {this.props.loading === false ?
-          (this.state.addItemShown === false ?
+          (this.props.addItemShown === false ?
             <div className="changes-button-holder">
               <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>
               <p className="bag-of-holding-cancel-changes-button" onClick={() => this.moneyRefreshHandler()}>Cancel<br/>Changes</p>
             </div>
           :
-            <div className="changes-button-holder">
-              <p className="cart-save-changes-button">Create Item</p>
-            </div>
+            null
           )
         :
-          <div className="changes-button-holder">
-            <p>Saving...</p>
-          </div>
+          (this.props.addItemShown === false ?
+            <div className="changes-button-holder">
+              <p>Saving...</p>
+            </div>
+          :
+            null
+          )
         }
         <div className="parchmentBottom"></div></div>
       </div>

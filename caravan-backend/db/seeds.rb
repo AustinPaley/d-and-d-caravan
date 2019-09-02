@@ -56,21 +56,21 @@ def item_data_process
 
     case
     when ((item_obj[1]["name"].downcase.include?("bow") == true) || (item_obj[1]["name"].downcase.include?("arrow") == true) || (item_obj[1]["name"].downcase.include?("bolt") == true))
-      shop_id = 4
-    when (armor_category != "")
       shop_id = 5
-    when (weapon_category != "")
-      shop_id = 3
-    when ((item_obj[1]["name"].downcase.include?("ship") == true) || (item_obj[1]["name"].downcase.include?("boat") == true) || (item_obj[1]["name"].downcase.include?("galley") == true))
-      shop_id = 7
-    when (item_obj[1]["equipment_category"].include?("Mounts") == true)
+    when (armor_category != "")
       shop_id = 6
-    when ((item_obj[1]["name"].downcase.include?("vial") == true) || (item_obj[1]["name"].downcase.include?("flask") == true) || (item_obj[1]["name"].downcase.include?("potion") == true))
+    when (weapon_category != "")
+      shop_id = 4
+    when ((item_obj[1]["name"].downcase.include?("ship") == true) || (item_obj[1]["name"].downcase.include?("boat") == true) || (item_obj[1]["name"].downcase.include?("galley") == true))
       shop_id = 8
-    when (musical_instruments.include?(item_obj[1]["name"].downcase) == true)
+    when (item_obj[1]["equipment_category"].include?("Mounts") == true)
+      shop_id = 7
+    when ((item_obj[1]["name"].downcase.include?("vial") == true) || (item_obj[1]["name"].downcase.include?("flask") == true) || (item_obj[1]["name"].downcase.include?("potion") == true))
       shop_id = 9
+    when (musical_instruments.include?(item_obj[1]["name"].downcase) == true)
+      shop_id = 10
     else
-      shop_id = 2
+      shop_id = 3
     end
 
     # LEVEL ASSIGNMENT BASED ON ITEM COST
@@ -151,7 +151,7 @@ def spell_parsing
       school: spells_obj[1]["school"],
       cost: spellCostKey[spells_obj[1]["level"]],
       current_stock: 2,
-      shop_id: 1
+      shop_id: 2
     )
     # Need some spells to test bagofholding - this is for testing purposes
     if (Bagofholding.all[0].spells.length < 10)
@@ -172,6 +172,7 @@ Character.create(name: "Mason Maxwell IV", race_id: Race.all[11].id, character_i
 Character.create(name: "Ferrymaster Mack", race_id: Race.all[4].id, character_image: Base64.strict_encode64(File.read(File.join(File.dirname(__FILE__), "../local-data/character-images/mack.png"))))
 Character.create(name: "Eevee The Arcane", race_id: Race.all[7].id, character_image: Base64.strict_encode64(File.read(File.join(File.dirname(__FILE__), "../local-data/character-images/eevee.png"))))
 Character.create(name: "Kyrene", race_id: Race.all[4].id, character_image: Base64.strict_encode64(File.read(File.join(File.dirname(__FILE__), "../local-data/character-images/kyrene.png"))))
+Shop.create(name:"PARTY BAG HOLDER", character_id: 1, level: 0)
 Shop.create(name: "Troublesome Telekinesis", character_id: 1, level: 0)
 Shop.create(name: "The Whomping Willow", character_id: 2, level: 0)
 Shop.create(name: "Eduardo's Arms", character_id: 3, level: 0)

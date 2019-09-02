@@ -18,7 +18,8 @@ class BagofHoldingComponent extends React.Component{
       gold: null,
       silver: null,
       copper: null,
-      loading: false
+      loading: false,
+      addItemShown: false
     }
   }
 
@@ -101,7 +102,6 @@ class BagofHoldingComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
-        debugger
         this.setState({
           items: res.bag.items,
           spells: res.bag.spells,
@@ -180,12 +180,18 @@ class BagofHoldingComponent extends React.Component{
     }
   }
 
+  addItemStatusHelper = (argument) => {
+    this.setState({
+      addItemShown: !this.state.addItemShown
+    })
+  }
+
   render(){
     return(
       <div className="bag-or-cart" style={this.props.bagOfHoldingShown === true ? {display: "block"} : {display: "none"}}>
         {
           (this.state.items.length > 0 || this.state.spells.length > 0) && this.state.gold !== null ?
-            <ObjectsList loading={this.state.loading} items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems} gold={this.state.gold} silver={this.state.silver} copper={this.state.copper} bagOfHoldingShownFunc={this.props.bagOfHoldingShownFunc} />
+            <ObjectsList addItemStatusHelper={this.addItemStatusHelper} addItemShown={this.state.addItemShown} loading={this.state.loading} items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems} gold={this.state.gold} silver={this.state.silver} copper={this.state.copper} bagOfHoldingShownFunc={this.props.bagOfHoldingShownFunc} />
           :
           null
         }

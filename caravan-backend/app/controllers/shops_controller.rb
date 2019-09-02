@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
   def index
-    @shops = Shop.all
+    @shops = Shop.where.not(id: params[:exclude])
     render json: @shops, except: [:created_at, :updated_at]
   end
 

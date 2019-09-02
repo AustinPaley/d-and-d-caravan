@@ -353,12 +353,22 @@ th.sticky-header{
 .add-object-holder{
   height: 70px;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .add-object-holder h3{
   text-align: left;
   text-decoration: underline;
   margin-block-start: 0.3em;
+}
+
+.add-object-required-field{
+  color: red;
+  text-align: left;
+  position: absolute;
+  left: 52%;
+  height: 18px;
+  bottom: 4px;
 }
 
 .add-object-holder input{
@@ -389,9 +399,10 @@ th.sticky-header{
   background: rgba(255, 255, 255, 0.5);
   font-size: 14px;
   color: black;
-  width: 100%;
-  height: 100px;
+  width: 95%;
+  height: 60px;
   resize: none;
+  margin-right: 5%;
 }
 
 .add-object-holder textarea:focus{
