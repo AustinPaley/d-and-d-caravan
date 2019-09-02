@@ -344,3 +344,55 @@ th.sticky-header{
   font-weight: bold;
   margin:auto;
 }
+
+.add-object-header{
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+
+.add-object-holder{
+  height: 70px;
+  margin-bottom: 10px;
+}
+
+.add-object-holder h3{
+  text-align: left;
+  text-decoration: underline;
+  margin-block-start: 0.3em;
+}
+
+.add-object-holder input{
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+  color: black;
+  display: table;
+  width: 50%;
+}
+
+.add-object-holder input:focus{
+  outline: none;
+}
+
+.add-object-holder select{
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  color: black;
+  display: table;
+}
+
+.add-object-holder select:focus{
+  outline: none;
+}
+
+
+.add-object-holder textarea{
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  color: black;
+  width: 100%;
+  height: 100px;
+}
+
+.add-object-holder textarea:focus{
+  outline: none;
+}
