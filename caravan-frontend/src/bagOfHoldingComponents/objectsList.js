@@ -185,8 +185,8 @@ class ObjectsList extends React.Component{
         {this.props.addItemShown === false ?
           <div>
             <p className="shop-x-button" onClick={() => this.props.bagOfHoldingShownFunc()}>X</p>
-            <div style={{position: "absolute", left: "600px"}}>
-              <p style={{cursor: "pointer"}} onClick={() => this.props.addItemStatusHelper()}>Add Item</p>
+            <div style={{position: "absolute", left: "580px"}}>
+              <p className="add-object-button" style={{cursor: "pointer"}} onClick={() => this.props.addItemStatusHelper()}>Add Item</p>
             </div>
           </div>
 
@@ -198,7 +198,7 @@ class ObjectsList extends React.Component{
         <div className="parchment"></div>
           <div>
           {this.props.addItemShown === false ?
-            <div className="parchmentBody">
+            <div className="parchmentBody" style={{marginTop: "10px"}}>
               <table className="itemListTable">
                 <thead>
                   <tr>
