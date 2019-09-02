@@ -35,11 +35,17 @@ def filter_objects(params)
 
   params[:items].each do |item|
     currentItem = Item.find(item[:id])
+    currentItem.update(
+      current_stock: item[:current_stock]
+    )
     new_items_array.push(currentItem)
   end
 
   params[:spells].each do |spell|
     currentSpell = Spell.find(spell[:id])
+    currentSpell.update(
+      current_stock: spell[:current_stock]
+    )
     new_spells_array.push(currentSpell)
   end
 
@@ -54,8 +60,7 @@ def add_objects(params)
   # THIS SHOULD BE REFACTORED IN SOME WAY TO EITHER CREATE A NEW ITEM RECORD SEPARATE FROM SHOP
 
   params[:items].each do |item|
-    currentItem = Item.find(item[:id])
-    currentItem.update(
+    currentItem = Item.create(
       name: item[:name],
       equipment_category: item[:equipment_category],
       weapon_category: item[:weapon_category],
@@ -74,8 +79,7 @@ def add_objects(params)
   end
 
   params[:spells].each do |spell|
-    currentSpell = Spell.find(spell[:id])
-    currentSpell.update(
+    currentSpell = Spell.create(
       name: spell[:name],
       casting_time: spell[:casting_time],
       components: spell[:components],
