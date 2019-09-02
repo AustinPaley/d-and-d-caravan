@@ -106,8 +106,6 @@ class ObjectsList extends React.Component{
   }
 
   moneyConverterHelper = (event, moneyType) => {
-    // TODO - THIS NEEDS A CHECK TO MAKE SURE NO REGULAR ALPHABETICAL CHARACTERS ARE INCLUDED
-    // SHOULD BE SOMETHING LIKE /[A-Za-z]/ in regex.
     var goldGuide = {"cp": 0.01, "sp": 0.1, "ep": 0.5, "gp": 1, "pp": 10}
 
     if (moneyType === "gp" && isNaN(parseFloat(event.target.value)) === true){

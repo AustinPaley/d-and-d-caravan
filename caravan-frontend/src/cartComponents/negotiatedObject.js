@@ -1,7 +1,5 @@
 import React from 'react';
 
-// TODO - THIS COMPONENT NEEDS CSS TO MAKE THE INPUT LESS FUCKY-WUCKY
-
 class NegotiatedObject extends React.Component{
   constructor(props){
     super(props)

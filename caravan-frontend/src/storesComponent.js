@@ -2,9 +2,6 @@ import React from 'react';
 import ItemList from './storesComponents/itemList.js'
 import SpellList from './storesComponents/spellList.js'
 
-// TODO
-// 1) TIE STOCK TO BACKEND FUNCTIONALITY - UPON "CHECKOUT" REMOVE ITEMS FROM CART AND FROM STORE
-
 const IMAGELIBRARY = {
   0: require('./images/level0.png'),
   1: require('./images/level1.png'),
