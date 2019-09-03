@@ -126,7 +126,6 @@ class App extends React.Component{
     }
 
     if (itemType === "spell"){
-              debugger
       if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
         object.current_stock = 1
         this.setState(prevState => ({

@@ -28,6 +28,12 @@ class CurrentCart extends React.Component{
     if (this.props.pendingSpellsInCart !== prevProps.pendingSpellsInCart){
       this.spellConverterHelper()
     }
+
+    if (((this.props.pendingItemsInCart.length + this.props.pendingSpellsInCart.length) === 0) && ((prevProps.pendingItemsInCart.length + prevProps.pendingSpellsInCart.length) >= 1)){
+      this.setState({
+        displayedCost: 0
+      })
+    }
   }
 
   priceConverterHelper = () => {
@@ -236,7 +242,19 @@ class CurrentCart extends React.Component{
     }
   }
 
+  clearCartAndResetCost = () => {
+    this.props.clearCart()
+    this.setState({
+      displayedCost: 0
+    })
+  }
+
+  removeObjectAndResetCost = (object, type) => {
+    this.props.objectToCartRemove(object, type)
+  }
+
   render(){
+    console.log(this.state)
     return(
       <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">
@@ -259,7 +277,7 @@ class CurrentCart extends React.Component{
                   return (
                     <Fragment key={`item-number-${item.id}`}>
                     <tr>
-                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
+                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.removeObjectAndResetCost(item, "item")}/></td>
                     </tr>
                     </Fragment>
                   )
@@ -269,7 +287,7 @@ class CurrentCart extends React.Component{
                   return (
                     <Fragment key={`item-number-${spell.id}`}>
                     <tr>
-                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
+                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.removeObjectAndResetCost(spell, "spell")}/></td>
                     </tr>
                     </Fragment>
                   )
@@ -290,7 +308,7 @@ class CurrentCart extends React.Component{
             {this.state.loading === false ?
               <div className="changes-button-holder">
                 <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
-                <p className="cart-cancel-changes-button" onClick={() => this.props.clearCart()}>Empty<br/>Cart</p>
+                <p className="cart-cancel-changes-button" onClick={() => this.clearCartAndResetCost()}>Empty<br/>Cart</p>
               </div>
             :
             <div className="changes-button-holder">

@@ -145,7 +145,7 @@ class StoresComponent extends React.Component{
   spellChanger = (purchasedSpell, actionType) => {
     var selectedSpell = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id)
     var maxSpellStock = this.state.shopSpells.find(spell => spell.id === purchasedSpell.id).max_stock
-    debugger
+
     var cartObject = Object.assign({}, purchasedSpell)
 
     if (actionType === "plus" && selectedSpell.current_stock < maxSpellStock){
