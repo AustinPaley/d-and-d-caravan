@@ -3,6 +3,9 @@ import MinusImage from './images/minus-square-regular.svg';
 import Negotiate from './images/negotiate.svg'
 import NegotiatedObject from './cartComponents/negotiatedObject.js'
 
+// TODO - MAKE A WARNING MESSAGE SO THAT WHEN SOMEONE TRIES TO SAVE WITH 
+// NO ITEMS IN CART IT TELLS USERS TO SAVE ITEMS TO THEIR CART FIRST
+
 class CurrentCart extends React.Component{
   constructor(props){
     super(props)
