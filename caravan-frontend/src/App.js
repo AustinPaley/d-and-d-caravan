@@ -21,6 +21,10 @@ class App extends React.Component{
   }
 
   componentDidMount(){
+    this.getAllStoresData()
+  }
+
+  getAllStoresData = () => {
     fetch("http://localhost:3000/shops/?exclude=1",{
       method: "GET"
     })
@@ -182,6 +186,7 @@ class App extends React.Component{
     this.setState({
       bagOfHoldingMoneyInfo: {"money": bagOfHoldingMoney, "gold": bagOfHoldingGold, "silver": bagOfHoldingSilver, "copper": bagOfHoldingCopper}
     })
+    this.getAllStoresData()
   }
 
   render(){
