@@ -126,6 +126,7 @@ class App extends React.Component{
     }
 
     if (itemType === "spell"){
+              debugger
       if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
         object.current_stock = 1
         this.setState(prevState => ({
@@ -133,7 +134,7 @@ class App extends React.Component{
         }))
       }
 
-      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < this.state.pendingSpellsInCart.find(spell => spell.id === object.id).max_stock)){
+      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < object.max_stock)){
         var newSpellArray = [...this.state.pendingSpellsInCart]
         newSpellArray.find(spell => spell.id === object.id).current_stock += 1
         this.setState({
