@@ -123,20 +123,37 @@ class StoresComponent extends React.Component{
     var maxStock = this.state.shopItems.find(item => item.id === changedItem.id).max_stock
     var cartObject = Object.assign({}, selectedItem)
 
+    // ITEM REMOVED FROM CART LOGIC  -- YES THIS SEEMS COUNTERINTUITIVE, I KNOW
+
     if (actionType === "plus" && selectedItem.current_stock < maxStock){
+      selectedItem["number_in_cart"] -= 1
       selectedItem.current_stock += 1
-      this.setState(prevState => ({
-        ...prevState.shopItems,
-        [prevState.shopItems.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
-      }))
+      let updatedItems = [...this.state.shopItems]
+      updatedItems.find(item => item.id === changedItem.id).current_stock = selectedItem.current_stock
+      updatedItems.find(item => item.id === changedItem.id)["number_in_cart"] = selectedItem["number_in_cart"]
+
+      this.setState({
+        shopItems: updatedItems
+      })
     }
 
+    // ITEM ADDED TO CART LOGIC
     if (actionType === "minus" && selectedItem.current_stock > 0){
+      if (selectedItem["number_in_cart"] === undefined){
+        selectedItem["number_in_cart"] = 1
+      }
+      else {
+        selectedItem["number_in_cart"] += 1
+      }
+
+      let updatedItems = [...this.state.shopItems]
+      updatedItems.find(item => item.id === changedItem.id).current_stock = selectedItem.current_stock
+      updatedItems.find(item => item.id === changedItem.id)["number_in_cart"] = selectedItem["number_in_cart"]
+
       selectedItem.current_stock -= 1
-      this.setState(prevState => ({
-        ...prevState.shopItems,
-        [prevState.shopItems.find(item => item.id === changedItem.id).current_stock]: selectedItem.current_stock
-      }), () => {
+      this.setState({
+        shopItems: updatedItems
+      }, () => {
         this.props.objectToCartAdd(cartObject, "item")
       })
     }
@@ -148,20 +165,40 @@ class StoresComponent extends React.Component{
 
     var cartObject = Object.assign({}, purchasedSpell)
 
+    // SPELL REMOVED FROM CART LOGIC
+
     if (actionType === "plus" && selectedSpell.current_stock < maxSpellStock){
+
+      let updatedSpells = [...this.state.shopItems]
+      updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = purchasedSpell.current_stock
+      updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
+
+      purchasedSpell["number_in_cart"] -= 1
       selectedSpell.current_stock += 1
-      this.setState(prevState => ({
-        ...prevState.shopSpells,
-        [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
-      }))
+
+      this.setState({
+        shopSpells: updatedSpells
+      })
     }
 
+    // SPELL ADDED TO CART LOGIC
+
     if (actionType === "minus" && selectedSpell.current_stock > 0){
+      if (purchasedSpell["number_in_cart"] === undefined){
+        purchasedSpell["number_in_cart"] = 1
+      }
+      else {
+        purchasedSpell["number_in_cart"] += 1
+      }
+
+      let updatedSpells = [...this.state.shopSpells]
+      updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = purchasedSpell.current_stock
+      updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
+
       selectedSpell.current_stock -= 1
-      this.setState(prevState => ({
-        ...prevState.shopSpells,
-        [prevState.shopSpells.find(spell => spell.id === selectedSpell.id).current_stock]: selectedSpell.current_stock
-      }), () => this.props.objectToCartAdd(cartObject, "spell"))
+      this.setState({
+        shopSpells: updatedSpells
+      }, () => this.props.objectToCartAdd(cartObject, "spell"))
     }
 
   }
