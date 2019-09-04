@@ -190,7 +190,7 @@ class BagofHoldingComponent extends React.Component{
     return(
       <div className="bag-or-cart" style={this.props.bagOfHoldingShown === true ? {display: "block"} : {display: "none"}}>
         {
-          (this.state.items.length > 0 || this.state.spells.length > 0) && this.state.gold !== null ?
+          this.state.gold !== null ?
             <ObjectsList addItemStatusHelper={this.addItemStatusHelper} addItemShown={this.state.addItemShown} loading={this.state.loading} items={this.state.items} spells={this.state.spells} stockChanger={this.stockChanger} spellChanger={this.spellChanger} refreshItems={this.refreshItems} saveItems={this.saveItems} gold={this.state.gold} silver={this.state.silver} copper={this.state.copper} bagOfHoldingShownFunc={this.props.bagOfHoldingShownFunc} />
           :
           null
