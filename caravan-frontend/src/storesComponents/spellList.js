@@ -51,7 +51,7 @@ class SpellList extends React.Component{
             <tbody>
               {this.state.spellsList.sort((a,b) => a.level-b.level).map(spell => {
                 return (
-                  <Fragment key={`item-number-${spell.id}`}>
+                  <Fragment key={`spell-number-${spell.id}`}>
                   <tr>
                     <td>{spell.name}</td><td>{spell.school}</td><td>{spell.render_level}</td><td>{spell.render_cost}</td><td>{spell.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.spellChanger(spell, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
                   </tr>

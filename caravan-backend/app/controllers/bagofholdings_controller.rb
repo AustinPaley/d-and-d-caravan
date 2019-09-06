@@ -58,8 +58,11 @@ end
 def add_objects(params)
   # HUGE BUG HERE WHERE DOING AN UPDATE ON ITEM IS CAUSING THE SHOP RENDER TO IMPROPERLY RESET STOCK
   # THIS SHOULD BE REFACTORED IN SOME WAY TO EITHER CREATE A NEW ITEM RECORD SEPARATE FROM SHOP
-
   params[:items].each do |item|
+    oldItem = Item.find(item[:id])
+    oldItem.update(
+      current_stock: item[:current_stock]
+    )
     currentItem = Item.create(
       name: item[:name],
       equipment_category: item[:equipment_category],
@@ -71,14 +74,18 @@ def add_objects(params)
       description: item[:description],
       armor_category: item[:armor_category],
       armor_class: item[:armor_class],
-      shop_id: item[:shop_id],
-      current_stock: item[:current_stock],
+      shop_id: 1,
+      current_stock: item[:number_in_cart],
       item_level: item[:item_level]
     )
     @bagofholding.items.push(currentItem)
   end
 
   params[:spells].each do |spell|
+    oldSpell = Spell.find(spell[:id])
+    oldSpell.update(
+      current_stock: spell[:current_stock]
+    )
     currentSpell = Spell.create(
       name: spell[:name],
       casting_time: spell[:casting_time],
@@ -89,8 +96,8 @@ def add_objects(params)
       range: spell[:range],
       school: spell[:school],
       cost: spell[:cost],
-      current_stock: spell[:current_stock],
-      shop_id: spell[:shop_id]
+      current_stock: spell[:number_in_cart],
+      shop_id: 1
     )
     @bagofholding.spells.push(currentSpell)
   end

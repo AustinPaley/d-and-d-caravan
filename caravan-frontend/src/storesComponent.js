@@ -35,7 +35,7 @@ class StoresComponent extends React.Component{
 
   componentDidMount(){
     if (this.props.info){
-      fetch("http://localhost:3000/shops/" + this.props.info.id, {
+      fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
         method: "GET"
       })
       .then(res => res.json())
@@ -59,7 +59,7 @@ class StoresComponent extends React.Component{
     }
   }
 
-  componentDidUpdate(){
+  componentDidUpdate(prevProps){
     if (this.props.loaded === false){
       this.props.loaderHelper()
     }
@@ -82,7 +82,7 @@ class StoresComponent extends React.Component{
     if (levelChange === "up"){
       var increasedLevel = this.state.shopLevel + 1
       var increasedShopImage = IMAGELIBRARY[increasedLevel]
-      fetch("http://localhost:3000/shops/" + this.props.info.id, {
+      fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"
@@ -101,7 +101,7 @@ class StoresComponent extends React.Component{
     if (levelChange === "down"){
       var decreasedLevel = this.state.shopLevel - 1
       var decreasedShopImage = IMAGELIBRARY[decreasedLevel]
-      fetch("http://localhost:3000/shops/" + this.props.info.id, {
+      fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"
@@ -132,6 +132,8 @@ class StoresComponent extends React.Component{
       updatedItems.find(item => item.id === changedItem.id).current_stock = selectedItem.current_stock
       updatedItems.find(item => item.id === changedItem.id)["number_in_cart"] = selectedItem["number_in_cart"]
 
+      // TIE THIS TO FUNCTION IN APP (ALREADY PASSES DOWN) TO UPDATE THE CART
+      // WHEN/IF AN ITEM IS ADDED BACK TO THE STORE
       this.setState({
         shopItems: updatedItems
       })
@@ -147,10 +149,10 @@ class StoresComponent extends React.Component{
       }
 
       let updatedItems = [...this.state.shopItems]
+      selectedItem.current_stock -= 1
       updatedItems.find(item => item.id === changedItem.id).current_stock = selectedItem.current_stock
       updatedItems.find(item => item.id === changedItem.id)["number_in_cart"] = selectedItem["number_in_cart"]
-
-      selectedItem.current_stock -= 1
+      cartObject = updatedItems.find(item => item.id === changedItem.id)
       this.setState({
         shopItems: updatedItems
       }, () => {
@@ -166,16 +168,15 @@ class StoresComponent extends React.Component{
     var cartObject = Object.assign({}, purchasedSpell)
 
     // SPELL REMOVED FROM CART LOGIC
-
     if (actionType === "plus" && selectedSpell.current_stock < maxSpellStock){
-
-      let updatedSpells = [...this.state.shopItems]
-      updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = purchasedSpell.current_stock
-      updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
-
       purchasedSpell["number_in_cart"] -= 1
       selectedSpell.current_stock += 1
+      let updatedSpells = [...this.state.shopSpells]
+      updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = selectedSpell.current_stock
+      updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
 
+      // TIE THIS TO FUNCTION IN APP (ALREADY PASSES DOWN) TO UPDATE THE CART
+      // WHEN/IF AN ITEM IS ADDED BACK TO THE STORE
       this.setState({
         shopSpells: updatedSpells
       })
@@ -192,10 +193,10 @@ class StoresComponent extends React.Component{
       }
 
       let updatedSpells = [...this.state.shopSpells]
+      selectedSpell.current_stock -= 1
       updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = purchasedSpell.current_stock
       updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
-
-      selectedSpell.current_stock -= 1
+      cartObject = updatedSpells.find(item => item.id === purchasedSpell.id)
       this.setState({
         shopSpells: updatedSpells
       }, () => this.props.objectToCartAdd(cartObject, "spell"))

@@ -17,7 +17,7 @@ class AddObject extends React.Component{
       alert("Please fill out all required fields.")
     }
     else{
-      fetch("http://localhost:3000/items/",{
+      fetch("http://austins-macbook-air-2.local/items/",{
         method: "POST",
         headers: {
           "Content-Type":"application/json"

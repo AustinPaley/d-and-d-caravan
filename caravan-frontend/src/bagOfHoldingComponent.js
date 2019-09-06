@@ -37,7 +37,7 @@ class BagofHoldingComponent extends React.Component{
     this.setState({
       loading: true
     }, () => {
-      fetch("http://localhost:3000/bagofholdings/1", {
+      fetch("http://austins-macbook-air-2.local/bagofholdings/1", {
         method: "GET"
       })
       .then(res => res.json())
@@ -93,7 +93,7 @@ class BagofHoldingComponent extends React.Component{
     this.setState({
       loading: true
     }, () => {
-      fetch("http://localhost:3000/bagofholdings/1", {
+      fetch("http://austins-macbook-air-2.local/bagofholdings/1", {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"

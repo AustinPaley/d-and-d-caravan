@@ -77,7 +77,7 @@ class CurrentCart extends React.Component{
         spell["render_level"] = spell.level
         spell["render_cost"] = spell.cost + "g"
       }
-      spell["max_stock"] = spell.current_stock
+      // spell["max_stock"] = spell.current_stock
       newSpellArray.push(spell)
     })
 
@@ -87,21 +87,21 @@ class CurrentCart extends React.Component{
   }
 
   saveItems = (bagContents) => {
+    debugger
     var cartCost = 0
     var cartCostString = ""
     if (bagContents.spellsList.length !== 0){
-      bagContents.spellsList.forEach(item => cartCost += ((item.cost * item.current_stock) * 100) / 100)
+      bagContents.spellsList.forEach(item => cartCost += ((item.cost * item.number_in_cart) * 100) / 100)
     }
     if (bagContents.itemsList.length !== 0){
-      bagContents.itemsList.forEach(item => cartCost += ((item.cost * item.current_stock) * 100) / 100)
+      bagContents.itemsList.forEach(item => cartCost += ((item.cost * item.number_in_cart) * 100) / 100)
     }
 
     cartCostString = ((cartCost * 100) /100).toFixed(2)
-
     this.setState({
       loading: true
     }, () => {
-      fetch("http://localhost:3000/bagofholdings/1", {
+      fetch("http://austins-macbook-air-2.local/bagofholdings/1", {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"
@@ -165,7 +165,7 @@ class CurrentCart extends React.Component{
     var totalObjects = [...this.state.itemsList, this.state.spellsList].flat()
     if (totalObjects.length > 0){
       totalObjects.forEach(item => {
-        var itemCost = parseFloat(item.cost * item.current_stock)
+        var itemCost = parseFloat(item.cost * item.number_in_cart)
         totalCost += itemCost
       })
     }
@@ -275,7 +275,7 @@ class CurrentCart extends React.Component{
                   return (
                     <Fragment key={`item-number-${item.id}`}>
                     <tr>
-                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
+                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.number_in_cart}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
                     </tr>
                     </Fragment>
                   )
@@ -285,7 +285,7 @@ class CurrentCart extends React.Component{
                   return (
                     <Fragment key={`item-number-${spell.id}`}>
                     <tr>
-                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
+                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.number_in_cart}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
                     </tr>
                     </Fragment>
                   )

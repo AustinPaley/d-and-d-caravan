@@ -37,7 +37,6 @@ class ItemList extends React.Component{
       item["max_stock"] = item.current_stock
       newItemArray.push(item)
     })
-
     this.setState({
       itemsList: newItemArray
     })

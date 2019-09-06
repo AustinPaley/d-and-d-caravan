@@ -25,7 +25,7 @@ class App extends React.Component{
   }
 
   getAllStoresData = () => {
-    fetch("http://localhost:3000/shops/?exclude=1",{
+    fetch("http://austins-macbook-air-2.local/shops/?exclude=1",{
       method: "GET"
     })
     .then(res => res.json())
@@ -110,7 +110,6 @@ class App extends React.Component{
   objectToCartAdd = (object, itemType) => {
     if (itemType === "item"){
       if (this.state.pendingItemsInCart.find(item => item.id === object.id) === undefined){
-        object.current_stock = 1
         this.setState(prevState => ({
           pendingItemsInCart: [...prevState.pendingItemsInCart, object]
         }))
@@ -118,7 +117,16 @@ class App extends React.Component{
 
       if ((this.state.pendingItemsInCart.find(item => item.id === object.id) !== undefined) && (this.state.pendingItemsInCart.find(item => item.id === object.id).current_stock < this.state.pendingItemsInCart.find(item => item.id === object.id).max_stock)){
         var newItemArray = [...this.state.pendingItemsInCart]
-        newItemArray.find(item => item.id === object.id).current_stock += 1
+        // at this point everything in "object" is correct!
+        if (newItemArray.find(item => item.id === object.id).current_stock >= 0){
+          newItemArray.find(item => item.id === object.id).current_stock = object.current_stock
+          newItemArray.find(item => item.id === object.id).number_in_cart = object.number_in_cart
+
+          this.setState({
+            pendingItemsInCart: newItemArray
+          })
+        }
+
         this.setState({
           pendingItemsInCart: newItemArray
         })
@@ -133,12 +141,52 @@ class App extends React.Component{
         }))
       }
 
-      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < object.max_stock)){
+      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < this.state.pendingSpellsInCart.find(spell => spell.id === object.id).max_stock)){
         var newSpellArray = [...this.state.pendingSpellsInCart]
-        newSpellArray.find(spell => spell.id === object.id).current_stock += 1
+        if (newSpellArray.find(spell => spell.id === object.id).current_stock >= 0){
+          newSpellArray.find(spell => spell.id === object.id).current_stock = object.current_stock
+          newSpellArray.find(spell => spell.id === object.id).number_in_cart = object.number_in_cart
+        }
         this.setState({
           pendingSpellsInCart: newSpellArray
         })
+      }
+    }
+  }
+
+  objectRemovedFromCartFromStore = (object, itemType) => {
+    if (itemType === "item"){
+
+      if ((this.state.pendingItemsInCart.find(item => item.id === object.id) !== undefined)){
+        var newItemArray = [...this.state.pendingItemsInCart]
+        // at this point everything in "object" is correct!
+        debugger
+          newItemArray.find(item => item.id === object.id).current_stock = object.current_stock
+          newItemArray.find(item => item.id === object.id).number_in_cart = object.number_in_cart
+
+          // this.setState({
+          //   pendingItemsInCart: newItemArray
+          // })
+      }
+    }
+
+    if (itemType === "spell"){
+      if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
+        object.current_stock = 1
+        this.setState(prevState => ({
+          pendingSpellsInCart: [...prevState.pendingSpellsInCart, object]
+        }))
+      }
+
+      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < this.state.pendingSpellsInCart.find(spell => spell.id === object.id).max_stock)){
+        var newSpellArray = [...this.state.pendingSpellsInCart]
+        if (newSpellArray.find(spell => spell.id === object.id).current_stock >= 0){
+          newSpellArray.find(spell => spell.id === object.id).current_stock = object.current_stock
+          newSpellArray.find(spell => spell.id === object.id).number_in_cart = object.number_in_cart
+        }
+        // this.setState({
+        //   pendingSpellsInCart: newSpellArray
+        // })
       }
     }
   }
@@ -179,7 +227,7 @@ class App extends React.Component{
     this.setState({
       pendingSpellsInCart: [],
       pendingItemsInCart: []
-    })
+    }, () => {this.getAllStoresData()})
   }
 
   moneyHoister = (bagOfHoldingMoney, bagOfHoldingGold, bagOfHoldingSilver, bagOfHoldingCopper) => {
@@ -190,6 +238,7 @@ class App extends React.Component{
   }
 
   render(){
+    console.log(this.state.pendingItemsInCart)
     return (
       <div className="App">
         <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} numberOfPendingItemsInCart={this.state.pendingItemsInCart.length + this.state.pendingSpellsInCart.length} />
@@ -205,7 +254,7 @@ class App extends React.Component{
         {this.state.allStoresObject.length > 0 ?
           <div>
             {this.state.allStoresObject.map(store => (
-                <StoresComponent key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} shopsShown={this.state.shopsShown} />
+                <StoresComponent objectRemovedFromCartFromStore={this.objectRemovedFromCartFromStore} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} shopsShown={this.state.shopsShown} />
               ))
             }
           </div>
