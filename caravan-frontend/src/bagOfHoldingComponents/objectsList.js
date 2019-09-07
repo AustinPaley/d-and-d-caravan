@@ -183,7 +183,7 @@ class ObjectsList extends React.Component{
         {this.props.addItemShown === false ?
           <div>
             <p className="shop-x-button" onClick={() => this.props.bagOfHoldingShownFunc()}>X</p>
-            <div style={{position: "absolute", left: "580px"}}>
+            <div className="add-object-button-holder">
               <p className="add-object-button" style={{cursor: "pointer"}} onClick={() => this.props.addItemStatusHelper()}>Add Item</p>
             </div>
           </div>

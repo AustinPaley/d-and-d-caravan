@@ -60,6 +60,7 @@ class StoresComponent extends React.Component{
   }
 
   componentDidUpdate(prevProps){
+    debugger
     if (this.props.loaded === false){
       this.props.loaderHelper()
     }
@@ -131,12 +132,10 @@ class StoresComponent extends React.Component{
       let updatedItems = [...this.state.shopItems]
       updatedItems.find(item => item.id === changedItem.id).current_stock = selectedItem.current_stock
       updatedItems.find(item => item.id === changedItem.id)["number_in_cart"] = selectedItem["number_in_cart"]
-
-      // TIE THIS TO FUNCTION IN APP (ALREADY PASSES DOWN) TO UPDATE THE CART
-      // WHEN/IF AN ITEM IS ADDED BACK TO THE STORE
+      cartObject = updatedItems.find(item => item.id === changedItem.id)
       this.setState({
         shopItems: updatedItems
-      })
+      }, () => this.props.objectRemovedFromCartFromStore(cartObject, "item"))
     }
 
     // ITEM ADDED TO CART LOGIC
@@ -174,12 +173,10 @@ class StoresComponent extends React.Component{
       let updatedSpells = [...this.state.shopSpells]
       updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = selectedSpell.current_stock
       updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
-
-      // TIE THIS TO FUNCTION IN APP (ALREADY PASSES DOWN) TO UPDATE THE CART
-      // WHEN/IF AN ITEM IS ADDED BACK TO THE STORE
+      cartObject = updatedSpells.find(item => item.id === purchasedSpell.id)
       this.setState({
         shopSpells: updatedSpells
-      })
+      }, () => this.props.objectRemovedFromCartFromStore(cartObject, "spell"))
     }
 
     // SPELL ADDED TO CART LOGIC

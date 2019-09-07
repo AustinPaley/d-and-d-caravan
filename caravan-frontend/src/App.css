@@ -418,3 +418,255 @@ th.sticky-header{
 .add-object-holder textarea:focus{
   outline: none;
 }
+
+.add-object-button-holder{
+  position: absolute;
+  left: 580px
+}
+
+@media only screen and (max-width: 450px){
+  .bag-or-cart{
+    margin: auto;
+    width: 320px;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+  }
+
+  .parchmentBody {
+    width:300px;
+    height: 61vh;
+    margin: 10px;
+    overflow-y: scroll;
+  }
+
+  .add-object-header{
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-size: 16px;
+  }
+
+  .add-object-holder{
+    height: 70px;
+    margin-bottom: 0px;
+    margin-left: 8px;
+    margin-right: 8px;
+    position: relative;
+  }
+
+  .add-object-holder h3{
+    text-align: left;
+    text-decoration: underline;
+    margin-block-start: 0.3em;
+    font-size: 14px;
+  }
+
+  .add-object-holder input{
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    color: black;
+    display: table;
+    width: 50%;
+  }
+
+  .add-object-holder input:focus{
+    outline: none;
+  }
+
+  .add-object-holder select{
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    color: black;
+    display: table;
+  }
+
+  .add-object-holder select:focus{
+    outline: none;
+  }
+
+
+  .add-object-holder textarea{
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    color: black;
+    width: 95%;
+    height: 40px;
+    resize: none;
+    margin-right: 5%;
+  }
+
+  .add-object-holder textarea:focus{
+    outline: none;
+  }
+
+  .add-object-required-field{
+    color: red;
+    text-align: left;
+    position: absolute;
+    left: 58%;
+    width: 160px;
+    bottom: 13px;
+    font-size: 12px;
+  }
+
+  .changes-button-holder{
+    display: inline-flex;
+    justify-content: center;
+    margin: auto;
+  }
+
+  .cart-save-changes-button{
+    cursor: pointer;
+    border-radius: 5px;
+    color: yellow;
+    background-color: green;
+    border: 1px solid black;
+    width: 100px;
+    height: 40px;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+  }
+
+  .parchmentTop {
+    position:relative;
+    width:320px;
+    top:25px;
+    font-family:georgia,times;
+    font-style:italic;
+    font-size:12pt;
+    line-height:normal;
+    background-image:url("./images/Parchment-Body-Mobile.png");
+    background-size: auto;
+  }
+
+  .shop-x-button{
+    position: absolute;
+    left: 30px;
+    border: 1px solid black;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .add-object-button{
+    cursor: pointer;
+    border-radius: 5px;
+    color: black;
+    background-color: yellow;
+    border: 1px solid black;
+    margin-left: 10px;
+    padding: 5px;
+  }
+
+  .parchment {
+    position:relative;
+    top:-20px;
+    width:320px;
+    height:38px;
+    background-image:url("./images/Parchment-Top-Mobile.png");
+  }
+
+  .parchmentBottom {
+    position:relative;
+    bottom:-18px;
+    right:-6px;
+    width:320px;
+    height:38px;
+    background-image:url("./images/Parchment-Bottom-Mobile.png");
+    margin-bottom:40px;
+  }
+
+  .itemListTable{
+    width: 90%;
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .itemListTable tbody tr{
+    height: 20px;
+  }
+
+  th.sticky-header{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: rgb(183,133,78, 1);
+    font-size: 12px;
+  }
+
+  .bag-of-holding-money{
+    display: block;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    width: 100%;
+  }
+
+  .bag-of-holding-money-type{
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .bag-of-holding-money-type label{
+    margin-right: 5px;
+  }
+
+  .bag-of-holding-money-type input{
+    background-color: yellow;
+    border: none;
+    width: 90px;
+  }
+
+  .bag-of-holding-cancel-changes-button{
+    cursor: pointer;
+    border-radius: 5px;
+    color: yellow;
+    background-color: red;
+    border: 1px solid black;
+    width: 100px;
+    height: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  .bag-of-holding-save-changes-button{
+    cursor: pointer;
+    border-radius: 5px;
+    color: yellow;
+    background-color: green;
+    border: 1px solid black;
+    width: 100px;
+    height: 40px;
+    margin: auto;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .add-object-button-holder{
+    position: absolute;
+    left: 210px;
+    top: -7px;
+    z-index: 10;
+  }
+
+  .add-remove-icons{
+    width: 15px;
+    padding-left: 0px;
+    padding-right: 0px;
+    cursor: pointer;
+  }
+
+  .itemListTable td {
+    font-size: 12px;
+  }
+
+}

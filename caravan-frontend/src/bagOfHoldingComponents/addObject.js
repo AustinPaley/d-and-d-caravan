@@ -70,7 +70,6 @@ class AddObject extends React.Component{
     for (let i=0; i<=100; i++){
       numbers.push(i.toString())
     }
-    console.log(this.props.loading)
     return(
       <div>
         <div className="parchmentBody">

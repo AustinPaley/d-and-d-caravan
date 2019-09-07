@@ -156,37 +156,38 @@ class App extends React.Component{
 
   objectRemovedFromCartFromStore = (object, itemType) => {
     if (itemType === "item"){
-
-      if ((this.state.pendingItemsInCart.find(item => item.id === object.id) !== undefined)){
+      if (this.state.pendingItemsInCart.find(item => item.id === object.id).current_stock <= this.state.pendingItemsInCart.find(item => item.id === object.id).max_stock){
         var newItemArray = [...this.state.pendingItemsInCart]
-        // at this point everything in "object" is correct!
-        debugger
-          newItemArray.find(item => item.id === object.id).current_stock = object.current_stock
-          newItemArray.find(item => item.id === object.id).number_in_cart = object.number_in_cart
+        newItemArray.find(item => item.id === object.id).current_stock = object.current_stock
+        newItemArray.find(item => item.id === object.id).number_in_cart = object.number_in_cart
+        this.setState(prevState => ({
+          pendingItemsInCart: newItemArray
+        }))
+      }
 
-          // this.setState({
-          //   pendingItemsInCart: newItemArray
-          // })
+      if (object.number_in_cart === 0){
+        var newItemArray = [...this.state.pendingItemsInCart]
+        this.setState({
+          pendingItemsInCart: newItemArray.filter(item => item.id !== object.id)
+        })
       }
     }
 
     if (itemType === "spell"){
-      if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
-        object.current_stock = 1
+      if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock <= this.state.pendingSpellsInCart.find(spell => spell.id === object.id).max_stock){
+        var newSpellArray = [...this.state.pendingSpellsInCart]
+        newSpellArray.find(spell => spell.id === object.id).current_stock = object.current_stock
+        newSpellArray.find(spell => spell.id === object.id).number_in_cart = object.number_in_cart
         this.setState(prevState => ({
-          pendingSpellsInCart: [...prevState.pendingSpellsInCart, object]
+          pendingSpellsInCart: newSpellArray
         }))
       }
 
-      if ((this.state.pendingSpellsInCart.find(spell => spell.id === object.id) !== undefined) && (this.state.pendingSpellsInCart.find(spell => spell.id === object.id).current_stock < this.state.pendingSpellsInCart.find(spell => spell.id === object.id).max_stock)){
+      if (object.number_in_cart === 0){
         var newSpellArray = [...this.state.pendingSpellsInCart]
-        if (newSpellArray.find(spell => spell.id === object.id).current_stock >= 0){
-          newSpellArray.find(spell => spell.id === object.id).current_stock = object.current_stock
-          newSpellArray.find(spell => spell.id === object.id).number_in_cart = object.number_in_cart
-        }
-        // this.setState({
-        //   pendingSpellsInCart: newSpellArray
-        // })
+        this.setState({
+          pendingSpellsInCart: newSpellArray.filter(spell => spell.id !== object.id)
+        })
       }
     }
   }
@@ -238,10 +239,9 @@ class App extends React.Component{
   }
 
   render(){
-    console.log(this.state.pendingItemsInCart)
     return (
       <div className="App">
-        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} numberOfPendingItemsInCart={this.state.pendingItemsInCart.length + this.state.pendingSpellsInCart.length} />
+        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} />
         <CurrentCart moneyHoister={this.moneyHoister} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
         <BagofHoldingComponent moneyHoister={this.moneyHoister} bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} />
         {this.state.loaded === true ?
