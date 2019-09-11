@@ -60,7 +60,6 @@ class StoresComponent extends React.Component{
   }
 
   componentDidUpdate(prevProps){
-    debugger
     if (this.props.loaded === false){
       this.props.loaderHelper()
     }

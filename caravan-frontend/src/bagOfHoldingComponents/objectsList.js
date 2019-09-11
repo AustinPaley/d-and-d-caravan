@@ -1,5 +1,7 @@
 import React, {Fragment} from 'react';
 import MinusImage from '../images/minus-square-regular.svg';
+import SortDown from '../images/sort-down-solid.svg';
+import SortUp from '../images/sort-up-solid.svg';
 import AddObject from './addObject.js'
 
 class ObjectsList extends React.Component{
@@ -15,12 +17,14 @@ class ObjectsList extends React.Component{
       shownSilver: this.props.silver,
       shownCopper: this.props.copper,
       moneyBeingReset: false,
+      sort: "loading"
     }
   }
 
   componentDidMount(){
     this.priceConverterHelper()
     this.spellConverterHelper()
+    this.sortHelperFunction()
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -176,6 +180,38 @@ class ObjectsList extends React.Component{
 
   }
 
+  sortHelperFunction = () => {
+    if (this.state.sort === "loading"){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+        this.setState({
+          sort: "down",
+          itemsList: newSortedItemList,
+          spellsList: newSortedSpellList
+        })
+    }
+
+    if (this.state.sort === "down"){
+      var newSortedItemList = [...this.state.itemsList.sort((a,b) => (b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : 0))]
+      var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : 0))]
+      this.setState({
+        sort: "up",
+        itemsList: newSortedItemList,
+        spellsList: newSortedSpellList
+      })
+    }
+
+    if (this.state.sort === "up"){
+      var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+      var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+      this.setState({
+        sort: "down",
+        itemsList: newSortedItemList,
+        spellsList: newSortedSpellList
+      })
+    }
+  }
+
   render(){
     return(
       <div>
@@ -200,11 +236,21 @@ class ObjectsList extends React.Component{
               <table className="itemListTable">
                 <thead>
                   <tr>
-                    <th className="sticky-header">Item Name</th><th className="sticky-header">Item/Spell Type</th><th className="sticky-header">Stock</th><th className="sticky-header">Remove</th>
+                    <th className="sticky-header" onClick={() => this.sortHelperFunction()}>
+                      Item Name
+                      {this.state.sort === "down" ?
+                        <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
+                      :
+                        <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
+                      }
+                    </th>
+                    <th className="sticky-header">Item/Spell Type</th>
+                    <th className="sticky-header">Stock</th>
+                    <th className="sticky-header">Remove</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
+                  {this.state.itemsList.map(item => {
                     return (
                       <Fragment key={`item-number-${item.id}`}>
                       <tr>
@@ -214,7 +260,7 @@ class ObjectsList extends React.Component{
                     )
                   })
                   }
-                  {this.state.spellsList.sort((a,b) => a.level-b.level).map(spell => {
+                  {this.state.spellsList.sort((a,b) => a.name-b.name).map(spell => {
                     return (
                       <Fragment key={`item-number-${spell.id}`}>
                       <tr>

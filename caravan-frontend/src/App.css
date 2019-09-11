@@ -424,6 +424,16 @@ th.sticky-header{
   left: 580px
 }
 
+.sort-down-arrow{
+  height: 14px;
+  cursor: pointer;
+}
+
+.sort-up-arrow{
+  height: 14px;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 450px){
   .bag-or-cart{
     margin: auto;
