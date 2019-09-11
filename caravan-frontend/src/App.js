@@ -60,6 +60,17 @@ class App extends React.Component{
     })
   }
 
+  shopsShown = () => {
+    this.setState({
+      shopsShown: true
+    }, () => {
+      this.setState({
+        currentCartShown: false,
+        bagOfHoldingShown: false
+      })
+    })
+  }
+
   currentCartShown = () => {
     this.setState({
       currentCartShown: !this.state.currentCartShown
@@ -241,10 +252,10 @@ class App extends React.Component{
   render(){
     return (
       <div className="App">
-        <PartyNavBar bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} />
+        <PartyNavBar shopsShown={this.shopsShown} bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} />
         <CurrentCart moneyHoister={this.moneyHoister} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
         <BagofHoldingComponent moneyHoister={this.moneyHoister} bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} />
-        {this.state.loaded === true ?
+        {this.state.loaded === true && this.state.shopsShown === true ?
           <div>
             <img src={LeftArrow} className="left-arrow" alt="Left Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("left")}/>
           </div>
@@ -261,7 +272,7 @@ class App extends React.Component{
         :
           null
         }
-        {this.state.loaded === true ?
+        {this.state.loaded === true && this.state.shopsShown === true ?
           <div>
             <img src={RightArrow} className="right-arrow" alt="Right Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("right")} />
           </div>

@@ -5,14 +5,8 @@ class PartyNavBar extends React.Component{
     numberOfPendingObjectsInCart: 0
   }
 
-  componentDidMount(){
-
-  }
-
   componentDidUpdate(prevProps){
-    // debugger
     if ((this.props.pendingItemsInCart !== prevProps.pendingItemsInCart) || (this.props.pendingSpellsInCart !== prevProps.pendingSpellsInCart)){
-      // debugger
       this.itemInCartCalculator()
     }
   }
@@ -38,10 +32,9 @@ class PartyNavBar extends React.Component{
   }
 
   render(){
-    // console.log("navBar", this.props)
     return (
       <div className="nav-bar">
-        <div>Caravan Shoppes</div>
+        <div onClick={() => this.props.shopsShown()}>Caravan Shoppes</div>
         <div onClick={() => this.props.bagOfHoldingShown()}>Bag of Holding</div>
         <div>World Map</div>
         <div>Quest Board</div>
