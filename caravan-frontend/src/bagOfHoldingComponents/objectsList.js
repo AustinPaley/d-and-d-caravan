@@ -1,8 +1,10 @@
 import React, {Fragment} from 'react';
 import MinusImage from '../images/minus-square-regular.svg';
+import EditImage from '../images/edit-regular.svg'
 import SortDown from '../images/sort-down-solid.svg';
 import SortUp from '../images/sort-up-solid.svg';
 import AddObject from './addObject.js'
+import EditObject from './editObject.js'
 
 class ObjectsList extends React.Component{
   constructor(props){
@@ -28,11 +30,11 @@ class ObjectsList extends React.Component{
   }
 
   componentDidUpdate(prevProps, prevState){
-    if (this.props.items.length !== prevProps.items.length){
+    if (this.props.items !== prevProps.items){
       this.priceConverterHelper()
     }
 
-    if (this.props.spells.length !== prevProps.spells.length){
+    if (this.props.spells !== prevProps.spells){
       this.spellConverterHelper()
     }
 
@@ -213,10 +215,11 @@ class ObjectsList extends React.Component{
   }
 
   render(){
+    debugger
     return(
       <div>
         <div className="parchmentTop">
-        {this.props.addItemShown === false ?
+        {this.props.addItemShown === false && this.props.editItemShown === false ?
           <div>
             <p className="shop-x-button" onClick={() => this.props.bagOfHoldingShownFunc()}>X</p>
             <div className="add-object-button-holder">
@@ -225,59 +228,70 @@ class ObjectsList extends React.Component{
           </div>
 
         :
-          <div>
-            <p className="shop-x-button" onClick={() => this.props.addItemStatusHelper()}>X</p>
-          </div>
+          (this.props.editItemShown === false ?
+            <div>
+              <p className="shop-x-button" onClick={() => this.props.addItemStatusHelper()}>X</p>
+            </div>
+          :
+            <div>
+              <p className="shop-x-button" onClick={() => this.props.editItemStatusHelper("reset")}>X</p>
+            </div>
+          )
         }
         <div className="parchment"></div>
           <div>
           {this.props.addItemShown === false ?
-            <div className="parchmentBody" style={{marginTop: "10px"}}>
-              <table className="itemListTable">
-                <thead>
-                  <tr>
-                    <th className="sticky-header" onClick={() => this.sortHelperFunction()}>
-                      Item Name
-                      {this.state.sort === "down" ?
-                        <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
-                      :
-                        <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
-                      }
-                    </th>
-                    <th className="sticky-header">Item/Spell Type</th>
-                    <th className="sticky-header">Stock</th>
-                    <th className="sticky-header">Remove</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.itemsList.map(item => {
-                    return (
-                      <Fragment key={`item-number-${item.id}`}>
-                      <tr>
-                        <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
-                      </tr>
-                      </Fragment>
-                    )
-                  })
-                  }
-                  {this.state.spellsList.sort((a,b) => a.name-b.name).map(spell => {
-                    return (
-                      <Fragment key={`item-number-${spell.id}`}>
-                      <tr>
-                        <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
-                      </tr>
-                      </Fragment>
-                    )
-                  })
-                  }
-                </tbody>
-              </table>
-            </div>
+            (this.props.editItemShown === false ?
+              <div className="parchmentBody" style={{marginTop: "10px"}}>
+                <table className="itemListTable">
+                  <thead>
+                    <tr>
+                      <th className="sticky-header" onClick={() => this.sortHelperFunction()}>
+                        Item Name
+                        {this.state.sort === "down" ?
+                          <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
+                        :
+                          <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
+                        }
+                      </th>
+                      <th className="sticky-header">Item/Spell Type</th>
+                      <th className="sticky-header">Stock</th>
+                      <th className="sticky-header">Edit</th>
+                      <th className="sticky-header">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.itemsList.map(item => {
+                      return (
+                        <Fragment key={`item-number-${item.id}`}>
+                        <tr>
+                          <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.current_stock}</td><td><img className="edit-icons" src={EditImage} alt="Edit Icon" onClick={() => this.props.editItemStatusHelper(item)}/></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
+                        </tr>
+                        </Fragment>
+                      )
+                    })
+                    }
+                    {this.state.spellsList.sort((a,b) => a.name-b.name).map(spell => {
+                      return (
+                        <Fragment key={`item-number-${spell.id}`}>
+                        <tr>
+                          <td>{spell.name}</td><td>{spell.school}</td><td>{spell.current_stock}</td><td><img className="edit-icons" src={EditImage} alt="Edit Icon" onClick={() => this.props.editItemStatusHelper(spell)}/></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.spellChanger(spell, "minus")}/></td>
+                        </tr>
+                        </Fragment>
+                      )
+                    })
+                    }
+                  </tbody>
+                </table>
+              </div>
+            :
+              <EditObject editedObject={this.props.editedObject} refreshItems={this.props.refreshItems} editItemStatusHelper={this.props.editItemStatusHelper} loading={this.props.loading} />
+            )
           :
             <AddObject addItemStatusHelper={this.props.addItemStatusHelper} refreshItems={this.props.refreshItems} loading={this.props.loading}/>
           }
         </div>
-        {this.props.addItemShown === false ?
+        {this.props.addItemShown === false && this.props.editItemShown === false ?
           <div className="bag-of-holding-money">
             <div className="bag-of-holding-money-type">
               <label>Gold:</label>
@@ -296,7 +310,7 @@ class ObjectsList extends React.Component{
           null
         }
         {this.props.loading === false ?
-          (this.props.addItemShown === false ?
+          (this.props.addItemShown === false && this.props.editItemShown === false ?
             <div className="changes-button-holder">
               <p className="bag-of-holding-save-changes-button" onClick={() => this.props.saveItems(this.state)}>Save<br/>Changes</p>
               <p className="bag-of-holding-cancel-changes-button" onClick={() => this.moneyRefreshHandler()}>Cancel<br/>Changes</p>
@@ -305,7 +319,7 @@ class ObjectsList extends React.Component{
             null
           )
         :
-          (this.props.addItemShown === false ?
+          (this.props.addItemShown === false && this.props.editItemShown === false ?
             <div className="changes-button-holder">
               <p>Saving...</p>
             </div>

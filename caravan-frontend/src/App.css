@@ -93,6 +93,13 @@ th.sticky-header{
   cursor: pointer;
 }
 
+.edit-icons{
+  width: 20px;
+  padding-left: 5px;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
 .negotiate-icon{
   width: 20px;
   padding-left: 5px;
