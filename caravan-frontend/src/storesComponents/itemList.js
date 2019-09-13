@@ -52,7 +52,7 @@ class ItemList extends React.Component{
           <table className="itemListTable">
             <thead>
               <tr>
-                <th className="sticky-header">Item Name</th><th className="sticky-header">Item Type</th><th className="sticky-header">Cost</th><th className="sticky-header">Stock</th><th className="sticky-header">Add/Remove</th>
+                <th className="sticky-header">Item Name</th><th className="sticky-header">Item Type</th><th className="sticky-header">Cost</th><th className="sticky-header">Stock</th><th className="sticky-header">Buy/Undo</th>
               </tr>
             </thead>
             <tbody>
@@ -60,7 +60,7 @@ class ItemList extends React.Component{
                 return (
                   <Fragment key={`item-number-${item.id}`}>
                   <tr>
-                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.render_cost}</td><td>{item.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.stockChanger(item, "plus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "minus")}/></td>
+                    <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.render_cost}</td><td>{item.current_stock}</td><td><img src={PlusImage} className="add-remove-icons" alt="plusIcon" onClick={() => this.props.stockChanger(item, "minus")}/><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.stockChanger(item, "plus")}/></td>
                   </tr>
                   </Fragment>
                 )

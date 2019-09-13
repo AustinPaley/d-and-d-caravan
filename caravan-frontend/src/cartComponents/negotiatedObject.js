@@ -51,6 +51,15 @@ class NegotiatedObject extends React.Component{
     })
   }
 
+  negotiationValidator = () => {
+    if (this.state.selectedOption === "" || this.state.newValue === ""){
+      alert("Please choose a new value and currency type!")
+    }
+    else{
+      this.props.negotiatedPriceUpdator(this.props.info, this.state.selectedOption, this.state.newValue)
+    }
+  }
+
   render(){
     return(
       <div>
@@ -93,7 +102,7 @@ class NegotiatedObject extends React.Component{
           </div>
         </div>
         <div className="changes-button-holder">
-          <p className="cart-save-changes-button" onClick={() => this.props.negotiatedPriceUpdator(this.props.info, this.state.selectedOption, this.state.newValue)}>Update Price</p>
+          <p className="cart-save-changes-button" onClick={() => this.negotiationValidator()}>Update Price</p>
         </div>
       </div>
     )

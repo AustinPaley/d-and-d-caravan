@@ -252,8 +252,6 @@ class CurrentCart extends React.Component{
   }
 
   render(){
-    console.log("SPELLS IN THE CART", this.props.pendingSpellsInCart)
-    console.log("ITEMS IN THE CART", this.props.pendingItemsInCart)
     return(
       <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">
