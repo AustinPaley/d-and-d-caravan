@@ -365,18 +365,20 @@ th.sticky-header{
 .add-object-header{
   margin-block-start: 0em;
   margin-block-end: 0em;
+  font-size: 20px;
 }
 
 .add-object-holder{
   height: 70px;
-  margin-bottom: 10px;
+  margin-bottom: 2px;
   position: relative;
 }
 
 .add-object-holder h3{
   text-align: left;
   text-decoration: underline;
-  margin-block-start: 0.3em;
+  margin-block-start: 0em;
+  font-size: 18px;
 }
 
 .add-object-required-field{
@@ -384,13 +386,13 @@ th.sticky-header{
   text-align: left;
   position: absolute;
   left: 52%;
-  height: 18px;
-  bottom: 4px;
+  height: 14px;
+  bottom: 10px;
 }
 
 .add-object-holder input{
   background: rgba(255, 255, 255, 0.5);
-  font-size: 18px;
+  font-size: 14px;
   color: black;
   display: table;
   width: 50%;
