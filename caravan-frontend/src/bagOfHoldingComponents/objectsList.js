@@ -215,7 +215,6 @@ class ObjectsList extends React.Component{
   }
 
   render(){
-    debugger
     return(
       <div>
         <div className="parchmentTop">
