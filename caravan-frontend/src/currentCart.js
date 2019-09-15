@@ -42,7 +42,7 @@ class CurrentCart extends React.Component{
   priceConverterHelper = () => {
     var newItemArray = []
     this.props.pendingItemsInCart.forEach(item => {
-      var itemCost = parseFloat(item.cost)
+      var itemCost = parseFloat(item.in_cart_cost)
       if (itemCost / 1 >= 1){
         var gold = itemCost / 1
         itemCost = gold.toString() + "g"
@@ -57,7 +57,7 @@ class CurrentCart extends React.Component{
         var copper = itemCost / .01
         itemCost = copper.toString() + "c"
       }
-      item["render_cost"] = itemCost
+      item["in_cart_render_cost"] = itemCost
       newItemArray.push(item)
     })
 
@@ -67,15 +67,16 @@ class CurrentCart extends React.Component{
   }
 
   spellConverterHelper = () => {
+    // THERE IS A BUG HERE - THIS ONLY WORKS FOR GOLD
     var newSpellArray = []
     this.props.pendingSpellsInCart.forEach(spell => {
       if (spell.level === 0){
         spell["render_level"] = "Cantrip"
-        spell["render_cost"] = spell.cost + "g"
+        spell["in_cart_render_cost"] = spell.in_cart_cost + "g"
       }
       else {
         spell["render_level"] = spell.level
-        spell["render_cost"] = spell.cost + "g"
+        spell["in_cart_render_cost"] = spell.in_cart_cost + "g"
       }
       // spell["max_stock"] = spell.current_stock
       newSpellArray.push(spell)
@@ -90,10 +91,10 @@ class CurrentCart extends React.Component{
     var cartCost = 0
     var cartCostString = ""
     if (bagContents.spellsList.length !== 0){
-      bagContents.spellsList.forEach(item => cartCost += ((item.cost * item.number_in_cart) * 100) / 100)
+      bagContents.spellsList.forEach(item => cartCost += ((item.in_cart_cost * item.number_in_cart) * 100) / 100)
     }
     if (bagContents.itemsList.length !== 0){
-      bagContents.itemsList.forEach(item => cartCost += ((item.cost * item.number_in_cart) * 100) / 100)
+      bagContents.itemsList.forEach(item => cartCost += ((item.in_cart_cost * item.number_in_cart) * 100) / 100)
     }
 
     cartCostString = ((cartCost * 100) /100).toFixed(2)
@@ -164,7 +165,7 @@ class CurrentCart extends React.Component{
     var totalObjects = [...this.state.itemsList, this.state.spellsList].flat()
     if (totalObjects.length > 0){
       totalObjects.forEach(item => {
-        var itemCost = parseFloat(item.cost * item.number_in_cart)
+        var itemCost = parseFloat(item.in_cart_cost * item.number_in_cart)
         totalCost += itemCost
       })
     }
@@ -224,8 +225,8 @@ class CurrentCart extends React.Component{
 
     if (Object.keys(object).includes("item_level")){
       var newItemArray = [...this.state.itemsList]
-      newItemArray.find(oldObject => oldObject.id === object.id).render_cost = newCost
-      newItemArray.find(oldObject => oldObject.id === object.id).cost = rawCost
+      newItemArray.find(oldObject => oldObject.id === object.id).in_cart_render_cost = newCost
+      newItemArray.find(oldObject => oldObject.id === object.id).in_cart_cost = rawCost
       this.setState({
         itemsList: newItemArray,
         currentlyNegotiatedObject: ""
@@ -234,8 +235,8 @@ class CurrentCart extends React.Component{
 
     if (Object.keys(object).includes("level")){
       var newSpellArray = [...this.state.spellsList]
-      newSpellArray.find(oldObject => oldObject.id === object.id).render_cost = newCost
-      newSpellArray.find(oldObject => oldObject.id === object.id).cost = rawCost
+      newSpellArray.find(oldObject => oldObject.id === object.id).in_cart_render_cost = newCost
+      newSpellArray.find(oldObject => oldObject.id === object.id).in_cart_cost = rawCost
 
       this.setState({
         spellsList: newSpellArray,
@@ -252,8 +253,6 @@ class CurrentCart extends React.Component{
   }
 
   render(){
-    console.log("CART PROPS", this.props)
-    console.log("CART STATE", this.state)
     return(
       <div className="bag-or-cart" style={this.props.currentCartShownStatus === true ? {display: "block"} : {display: "none"}}>
         <div className="parchmentTop">
@@ -272,11 +271,11 @@ class CurrentCart extends React.Component{
                 </tr>
               </thead>
               <tbody>
-                {this.state.itemsList.sort((a,b) => a.cost-b.cost).map(item => {
+                {this.state.itemsList.sort((a,b) => a.in_cart_cost-b.in_cart_cost).map(item => {
                   return (
                     <Fragment key={`item-number-${item.id}`}>
                     <tr>
-                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.number_in_cart}</td><td>{item.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
+                      <td>{item.name}</td><td>{item.equipment_category}</td><td>{item.number_in_cart}</td><td>{item.in_cart_render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-item" onClick={() => this.negotiatorHelper(item)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(item, "item")}/></td>
                     </tr>
                     </Fragment>
                   )
@@ -286,7 +285,7 @@ class CurrentCart extends React.Component{
                   return (
                     <Fragment key={`item-number-${spell.id}`}>
                     <tr>
-                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.number_in_cart}</td><td>{spell.render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
+                      <td>{spell.name}</td><td>{spell.school}</td><td>{spell.number_in_cart}</td><td>{spell.in_cart_render_cost}</td><td><img className="negotiate-icon" src={Negotiate} alt="negotiate-spell" onClick={() => this.negotiatorHelper(spell)} /></td><td><img className="add-remove-icons" src={MinusImage} alt="minusIcon" onClick={() => this.props.objectToCartRemove(spell, "spell")}/></td>
                     </tr>
                     </Fragment>
                   )

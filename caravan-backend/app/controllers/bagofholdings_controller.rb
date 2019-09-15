@@ -68,7 +68,7 @@ def add_objects(params)
       equipment_category: item[:equipment_category],
       weapon_category: item[:weapon_category],
       range: item[:range],
-      cost: item[:cost],
+      cost: item[:in_cart_cost],
       damage: item[:damage],
       damage_type: item[:damage_type],
       description: item[:description],
@@ -95,7 +95,7 @@ def add_objects(params)
       level: spell[:level],
       range: spell[:range],
       school: spell[:school],
-      cost: spell[:cost],
+      cost: spell[:in_cart_cost],
       current_stock: spell[:number_in_cart],
       shop_id: 1
     )

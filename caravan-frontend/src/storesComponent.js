@@ -139,8 +139,12 @@ class StoresComponent extends React.Component{
 
     // ITEM ADDED TO CART LOGIC
     if (actionType === "minus" && selectedItem.current_stock > 0){
+            debugger
       if (selectedItem["number_in_cart"] === undefined){
+        debugger
         selectedItem["number_in_cart"] = 1
+        selectedItem["in_cart_cost"] = selectedItem["cost"]
+        selectedItem["in_cart_render_cost"] = selectedItem["render_cost"]
       }
       else {
         selectedItem["number_in_cart"] += 1
@@ -150,6 +154,8 @@ class StoresComponent extends React.Component{
       selectedItem.current_stock -= 1
       updatedItems.find(item => item.id === changedItem.id).current_stock = selectedItem.current_stock
       updatedItems.find(item => item.id === changedItem.id)["number_in_cart"] = selectedItem["number_in_cart"]
+      updatedItems.find(item => item.id === changedItem.id)["in_cart_cost"] = selectedItem["in_cart_cost"]
+      updatedItems.find(item => item.id === changedItem.id)["in_cart_render_cost"] = selectedItem["in_cart_render_cost"]
       cartObject = updatedItems.find(item => item.id === changedItem.id)
       this.setState({
         shopItems: updatedItems
@@ -183,6 +189,8 @@ class StoresComponent extends React.Component{
     if (actionType === "minus" && selectedSpell.current_stock > 0){
       if (purchasedSpell["number_in_cart"] === undefined){
         purchasedSpell["number_in_cart"] = 1
+        purchasedSpell["in_cart_cost"] = purchasedSpell["cost"]
+        purchasedSpell["in_cart_render_cost"] = purchasedSpell["render_cost"]
       }
       else {
         purchasedSpell["number_in_cart"] += 1
@@ -192,6 +200,8 @@ class StoresComponent extends React.Component{
       selectedSpell.current_stock -= 1
       updatedSpells.find(item => item.id === purchasedSpell.id).current_stock = purchasedSpell.current_stock
       updatedSpells.find(item => item.id === purchasedSpell.id)["number_in_cart"] = purchasedSpell["number_in_cart"]
+      updatedSpells.find(item => item.id === purchasedSpell.id)["in_cart_cost"] = purchasedSpell["in_cart_cost"]
+      updatedSpells.find(item => item.id === purchasedSpell.id)["in_cart_render_cost"] = purchasedSpell["in_cart_render_cost"]
       cartObject = updatedSpells.find(item => item.id === purchasedSpell.id)
       this.setState({
         shopSpells: updatedSpells

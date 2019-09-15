@@ -12,7 +12,7 @@ class NegotiatedObject extends React.Component{
   }
 
   componentDidMount(){
-    this.currencyFinderHelper(this.props.info.render_cost)
+    this.currencyFinderHelper(this.props.info.in_cart_render_cost)
   }
 
   currencyFinderHelper = (costString) => {
