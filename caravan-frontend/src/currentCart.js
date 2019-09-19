@@ -246,10 +246,15 @@ class CurrentCart extends React.Component{
   }
 
   clearCartAndResetCost = () => {
-    this.props.clearCart()
-    this.setState({
-      displayedCost: 0
-    })
+    if ([...this.state.itemsList, ...this.state.spellsList].length === 0){
+      alert("Cannot clear an empty cart!")
+    }
+    else {
+      this.props.clearCart("clear")
+      this.setState({
+        displayedCost: 0
+      })
+    }
   }
 
   render(){

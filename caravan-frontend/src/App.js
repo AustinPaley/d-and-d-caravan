@@ -236,12 +236,20 @@ class App extends React.Component{
     }
   }
 
-  clearCart = () => {
-    this.setState({
-      pendingSpellsInCart: [],
-      pendingItemsInCart: [],
-      cartClearLoading: true,
-    }, () => {this.getAllStoresData()})
+  clearCart = (status) => {
+    if (status === "clear"){
+      this.setState({
+        pendingSpellsInCart: [],
+        pendingItemsInCart: [],
+        cartClearLoading: true,
+      }, () => {this.getAllStoresData()})
+    }
+    else {
+      this.setState({
+        pendingSpellsInCart: [],
+        pendingItemsInCart: [],
+      }, () => {this.getAllStoresData()})
+    }
   }
 
   clearCartStoreHelper = (status) => {
