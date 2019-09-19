@@ -43,12 +43,20 @@ class ItemList extends React.Component{
       item["max_stock"] = item.current_stock
       newItemArray.push(item)
     })
-    this.setState({
-      itemsList: newItemArray
-    })
+    if (this.props.cartClearLoading === true){
+      this.setState({
+        itemsList: newItemArray
+      }, () => {this.props.clearCartStoreHelper("complete")})
+    }
+    else {
+      this.setState({
+        itemsList: newItemArray
+      }, () => {this.props.clearCartStoreHelper()})
+    }
   }
 
   render(){
+    console.log("IN ITEMS", this.props.cartClearLoading)
     return(
       <div>
         <div className="parchmentTop">

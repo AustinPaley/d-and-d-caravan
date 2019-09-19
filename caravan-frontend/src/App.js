@@ -17,7 +17,8 @@ class App extends React.Component{
     shopsShown: true,
     pendingItemsInCart: [],
     pendingSpellsInCart: [],
-    bagOfHoldingMoneyInfo: {}
+    bagOfHoldingMoneyInfo: {},
+    cartClearLoading: false
   }
 
   componentDidMount(){
@@ -238,8 +239,19 @@ class App extends React.Component{
   clearCart = () => {
     this.setState({
       pendingSpellsInCart: [],
-      pendingItemsInCart: []
+      pendingItemsInCart: [],
+      cartClearLoading: true,
     }, () => {this.getAllStoresData()})
+  }
+
+  clearCartStoreHelper = (status) => {
+    this.setState({
+      cartClearLoading: false
+    }, () => {
+      if (status === "complete"){
+        alert("Cart Cleared!")
+      }
+    })
   }
 
   moneyHoister = (bagOfHoldingMoney, bagOfHoldingGold, bagOfHoldingSilver, bagOfHoldingCopper) => {
@@ -250,10 +262,11 @@ class App extends React.Component{
   }
 
   render(){
+    // console.log(this.state.cartClearLoading)
     return (
       <div className="App">
         <PartyNavBar shopsShown={this.shopsShown} bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} />
-        <CurrentCart moneyHoister={this.moneyHoister} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
+        <CurrentCart cartClearLoading={this.state.cartClearLoading} moneyHoister={this.moneyHoister} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
         <BagofHoldingComponent moneyHoister={this.moneyHoister} bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} />
         {this.state.loaded === true && this.state.shopsShown === true ?
           <div>
@@ -265,7 +278,7 @@ class App extends React.Component{
         {this.state.allStoresObject.length > 0 ?
           <div>
             {this.state.allStoresObject.map(store => (
-                <StoresComponent objectRemovedFromCartFromStore={this.objectRemovedFromCartFromStore} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} shopsShown={this.state.shopsShown} />
+                <StoresComponent cartClearLoading={this.state.cartClearLoading} clearCartStoreHelper={this.clearCartStoreHelper} objectRemovedFromCartFromStore={this.objectRemovedFromCartFromStore} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} key={store.id} info={store} currentlySelectedStore={this.state.currentlySelectedStore} loaded={this.state.loaded} loaderHelper={this.loaderHelper} objectToCartAdd={this.objectToCartAdd} shopsShown={this.state.shopsShown} />
               ))
             }
           </div>

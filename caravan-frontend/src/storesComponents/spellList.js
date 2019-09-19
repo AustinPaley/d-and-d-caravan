@@ -35,10 +35,16 @@ class SpellList extends React.Component{
       spell["max_stock"] = spell.current_stock
       newSpellArray.push(spell)
     })
-
-    this.setState({
-      spellsList: newSpellArray
-    })
+    if (this.props.cartClearLoading === true){
+      this.setState({
+        spellsList: newSpellArray
+      }, () => {this.props.clearCartStoreHelper("complete")})
+    }
+    else {
+      this.setState({
+        spellsList: newSpellArray
+      }, () => {this.props.clearCartStoreHelper()})
+    }
   }
 
   render(){

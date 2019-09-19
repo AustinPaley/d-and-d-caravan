@@ -240,7 +240,7 @@ class StoresComponent extends React.Component{
                     <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
                   </div>
                 :
-                  <SpellList pendingSpellsInCart={this.props.pendingSpellsInCart} spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                  <SpellList cartClearLoading={this.props.cartClearLoading} clearCartStoreHelper={this.props.clearCartStoreHelper} pendingSpellsInCart={this.props.pendingSpellsInCart} spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
                 }
             </div>
           :
@@ -256,7 +256,7 @@ class StoresComponent extends React.Component{
                     <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
                   </div>
                 :
-                  <ItemList pendingItemsInCart={this.props.pendingItemsInCart} items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                  <ItemList cartClearLoading={this.props.cartClearLoading} clearCartStoreHelper={this.props.clearCartStoreHelper} pendingItemsInCart={this.props.pendingItemsInCart} items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
                 }
             </div>
           )

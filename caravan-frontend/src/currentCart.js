@@ -304,10 +304,16 @@ class CurrentCart extends React.Component{
               <p>Current Cost<span className="current-cart-cost">{this.state.displayedCost}</span></p>
             </div>
             {this.state.loading === false ?
+              (this.props.cartClearLoading === false ?
+                <div className="changes-button-holder">
+                  <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
+                  <p className="cart-cancel-changes-button" onClick={() => this.clearCartAndResetCost()}>Empty<br/>Cart</p>
+                </div>
+              :
               <div className="changes-button-holder">
-                <p className="cart-save-changes-button" onClick={() => this.saveItems(this.state)}>Checkout</p>
-                <p className="cart-cancel-changes-button" onClick={() => this.clearCartAndResetCost()}>Empty<br/>Cart</p>
+                <p>Emptying Cart...</p>
               </div>
+              )
             :
             <div className="changes-button-holder">
               <p>Purchasing...</p>
