@@ -35,27 +35,7 @@ class StoresComponent extends React.Component{
 
   componentDidMount(){
     if (this.props.info){
-      fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
-        method: "GET"
-      })
-      .then(res => res.json())
-      .then(res => {
-        var shopImage = IMAGELIBRARY[res.shop.level]
-        var unlockedItems = this.unlockedItemChanger(res.items, res.shop.level)
-        var unlockedSpells = this.unlockedSpellChanger(res.spells, res.shop.level)
-        this.setState({
-          shopName: res.shop.name,
-          ownerName: res.owner.name,
-          ownerRace: res.owner.race,
-          ownerImage: "data:image/png;base64," + res.owner.image,
-          shopItems: res.items,
-          unlockedItems: unlockedItems,
-          shopSpells: res.spells,
-          unlockedSpells: unlockedSpells,
-          shopLevel: res.shop.level,
-          shopImage: shopImage
-        })
-      })
+      this.fetchShop()
     }
   }
 
@@ -63,6 +43,34 @@ class StoresComponent extends React.Component{
     if (this.props.loaded === false){
       this.props.loaderHelper()
     }
+
+    if (((this.props.pendingItemsInCart.length + this.props.pendingSpellsInCart.length) === 0) && ((prevProps.pendingItemsInCart.length + prevProps.pendingSpellsInCart.length) > 0)){
+      this.fetchShop()
+    }
+  }
+
+  fetchShop = () => {
+    fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
+      method: "GET"
+    })
+    .then(res => res.json())
+    .then(res => {
+      var shopImage = IMAGELIBRARY[res.shop.level]
+      var unlockedItems = this.unlockedItemChanger(res.items, res.shop.level)
+      var unlockedSpells = this.unlockedSpellChanger(res.spells, res.shop.level)
+      this.setState({
+        shopName: res.shop.name,
+        ownerName: res.owner.name,
+        ownerRace: res.owner.race,
+        ownerImage: "data:image/png;base64," + res.owner.image,
+        shopItems: res.items,
+        unlockedItems: unlockedItems,
+        shopSpells: res.spells,
+        unlockedSpells: unlockedSpells,
+        shopLevel: res.shop.level,
+        shopImage: shopImage
+      })
+    })
   }
 
   unlockedItemChanger = (allItems, shopLevel) => {
@@ -139,9 +147,7 @@ class StoresComponent extends React.Component{
 
     // ITEM ADDED TO CART LOGIC
     if (actionType === "minus" && selectedItem.current_stock > 0){
-            debugger
       if (selectedItem["number_in_cart"] === undefined){
-        debugger
         selectedItem["number_in_cart"] = 1
         selectedItem["in_cart_cost"] = selectedItem["cost"]
         selectedItem["in_cart_render_cost"] = selectedItem["render_cost"]
@@ -234,7 +240,7 @@ class StoresComponent extends React.Component{
                     <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
                   </div>
                 :
-                  <SpellList spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                  <SpellList pendingSpellsInCart={this.props.pendingSpellsInCart} spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
                 }
             </div>
           :
@@ -250,7 +256,7 @@ class StoresComponent extends React.Component{
                     <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
                   </div>
                 :
-                  <ItemList items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                  <ItemList pendingItemsInCart={this.props.pendingItemsInCart} items={this.state.unlockedItems} shopLevel={this.state.shopLevel} stockChanger={this.stockChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
                 }
             </div>
           )

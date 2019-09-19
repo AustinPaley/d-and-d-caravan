@@ -7,7 +7,7 @@ class ItemList extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      itemsList: this.props.items
+      itemsList: []
     }
   }
 
@@ -15,9 +15,15 @@ class ItemList extends React.Component{
     this.priceConverterHelper()
   }
 
+  componentDidUpdate(prevProps){
+    if (this.props.pendingItemsInCart.length === 0 && this.props.items !== prevProps.items){
+      this.priceConverterHelper()
+    }
+  }
+
   priceConverterHelper = () => {
     var newItemArray = []
-    this.state.itemsList.forEach(item => {
+    this.props.items.forEach(item => {
       var itemCost = parseFloat(item.cost)
       if (itemCost / 1 >= 1){
         var gold = itemCost / 1

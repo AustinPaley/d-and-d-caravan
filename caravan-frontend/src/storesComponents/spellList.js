@@ -7,7 +7,7 @@ class SpellList extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      spellsList: this.props.spells
+      spellsList: []
     }
   }
 
@@ -15,9 +15,15 @@ class SpellList extends React.Component{
     this.spellConverterHelper()
   }
 
+  componentDidUpdate(prevProps){
+    if (this.props.pendingSpellsInCart.length === 0 && this.props.spells !== prevProps.spells){
+      this.spellConverterHelper()
+    }
+  }
+
   spellConverterHelper = () => {
     var newSpellArray = []
-    this.state.spellsList.forEach(spell => {
+    this.props.spells.forEach(spell => {
       if (spell.level === 0){
         spell["render_level"] = "Cantrip"
         spell["render_cost"] = spell.cost + "g"
