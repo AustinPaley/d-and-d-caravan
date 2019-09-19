@@ -26,7 +26,7 @@ class App extends React.Component{
   }
 
   getAllStoresData = () => {
-    fetch("http://austins-macbook-air-2.local/shops/?exclude=1",{
+    fetch("http://Austins-MacBook-Pro.local/shops/?exclude=1",{
       method: "GET"
     })
     .then(res => res.json())
@@ -158,6 +158,10 @@ class App extends React.Component{
         if (newSpellArray.find(spell => spell.id === object.id).current_stock >= 0){
           newSpellArray.find(spell => spell.id === object.id).current_stock = object.current_stock
           newSpellArray.find(spell => spell.id === object.id).number_in_cart = object.number_in_cart
+
+          this.setState({
+            pendingSpellsInCart: newSpellArray
+          })
         }
         this.setState({
           pendingSpellsInCart: newSpellArray

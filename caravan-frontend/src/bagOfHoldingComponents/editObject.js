@@ -40,7 +40,7 @@ class EditObject extends React.Component{
       alert("Please fill out all required fields.")
     }
     else{
-      fetch("http://austins-macbook-air-2.local/items/" + this.props.editedObject.id,{
+      fetch("http://Austins-MacBook-Pro.local/items/" + this.props.editedObject.id,{
         method: "PUT",
         headers: {
           "Content-Type":"application/json"

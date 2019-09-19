@@ -50,7 +50,7 @@ class StoresComponent extends React.Component{
   }
 
   fetchShop = () => {
-    fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
+    fetch("http://Austins-MacBook-Pro.local/shops/" + this.props.info.id, {
       method: "GET"
     })
     .then(res => res.json())
@@ -90,7 +90,7 @@ class StoresComponent extends React.Component{
     if (levelChange === "up"){
       var increasedLevel = this.state.shopLevel + 1
       var increasedShopImage = IMAGELIBRARY[increasedLevel]
-      fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
+      fetch("http://Austins-MacBook-Pro.local/shops/" + this.props.info.id, {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"
@@ -109,7 +109,7 @@ class StoresComponent extends React.Component{
     if (levelChange === "down"){
       var decreasedLevel = this.state.shopLevel - 1
       var decreasedShopImage = IMAGELIBRARY[decreasedLevel]
-      fetch("http://austins-macbook-air-2.local/shops/" + this.props.info.id, {
+      fetch("http://Austins-MacBook-Pro.local/shops/" + this.props.info.id, {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"
