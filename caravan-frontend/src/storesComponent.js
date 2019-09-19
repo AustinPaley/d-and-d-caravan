@@ -211,7 +211,9 @@ class StoresComponent extends React.Component{
       cartObject = updatedSpells.find(item => item.id === purchasedSpell.id)
       this.setState({
         shopSpells: updatedSpells
-      }, () => this.props.objectToCartAdd(cartObject, "spell"))
+      }, () => {
+        this.props.objectToCartAdd(cartObject, "spell")
+      })
     }
 
   }
@@ -240,7 +242,7 @@ class StoresComponent extends React.Component{
                     <p>Owned by: {this.state.ownerName}, {this.state.ownerRace}</p>
                   </div>
                 :
-                  <SpellList cartClearLoading={this.props.cartClearLoading} clearCartStoreHelper={this.props.clearCartStoreHelper} pendingSpellsInCart={this.props.pendingSpellsInCart} spells={this.state.shopSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
+                  <SpellList cartClearLoading={this.props.cartClearLoading} clearCartStoreHelper={this.props.clearCartStoreHelper} pendingSpellsInCart={this.props.pendingSpellsInCart} spells={this.state.unlockedSpells} shopLevel={this.state.shopLevel} spellChanger={this.spellChanger} levelChanger={this.levelChanger} activeShopHelper={this.activeShopHelper}/>
                 }
             </div>
           :

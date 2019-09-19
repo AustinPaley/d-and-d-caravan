@@ -147,7 +147,6 @@ class App extends React.Component{
 
     if (itemType === "spell"){
       if (this.state.pendingSpellsInCart.find(spell => spell.id === object.id) === undefined){
-        object.current_stock = 1
         this.setState(prevState => ({
           pendingSpellsInCart: [...prevState.pendingSpellsInCart, object]
         }))

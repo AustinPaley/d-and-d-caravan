@@ -17,6 +17,8 @@ class SpellList extends React.Component{
 
   componentDidUpdate(prevProps){
     if (this.props.pendingSpellsInCart.length === 0 && this.props.spells !== prevProps.spells){
+      console.log("HIT")
+      debugger
       this.spellConverterHelper()
     }
   }

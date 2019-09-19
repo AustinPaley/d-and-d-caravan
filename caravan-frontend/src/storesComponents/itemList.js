@@ -17,6 +17,8 @@ class ItemList extends React.Component{
 
   componentDidUpdate(prevProps){
     if (this.props.pendingItemsInCart.length === 0 && this.props.items !== prevProps.items){
+      console.log("ITEM")
+      debugger
       this.priceConverterHelper()
     }
   }
