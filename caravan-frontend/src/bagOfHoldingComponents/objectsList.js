@@ -238,10 +238,10 @@ class ObjectsList extends React.Component{
           )
         }
         <div className="parchment"></div>
-          <div>
+          <Fragment>
           {this.props.addItemShown === false ?
             (this.props.editItemShown === false ?
-              <div className="parchmentBody" style={{marginTop: "10px"}}>
+              <div className="parchmentBody" style={{marginTop: "10px", height: "325px"}}>
                 <table className="itemListTable">
                   <thead>
                     <tr>
@@ -289,7 +289,7 @@ class ObjectsList extends React.Component{
           :
             <AddObject addItemStatusHelper={this.props.addItemStatusHelper} refreshItems={this.props.refreshItems} loading={this.props.loading}/>
           }
-        </div>
+        </Fragment>
         {this.props.addItemShown === false && this.props.editItemShown === false ?
           <div className="bag-of-holding-money">
             <div className="bag-of-holding-money-type">

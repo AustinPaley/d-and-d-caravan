@@ -35,7 +35,7 @@
 .parchmentTop {
   position:relative;
   width:730px;
-  top:25px;
+  top:0px;
   font-family:georgia,times;
   font-style:italic;
   font-size:12pt;
