@@ -26,7 +26,7 @@ class App extends React.Component{
   }
 
   getAllStoresData = () => {
-    fetch("http://Austins-MacBook-Pro.local/shops/?exclude=1",{
+    fetch("http://austins-macbook-air-2.local/shops/?exclude=1",{
       method: "GET"
     })
     .then(res => res.json())

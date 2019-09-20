@@ -67,7 +67,6 @@ class CurrentCart extends React.Component{
   }
 
   spellConverterHelper = () => {
-    // THERE IS A BUG HERE - THIS ONLY WORKS FOR GOLD
     var newSpellArray = []
     this.props.pendingSpellsInCart.forEach(spell => {
       if (spell.level === 0){
@@ -78,7 +77,6 @@ class CurrentCart extends React.Component{
         spell["render_level"] = spell.level
         spell["in_cart_render_cost"] = spell.in_cart_cost + "g"
       }
-      // spell["max_stock"] = spell.current_stock
       newSpellArray.push(spell)
     })
 
@@ -98,10 +96,11 @@ class CurrentCart extends React.Component{
     }
 
     cartCostString = ((cartCost * 100) /100).toFixed(2)
+    debugger
     this.setState({
       loading: true
     }, () => {
-      fetch("http://Austins-MacBook-Pro.local/bagofholdings/1", {
+      fetch("http://austins-macbook-air-2.local/bagofholdings/1", {
         method: "PUT",
         headers: {
           "Content-Type":"application/json"

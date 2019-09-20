@@ -56,8 +56,6 @@ def filter_objects(params)
 end
 
 def add_objects(params)
-  # HUGE BUG HERE WHERE DOING AN UPDATE ON ITEM IS CAUSING THE SHOP RENDER TO IMPROPERLY RESET STOCK
-  # THIS SHOULD BE REFACTORED IN SOME WAY TO EITHER CREATE A NEW ITEM RECORD SEPARATE FROM SHOP
   params[:items].each do |item|
     oldItem = Item.find(item[:id])
     oldItem.update(
@@ -105,7 +103,11 @@ def add_objects(params)
     @bagofholding.update(money: params[:money])
   elsif params[:type] === "purchase"
     lengthSplitHelper = ((@bagofholding.money.to_f * 100) - (params[:money].to_f * 100)).to_s.split(".")[0].length - 2
-    newMoney = ((@bagofholding.money.to_f * 100) - (params[:money].to_f * 100)).to_s.split(".")[0].insert(lengthSplitHelper, ".")
+    if lengthSplitHelper > 0
+      newMoney = ((@bagofholding.money.to_f * 100) - (params[:money].to_f * 100)).to_s.split(".")[0].insert(lengthSplitHelper, ".")
+    else
+      newMoney = "0" + ((@bagofholding.money.to_f * 100) - (params[:money].to_f * 100)).to_s.split(".")[0].insert(lengthSplitHelper, ".")
+    end
     @bagofholding.update(money: newMoney)
   end
   render json: {bag: {id: @bagofholding.id, items: @bagofholding.items, spells: @bagofholding.spells, money: @bagofholding.money}}
