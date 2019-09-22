@@ -46,8 +46,9 @@ class NegotiatedObject extends React.Component{
   }
 
   handlePriceChange = (value) => {
+    var newValue = value.replace(/\D+/g, "")
     this.setState({
-      newValue: value
+      newValue: newValue
     })
   }
 
