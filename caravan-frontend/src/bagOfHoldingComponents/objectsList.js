@@ -19,14 +19,15 @@ class ObjectsList extends React.Component{
       shownSilver: this.props.silver,
       shownCopper: this.props.copper,
       moneyBeingReset: false,
-      sort: "loading"
+      sort: "loading",
+      downState: true
     }
   }
 
   componentDidMount(){
     this.priceConverterHelper()
     this.spellConverterHelper()
-    this.sortHelperFunction()
+    this.sortHelperFunction("loading")
   }
 
   componentDidUpdate(prevProps, prevState){
@@ -182,39 +183,86 @@ class ObjectsList extends React.Component{
 
   }
 
-  sortHelperFunction = () => {
-    if (this.state.sort === "loading"){
-        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
-        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+  sortHelperFunction = (type) => {
+      if (type === "loading"){
+          var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+          var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+          this.setState({
+            sort: "item",
+            downState: true,
+            itemsList: newSortedItemList,
+            spellsList: newSortedSpellList
+          })
+      }
+
+      if (type === "item" && this.state.downState === true){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : 0))]
         this.setState({
-          sort: "down",
+          sort: "item",
+          downState: false,
           itemsList: newSortedItemList,
           spellsList: newSortedSpellList
         })
-    }
+      }
 
-    if (this.state.sort === "down"){
-      var newSortedItemList = [...this.state.itemsList.sort((a,b) => (b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : 0))]
-      var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.name.toLowerCase() > a.name.toLowerCase()) ? 1 : ((a.name.toLowerCase() > b.name.toLowerCase()) ? -1 : 0))]
-      this.setState({
-        sort: "up",
-        itemsList: newSortedItemList,
-        spellsList: newSortedSpellList
-      })
-    }
+      if (type === "item" && this.state.downState === false){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
+        this.setState({
+          sort: "item",
+          downState: true,
+          itemsList: newSortedItemList,
+          spellsList: newSortedSpellList
+        })
+      }
 
-    if (this.state.sort === "up"){
-      var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
-      var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.name.toLowerCase() > b.name.toLowerCase()) ? 1 : ((b.name.toLowerCase() > a.name.toLowerCase()) ? -1 : 0))]
-      this.setState({
-        sort: "down",
-        itemsList: newSortedItemList,
-        spellsList: newSortedSpellList
-      })
-    }
+      if (type === "type" && this.state.downState === true){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? 1 : ((a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? 1 : ((a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? -1 : 0))]
+        this.setState({
+          sort: "type",
+          downState: false,
+          itemsList: newSortedItemList,
+          spellsList: newSortedSpellList
+        })
+      }
+
+      if (type === "type" && this.state.downState === false){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? 1 : ((b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? 1 : ((b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? -1 : 0))]
+        this.setState({
+          sort: "type",
+          downState: true,
+          itemsList: newSortedItemList,
+          spellsList: newSortedSpellList
+        })
+      }
+      if (type === "stock" && this.state.downState === true){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (b.current_stock > a.current_stock) ? 1 : ((a.current_stock > b.current_stock) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.current_stock > a.current_stock) ? 1 : ((a.current_stock > b.current_stock) ? -1 : 0))]
+        this.setState({
+          sort: "stock",
+          downState: false,
+          itemsList: newSortedItemList,
+          spellsList: newSortedSpellList
+        })
+      }
+
+      if (type === "stock" && this.state.downState === false){
+        var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.current_stock > b.current_stock) ? 1 : ((b.current_stock > a.current_stock) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.current_stock > b.current_stock) ? 1 : ((b.current_stock > a.current_stock) ? -1 : 0))]
+        this.setState({
+          sort: "stock",
+          downState: true,
+          itemsList: newSortedItemList,
+          spellsList: newSortedSpellList
+        })
+      }
   }
 
   render(){
+    console.log(this.state.downState)
     return(
       <div>
         <div className="parchmentTop">
@@ -245,16 +293,42 @@ class ObjectsList extends React.Component{
                 <table className="itemListTable">
                   <thead>
                     <tr>
-                      <th className="sticky-header" onClick={() => this.sortHelperFunction()}>
+                      <th className="sticky-header" onClick={() => this.sortHelperFunction("item")}>
                         Item Name
-                        {this.state.sort === "down" ?
-                          <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
+                        {this.state.sort === "item" ?
+                          (this.state.downState === true ?
+                            <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
+                          :
+                            <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
+                          )
                         :
-                          <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
+                          null
                         }
                       </th>
-                      <th className="sticky-header">Item/Spell Type</th>
-                      <th className="sticky-header">Stock</th>
+                      <th className="sticky-header" onClick={() => this.sortHelperFunction("type")}>
+                        Item/Spell Type
+                        {this.state.sort === "type" ?
+                          (this.state.downState === true ?
+                            <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
+                          :
+                            <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
+                          )
+                        :
+                          null
+                        }
+                      </th>
+                      <th className="sticky-header" onClick={() => this.sortHelperFunction("stock")}>
+                        Stock
+                        {this.state.sort === "stock" ?
+                          (this.state.downState === true ?
+                            <img src={SortDown} className="sort-down-arrow" alt="sort-down-arrow" />
+                          :
+                            <img src={SortUp} className="sort-up-arrow" alt="sort-up-arrow" />
+                          )
+                        :
+                          null
+                        }
+                      </th>
                       <th className="sticky-header">Edit</th>
                       <th className="sticky-header">Remove</th>
                     </tr>
