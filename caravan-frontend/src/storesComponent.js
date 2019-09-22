@@ -74,13 +74,11 @@ class StoresComponent extends React.Component{
   }
 
   unlockedItemChanger = (allItems, shopLevel) => {
-    // THIS IS SET TO LEVEL 9 FOR TESTING PURPOSES
-    return allItems.filter(item => item.item_level <= (shopLevel + 9))
+    return allItems.filter(item => item.item_level <= (shopLevel))
   }
 
   unlockedSpellChanger = (allSpells, shopLevel) => {
-    // THIS IS SET TO LEVEL 9 FOR TESTING PURPOSES
-    return allSpells.filter(spell => spell.level <= (shopLevel + 9))
+    return allSpells.filter(spell => spell.level <= (shopLevel - 1))
   }
 
   shopLevelChanger = (levelChange) => {
@@ -99,9 +97,13 @@ class StoresComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
+        var unlockedItems = this.unlockedItemChanger(this.state.shopItems, res.level)
+        var unlockedSpells = this.unlockedSpellChanger(this.state.shopSpells, res.level)
         this.setState({
           shopLevel: res.level,
-          shopImage: increasedShopImage
+          shopImage: increasedShopImage,
+          unlockedItems: unlockedItems,
+          unlockedSpells: unlockedSpells
         })
       })
     }
@@ -118,9 +120,13 @@ class StoresComponent extends React.Component{
       })
       .then(res => res.json())
       .then(res => {
+        var unlockedItems = this.unlockedItemChanger(this.state.shopItems, res.level)
+        var unlockedSpells = this.unlockedSpellChanger(this.state.shopSpells, res.level)
         this.setState({
           shopLevel: res.level,
-          shopImage: decreasedShopImage
+          shopImage: decreasedShopImage,
+          unlockedItems: unlockedItems,
+          unlockedSpells: unlockedSpells
         })
       })
     }

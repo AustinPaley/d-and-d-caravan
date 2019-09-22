@@ -219,7 +219,7 @@ class ObjectsList extends React.Component{
 
       if (type === "type" && this.state.downState === true){
         var newSortedItemList = [...this.state.itemsList.sort((a,b) => (b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? 1 : ((a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? -1 : 0))]
-        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? 1 : ((a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (b.school.toLowerCase() > a.school.toLowerCase()) ? 1 : ((a.school.toLowerCase() > b.school.toLowerCase()) ? -1 : 0))]
         this.setState({
           sort: "type",
           downState: false,
@@ -230,7 +230,7 @@ class ObjectsList extends React.Component{
 
       if (type === "type" && this.state.downState === false){
         var newSortedItemList = [...this.state.itemsList.sort((a,b) => (a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? 1 : ((b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? -1 : 0))]
-        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.equipment_category.toLowerCase() > b.equipment_category.toLowerCase()) ? 1 : ((b.equipment_category.toLowerCase() > a.equipment_category.toLowerCase()) ? -1 : 0))]
+        var newSortedSpellList = [...this.state.spellsList.sort((a,b) => (a.school.toLowerCase() > b.school.toLowerCase()) ? 1 : ((b.school.toLowerCase() > a.school.toLowerCase()) ? -1 : 0))]
         this.setState({
           sort: "type",
           downState: true,
@@ -262,7 +262,6 @@ class ObjectsList extends React.Component{
   }
 
   render(){
-    console.log(this.state.downState)
     return(
       <div>
         <div className="parchmentTop">
