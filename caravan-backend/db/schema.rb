@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_12_051212) do
+ActiveRecord::Schema.define(version: 2019_09_26_072713) do
 
   create_table "bagofholdings", force: :cascade do |t|
     t.string "money"
@@ -41,6 +41,17 @@ ActiveRecord::Schema.define(version: 2019_08_12_051212) do
     t.integer "bagofholding_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "questboards", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "quests", force: :cascade do |t|
+    t.string "description"
+    t.string "title"
+    t.string "reward"
+    t.integer "questboard_id"
   end
 
   create_table "races", force: :cascade do |t|

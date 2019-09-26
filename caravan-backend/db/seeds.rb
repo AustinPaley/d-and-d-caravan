@@ -182,5 +182,9 @@ Shop.create(name: "Mason's Magnificant Mounts and Pets", character_id: 6, level:
 Shop.create(name: "Boats of Loire", character_id: 7, level: 0)
 Shop.create(name: "Versatile Vials", character_id: 8, level: 0)
 Shop.create(name: "No Strings Attached", character_id: 9, level: 0)
+Questboard.create(name: "default")
+Quest.create(title: "Test1", questboard_id: 1, description: "Test1 description", reward: "10")
+Quest.create(title: "Test2", questboard_id: 1, description: "Test1 description", reward: "10")
+
 item_data_process
 spell_parsing
