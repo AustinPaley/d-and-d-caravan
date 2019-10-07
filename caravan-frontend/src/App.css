@@ -443,6 +443,106 @@ th.sticky-header{
   cursor: pointer;
 }
 
+.quest-board__wrapper{
+  display: inline-flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+}
+
+.quest-board__board{
+  width: 60%;
+  background: url("./images/Wood-Boards-Texture.jpg");
+  background-size: auto;
+  position: relative;
+}
+
+.quest-board__divider{
+  width: 10%;
+  background: url("./images/Divider-Graphic.png");
+  background-repeat: no-repeat;
+}
+
+.quest-board__description{
+  width: 30%;
+  background: url("./images/Wood-Boards-Texture.jpg");
+  background-size: auto;
+}
+
+.quest-board__description-container{
+  color: #ffffff;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: scroll;
+}
+
+.quest-board__description-container-inner{
+  font-size: 12px;
+  overflow-y: scroll;
+  width: 80%;
+  margin: auto;
+}
+
+.quest-board__description-container h3{
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  font-size: 28px;
+}
+
+.quest-board__description-container-inner-description{
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.quest-board__description-container-inner-reward{
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.quest-board__description-container-inner-reward h4{
+  font-size: 16px;
+}
+
+.parchmentTop__quest {
+  position:relative;
+  display: inline-flex;
+  width:150px;
+  font-family:georgia,times;
+  font-style:italic;
+  font-size:12pt;
+  line-height:normal;
+  background-image:url("./images/Parchment-Body.png");
+}
+
+.parchment__quest {
+  position:relative;
+  top:-25px;
+  width:150px;
+  height:38px;
+  background-image:url("./images/Parchment-Top.png");
+}
+
+.parchmentBottom__quest {
+  position:relative;
+  width:150px;
+  height:38px;
+  bottom: -80px;
+  background-image:url("./images/Parchment-Bottom.png");
+  margin-bottom:40px;
+}
+
+.parchmentBody__quest {
+  width:150px;
+  height: 250px;
+  margin: auto;
+  overflow-y: scroll;
+}
+
 @media only screen and (max-width: 450px){
   .bag-or-cart{
     margin: auto;

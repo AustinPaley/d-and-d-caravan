@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import StoresComponent from './storesComponent.js';
 import BagofHoldingComponent from './bagOfHoldingComponent.js';
+import QuestBoardComponent from './questBoardComponent.js';
 import CurrentCart from './currentCart.js';
 import PartyNavBar from './partyNavBar.js'
 import RightArrow from './images/arrow-circle-right-solid.svg';
@@ -15,6 +16,7 @@ class App extends React.Component{
     bagOfHoldingShown: false,
     currentCartShown: false,
     shopsShown: true,
+    questBoardShown: false,
     pendingItemsInCart: [],
     pendingSpellsInCart: [],
     bagOfHoldingMoneyInfo: {},
@@ -47,7 +49,7 @@ class App extends React.Component{
     this.setState({
       bagOfHoldingShown: !this.state.bagOfHoldingShown
     }, () => {
-      if (this.state.bagOfHoldingShown === false && this.state.currentCartShown === false){
+      if (this.state.bagOfHoldingShown === false && this.state.currentCartShown === false && this.state.questBoardShown === false){
         this.setState({
           shopsShown: true
         })
@@ -55,7 +57,8 @@ class App extends React.Component{
       else {
         this.setState({
           shopsShown: false,
-          currentCartShown: false
+          currentCartShown: false,
+          questBoardShown: false
         })
       }
     })
@@ -67,7 +70,8 @@ class App extends React.Component{
     }, () => {
       this.setState({
         currentCartShown: false,
-        bagOfHoldingShown: false
+        bagOfHoldingShown: false,
+        questBoardShown: false
       })
     })
   }
@@ -76,7 +80,7 @@ class App extends React.Component{
     this.setState({
       currentCartShown: !this.state.currentCartShown
     }, () => {
-      if (this.state.currentCartShown === false && this.state.bagOfHoldingShown === false){
+      if (this.state.currentCartShown === false && this.state.bagOfHoldingShown === false && this.state.questBoardShown === false){
         this.setState({
           shopsShown: true
         })
@@ -84,7 +88,27 @@ class App extends React.Component{
       else {
         this.setState({
           shopsShown: false,
-          bagOfHoldingShown: false
+          bagOfHoldingShown: false,
+          questBoardShown: false
+        })
+      }
+    })
+  }
+
+  questBoardShown = () => {
+    this.setState({
+      questBoardShown: !this.state.questBoardShown
+    }, () => {
+      if (this.state.currentCartShown === false && this.state.questBoardShown === false && this.state.bagOfHoldingShown === false){
+        this.setState({
+          shopsShown: true
+        })
+      }
+      else {
+        this.setState({
+          shopsShown: false,
+          bagOfHoldingShown: false,
+          currentCartShown: false
         })
       }
     })
@@ -276,7 +300,7 @@ class App extends React.Component{
     // console.log(this.state.cartClearLoading)
     return (
       <div className="App">
-        <PartyNavBar shopsShown={this.shopsShown} bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} />
+        <PartyNavBar questBoardShown={this.questBoardShown} shopsShown={this.shopsShown} bagOfHoldingShown={this.bagOfHoldingShown} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} />
         <CurrentCart cartClearLoading={this.state.cartClearLoading} moneyHoister={this.moneyHoister} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} currentCartShown={this.currentCartShown} pendingItemsInCart={this.state.pendingItemsInCart} pendingSpellsInCart={this.state.pendingSpellsInCart} objectToCartRemove={this.objectToCartRemove} currentCartShownStatus={this.state.currentCartShown} clearCart={this.clearCart}/>
         <BagofHoldingComponent moneyHoister={this.moneyHoister} bagOfHoldingShown={this.state.bagOfHoldingShown} bagOfHoldingShownFunc={this.bagOfHoldingShown} bagOfHoldingMoneyInfo={this.state.bagOfHoldingMoneyInfo} />
         {this.state.loaded === true && this.state.shopsShown === true ?
@@ -300,6 +324,11 @@ class App extends React.Component{
           <div>
             <img src={RightArrow} className="right-arrow" alt="Right Arrow" width={"5%"} onClick={() => this.storeSelectorHelper("right")} />
           </div>
+        :
+          null
+        }
+        {this.state.loaded === true && this.state.questBoardShown === true ?
+          <QuestBoardComponent />
         :
           null
         }
