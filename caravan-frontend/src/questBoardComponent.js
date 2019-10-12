@@ -1,5 +1,6 @@
 import React from 'react';
 import QuestObject from './questBoardComponents/questObject.js'
+import DividerImage from './images/Divider-Graphic.png'
 
 class QuestBoardComponent extends React.Component{
   constructor(props){
@@ -46,7 +47,9 @@ class QuestBoardComponent extends React.Component{
             null
           }
         </div>
-        <div className="quest-board__divider"></div>
+        <div className="quest-board__divider">
+          <img id="divider-image" src={DividerImage} />
+        </div>
         <div className="quest-board__description">
             {this.state.selectedQuest === null ?
               <div className="quest-board__description-container">

@@ -10,7 +10,7 @@ class QuestObject extends React.Component{
 
   render(){
     return(
-      <div onClick={() => this.props.questHelperFunction(this.props.questInfo)} className="parchmentTop__quest" style={this.props.questInfo.selected === true ? {"border":"1px solid yellow"} : {"border": "none"}}>
+      <div onClick={() => this.props.questHelperFunction(this.props.questInfo)} className="parchmentTop__quest" style={this.props.questInfo.selected === true ? {"box-shadow":"0 0 5px 10px rgba(31, 73, 125, 0.8)"} : {"border": "none"}}>
         <div className="parchment__quest"></div>
         <div className="parchmentBody__quest">
           <h3>{this.props.questInfo.title}</h3>
